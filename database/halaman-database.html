@@ -64,7 +64,7 @@ section.records { flex: 999 1 560px; min-width: 0; display: flex; flex-direction
 .tools { display: flex; flex-wrap: wrap; gap: 8px; }
 input[type="search"], .field input, .field select, .field textarea { min-height: 44px; padding: 8px 12px; border: 1px solid var(--control); border-radius: 2px; background: var(--surface); width: 100%; }
 input[type="search"] { width: 240px; max-width: 100%; }
-.table-box { overflow-x: auto; }
+.table-box { overflow-x: auto; position: relative; }
 table { width: 100%; border-collapse: collapse; font-size: 16px; font-variant-numeric: tabular-nums; }
 th { text-align: left; font-weight: 600; background: var(--panel); padding: 10px 12px; white-space: nowrap; }
 td { padding: 10px 12px; border-top: 1px solid var(--line); vertical-align: top; }
@@ -92,6 +92,11 @@ aside.editor h3 { margin: 0; font-size: 22px; font-weight: 600; word-break: brea
 .check input { width: 20px; height: 20px; accent-color: var(--brand); }
 .row { display: flex; flex-wrap: wrap; gap: 8px; }
 .confirm { padding: 12px 14px; border: 1px solid var(--bad); border-radius: 12px; background: var(--bad-bg); color: var(--bad); display: flex; flex-direction: column; gap: 10px; }
+.grid2 { display: grid; grid-template-columns: repeat(auto-fit, minmax(200px, 1fr)); gap: 12px 16px; }
+.err { color: var(--bad); font-size: 14px; }
+.field input[aria-invalid="true"] { border: 2px solid var(--bad); }
+fieldset.plain { margin: 0; padding: 0; border: 0; display: flex; flex-wrap: wrap; gap: 4px 20px; }
+fieldset.plain legend { font-size: 15px; font-weight: 600; padding: 0; margin-bottom: 4px; }
 footer.foot .wrap { padding-block: 0 32px; color: var(--muted); font-size: 15px; }
 @media (prefers-reduced-motion: no-preference) { tbody tr { transition: background-color .12s; } }
 </style>
@@ -107,6 +112,7 @@ footer.foot .wrap { padding-block: 0 32px; color: var(--muted); font-size: 15px;
       <span class="live"><span class="dot" id="liveDot"></span><span id="liveText">Menghubungkan…</span></span>
       <span id="totalText">— dokumen</span>
       <span id="sampleText"></span>
+      <button class="btn on-band" id="resvBtn" type="button" hidden>+ Reservasi baru</button>
       <button class="btn on-band" id="exportBtn" type="button" hidden>Unduh JSON</button>
       <button class="btn on-band" id="purgeBtn" type="button" hidden>Hapus data contoh</button>
     </div>
@@ -118,6 +124,7 @@ footer.foot .wrap { padding-block: 0 32px; color: var(--muted); font-size: 15px;
     <nav class="index" id="index" aria-label="Koleksi data"></nav>
     <section class="records" aria-labelledby="recTitle">
       <div id="purgeBox"></div>
+      <div id="resvBox"></div>
       <div class="rec-head">
         <div>
           <div class="eyebrow" id="recGroup" style="color: var(--gold-text)"></div>
@@ -225,6 +232,7 @@ footer.foot .wrap { padding-block: 0 32px; color: var(--muted); font-size: 15px;
     $('sampleText').textContent = t.c ? t.c + ' contoh' : '';
     $('purgeBtn').hidden = !(canEdit && t.c > 0);
     $('exportBtn').hidden = !downloads || !t.loaded;
+    $('resvBtn').hidden = !canEdit || !t.loaded;
   }
   function renderIndex() {
     const nav = $('index'); nav.replaceChildren();
@@ -406,6 +414,105 @@ footer.foot .wrap { padding-block: 0 32px; color: var(--muted); font-size: 15px;
     } catch (e) { if (!(e && e.code === 'declined')) setStatus('err', 'File tidak bisa diunduh di tampilan ini.'); }
   }
 
+  // ---------- Reservasi baru (input admin / CS) ----------
+  let resv = null;
+  const pad = (n) => String(n).padStart(2, '0');
+  const isoDate = (d) => d.getFullYear() + '-' + pad(d.getMonth() + 1) + '-' + pad(d.getDate());
+  const isoDT = (d) => isoDate(d) + 'T' + pad(d.getHours()) + ':' + pad(d.getMinutes());
+  function dayPlus(dateStr, n, hh, mm) { const p = dateStr.split('-').map(Number); return new Date(p[0], p[1] - 1, p[2] + n, hh || 0, mm || 0); }
+  function normWa(v) { let d = String(v || '').replace(/[^0-9+]/g, '').replace(/^\+/, ''); if (d.indexOf('0') === 0) d = '62' + d.slice(1); return /^628[0-9]{7,11}$/.test(d) ? d : null; }
+  function resvDefaults() {
+    const k = (cache.koleksi || [])[0];
+    return { nama: '', email: '', wa: '', koleksi: k ? k.id : '', ukuran: 'M', fitting: '', acara: '', bayar: 'Transfer bank', waOn: true, emailOn: true, err: {}, msg: null, busy: false };
+  }
+  function renderResv() {
+    const box = $('resvBox');
+    if (!resv) { box.replaceChildren(); return; }
+    const r = resv;
+    const errOf = (k) => r.err[k] ? h('span', { class: 'err', id: 'e-' + k }, r.err[k]) : null;
+    const inp = (id, label, type, key, extra) => h('div', { class: 'field' }, h('label', { for: id }, label),
+      h('input', Object.assign({ id, type, value: r[key], 'aria-invalid': r.err[key] ? 'true' : null, 'aria-describedby': r.err[key] ? 'e-' + key : null, oninput: (e) => { r[key] = e.target.value; } }, extra || {})), errOf(key));
+    const sel = (id, label, key, opts) => h('div', { class: 'field' }, h('label', { for: id }, label),
+      h('select', { id, onchange: (e) => { r[key] = e.target.value; } }, opts.map(o => { const v = Array.isArray(o) ? o[0] : o; return h('option', { value: v, selected: v === r[key] ? true : null }, Array.isArray(o) ? o[1] : o); })), errOf(key));
+    const kol = (cache.koleksi || []).map(d => [d.id, (d.data.kode || d.id) + ' · ' + (d.data.nama || '') + ' · ' + rp(d.data.harga)]);
+    box.replaceChildren(h('form', { class: 'card', novalidate: true, style: 'padding:20px;display:flex;flex-direction:column;gap:14px', onsubmit: (e) => { e.preventDefault(); submitResv(); } },
+      h('div', null, h('div', { class: 'eyebrow', style: 'color:var(--gold-text)' }, 'Input admin / CS'),
+        h('h2', { style: 'margin:0;font-size:26px;font-weight:600' }, 'Reservasi baru'),
+        h('p', { style: 'margin:4px 0 0;color:var(--muted)' }, 'Untuk reservasi lewat WhatsApp, telepon, atau datang langsung. Sekali simpan: pelanggan, reservasi, invoice, dan jadwal pengingat.')),
+      r.msg ? h('div', { class: 'note ' + r.msg.kind, role: 'alert' }, r.msg.text) : null,
+      h('div', { class: 'grid2' },
+        inp('rv-nama', 'Nama lengkap', 'text', 'nama', { autocomplete: 'name' }),
+        inp('rv-email', 'Email', 'email', 'email', { autocomplete: 'email', inputmode: 'email', placeholder: 'nama@gmail.com' }),
+        inp('rv-wa', 'Nomor WhatsApp', 'tel', 'wa', { autocomplete: 'tel', inputmode: 'tel', placeholder: '0812 3456 7890' })),
+      h('div', { class: 'grid2' },
+        sel('rv-kol', 'Koleksi', 'koleksi', kol),
+        sel('rv-uk', 'Ukuran', 'ukuran', ['S', 'M', 'L', 'XL']),
+        inp('rv-fit', 'Jadwal fitting (opsional)', 'datetime-local', 'fitting'),
+        inp('rv-acara', 'Tanggal acara', 'date', 'acara'),
+        sel('rv-bayar', 'Cara bayar DP', 'bayar', ['Transfer bank', 'QRIS', 'Tunai saat fitting'])),
+      h('fieldset', { class: 'plain' }, h('legend', null, 'Kirim invoice dan pengingat lewat'),
+        h('label', { class: 'check' }, h('input', { type: 'checkbox', id: 'rv-waon', checked: r.waOn ? true : null, onchange: (e) => { r.waOn = e.target.checked; } }), 'WhatsApp'),
+        h('label', { class: 'check' }, h('input', { type: 'checkbox', id: 'rv-emon', checked: r.emailOn ? true : null, onchange: (e) => { r.emailOn = e.target.checked; } }), 'Email'),
+        errOf('kanal')),
+      h('div', { class: 'row' },
+        h('button', { class: 'btn primary', type: 'submit', disabled: r.busy ? true : null }, r.busy ? 'Menyimpan…' : 'Simpan reservasi'),
+        h('button', { class: 'btn', type: 'button', onclick: () => { resv = null; renderResv(); } }, 'Batal'))));
+  }
+  async function submitResv() {
+    const r = resv; if (!r || r.busy) return;
+    const err = {};
+    const nama = r.nama.trim(), email = r.email.trim(), wa = normWa(r.wa);
+    if (nama.length < 2) err.nama = 'Isi nama lengkap.';
+    if (!/^[^\s@]+@[^\s@]+\.[^\s@]{2,}$/.test(email)) err.email = 'Email belum benar, misalnya nama@gmail.com.';
+    if (!wa) err.wa = 'Nomor WhatsApp harus diawali 08 atau +62, 10–13 angka.';
+    if (!r.koleksi) err.koleksi = 'Pilih koleksi.';
+    if (!/^\d{4}-\d{2}-\d{2}$/.test(r.acara)) err.acara = 'Isi tanggal acara.';
+    if (r.fitting && !/^\d{4}-\d{2}-\d{2}T\d{2}:\d{2}/.test(r.fitting)) err.fitting = 'Jadwal fitting tidak dikenali.';
+    if (!r.waOn && !r.emailOn) err.kanal = 'Pilih minimal satu: WhatsApp atau email.';
+    r.err = err;
+    if (Object.keys(err).length) { r.msg = { kind: 'err', text: 'Periksa kembali isian yang ditandai.' }; renderResv(); return; }
+    r.busy = true; r.msg = null; renderResv();
+    try {
+      const now = new Date(), today = isoDate(now), ym = today.slice(0, 7);
+      let max = 0; (cache.reservasi || []).forEach(d => { const m = /-(\d{4})$/.exec(d.id); if (m) max = Math.max(max, +m[1]); });
+      const no = pad4(max + 1), rsv = 'RSV-' + ym + '-' + no, inv = 'INV-' + ym + '-' + no;
+      if ((await db.collection('reservasi').doc(rsv).get()).exists) throw { code: 'conflict' };
+      const kd = (cache.koleksi || []).find(d => d.id === r.koleksi);
+      const harga = kd && typeof kd.data.harga === 'number' ? kd.data.harga : 0;
+      const st = (cache.pengaturan || []).find(d => d.id === 'studio');
+      const dpPct = st && typeof st.data.dp_persen === 'number' ? st.data.dp_persen : 50;
+      const dp = Math.round(harga * dpPct / 100);
+      const slug = nama.toLowerCase().normalize('NFD').replace(/[̀-ͯ]/g, '').replace(/[^a-z0-9]+/g, '-').replace(/^-+|-+$/g, '') || 'pelanggan';
+      const pid = slug + '-' + wa.slice(-4);
+      const ambil = isoDate(dayPlus(r.acara, -1)), kembali = isoDate(dayPlus(r.acara, 1));
+      const kanal = [r.waOn ? 'WhatsApp' : '', r.emailOn ? 'Email' : ''].filter(Boolean);
+      const namaKol = kd ? kd.data.nama : r.koleksi;
+      await db.collection('pelanggan').doc(pid).set({ nama, email, whatsapp: wa, login: 'Google', pengingat: kanal, dibuat: isoDT(now), contoh: false });
+      await db.collection('reservasi').doc(rsv).set({ pelanggan: pid, koleksi: r.koleksi, ukuran: r.ukuran, fitting: r.fitting || null, ambil, acara: r.acara, kembali, bayar: r.bayar, status: 'Menunggu DP', invoice: inv, dibuat: isoDT(now), contoh: false });
+      await db.collection('invoice').doc(inv).set({ reservasi: rsv, pelanggan: pid, item: [{ keterangan: 'Sewa ' + namaKol + ' (' + r.ukuran + ')', jumlah: 1, harga }], total: harga, dp, dibayar: 0, sisa: harga, status: 'Menunggu DP', terbit: today, batas_dp: isoDate(dayPlus(today, 2)) + 'T23:59', contoh: false });
+      const rem = [['Kirim invoice & konfirmasi', isoDT(now), isoDT(now)], ['Batas bayar DP', isoDT(dayPlus(today, 2, 10, 0)), isoDate(dayPlus(today, 2)) + 'T23:59']];
+      if (r.fitting) rem.push(['H-1 fitting', isoDT(dayPlus(r.fitting.slice(0, 10), -1, 10, 0)), r.fitting.slice(0, 16)]);
+      rem.push(['H-1 pengambilan', isoDT(dayPlus(r.acara, -2, 10, 0)), ambil]);
+      rem.push(['Hari pengembalian', isoDT(dayPlus(r.acara, 1, 9, 0)), kembali]);
+      for (let i = 0; i < rem.length; i++) {
+        await db.collection('pengingat').doc('PNG-' + ym + '-' + no + '-' + (i + 1)).set({ kirim: rem[i][1], pelanggan: pid, jenis: rem[i][0], jadwal: rem[i][2], kanal: kanal.join(' + '), status: 'Terjadwal', reservasi: rsv, invoice: inv, contoh: false });
+      }
+      const aref = db.collection('aktivitas').doc(today), asnap = await aref.get();
+      const old = asnap.exists ? asnap.data() : { tanggal: today, contoh: false };
+      const entri = Array.isArray(old.entri) ? old.entri.slice() : [];
+      entri.push({ waktu: pad(now.getHours()) + '.' + pad(now.getMinutes()), agen: 'admin', teks: 'Reservasi ' + rsv + ' dicatat untuk ' + nama + ' (' + namaKol + ', ' + r.ukuran + '). Invoice ' + inv + ' dan ' + rem.length + ' pengingat menunggu dikirim Agen CS.' });
+      await aref.set(Object.assign({}, old, { entri }));
+      resv = null; renderResv();
+      if (location.hash !== '#reservasi') location.hash = 'reservasi'; else route();
+      setStatus('ok', 'Reservasi ' + rsv + ' tersimpan bersama invoice ' + inv + ' dan ' + rem.length + ' pengingat. Agen CS mengirimnya sesuai jadwal.');
+    } catch (e) {
+      r.busy = false;
+      r.msg = { kind: 'err', text: e && e.code === 'conflict' ? 'Nomor reservasi baru saja dipakai. Tekan Simpan sekali lagi.' : explain(e) };
+      renderResv();
+    }
+  }
+  const pad4 = (n) => String(n).padStart(4, '0');
+
   function route() {
     const hsh = (location.hash || '').slice(1).replace(/-/g, '_');
     const next = byId[hsh] ? hsh : 'koleksi';
@@ -417,6 +524,7 @@ footer.foot .wrap { padding-block: 0 32px; color: var(--muted); font-size: 15px;
   $('addBtn').addEventListener('click', () => { isNew = true; selected = null; editorMsg = null; confirmDelete = false; renderTable(); renderEditor(); const f = $('f__id'); if (f) f.focus(); });
   $('purgeBtn').addEventListener('click', () => { purgeAsk = true; renderPurge(); });
   $('exportBtn').addEventListener('click', exportAll);
+  $('resvBtn').addEventListener('click', () => { resv = resvDefaults(); renderResv(); const f = $('rv-nama'); if (f) { f.scrollIntoView({ block: 'center' }); f.focus(); } });
   route(); renderHeader();
 
   (async function start() {

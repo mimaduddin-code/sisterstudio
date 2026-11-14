@@ -191,10 +191,10 @@ a{color:#730020}a:hover{color:#4e0014}
 </div>
 <fieldset style="margin: 0; padding: 0; border: 0; display: flex; flex-wrap: wrap; gap: 4px 16px;">
 <legend style="font-weight: 600; font-size: 15px; padding: 0; margin-bottom: 6px;">Kondisi</legend>
-<label style="display: flex; align-items: center; gap: 6px; min-height: 36px;"><input type="radio" name="kondisi" style="width: 18px; height: 18px; accent-color: #730020;"> Baik, siap disewa</label>
-<label style="display: flex; align-items: center; gap: 6px; min-height: 36px;"><input type="radio" name="kondisi" style="width: 18px; height: 18px; accent-color: #730020;"> Laundry</label>
-<label style="display: flex; align-items: center; gap: 6px; min-height: 36px;"><input type="radio" name="kondisi" checked style="width: 18px; height: 18px; accent-color: #730020;"> Perbaikan</label>
-<label style="display: flex; align-items: center; gap: 6px; min-height: 36px;"><input type="radio" name="kondisi" style="width: 18px; height: 18px; accent-color: #730020;"> Tidak layak sewa</label>
+<label style="display: flex; align-items: center; gap: 6px; min-height: 36px;"><input checked="{{ff.rd_kondisi_0}}" onChange="{{fh.rd_kondisi_0}}" type="radio" name="kondisi" style="width: 18px; height: 18px; accent-color: #730020;"> Baik, siap disewa</label>
+<label style="display: flex; align-items: center; gap: 6px; min-height: 36px;"><input checked="{{ff.rd_kondisi_1}}" onChange="{{fh.rd_kondisi_1}}" type="radio" name="kondisi" style="width: 18px; height: 18px; accent-color: #730020;"> Laundry</label>
+<label style="display: flex; align-items: center; gap: 6px; min-height: 36px;"><input checked="{{ff.rd_kondisi_2}}" onChange="{{fh.rd_kondisi_2}}" type="radio" name="kondisi" style="width: 18px; height: 18px; accent-color: #730020;"> Perbaikan</label>
+<label style="display: flex; align-items: center; gap: 6px; min-height: 36px;"><input checked="{{ff.rd_kondisi_3}}" onChange="{{fh.rd_kondisi_3}}" type="radio" name="kondisi" style="width: 18px; height: 18px; accent-color: #730020;"> Tidak layak sewa</label>
 </fieldset>
 <label style="display: flex; flex-direction: column; gap: 6px; font-weight: 600; font-size: 15px;">Catatan
 <textarea rows="2" style="padding: 10px 12px; border: 1px solid #9a7a5a; border-radius: 2px; background: #fffaf3; font-family: inherit; font-size: 16px; line-height: 24px; font-weight: 400; resize: vertical;">Payet lepas di lengan kiri, sekitar 6 butir. Dikirim ke penjahit.</textarea>
@@ -220,16 +220,16 @@ a{color:#730020}a:hover{color:#4e0014}
 <select style="min-width: 0; min-height: 44px; padding: 0 12px; border: 1px solid #9a7a5a; border-radius: 2px; background: #fffaf3; font-family: inherit; font-size: 16px;"><option>M</option><option>S</option><option>L</option><option>XL</option></select>
 </label>
 <label style="flex: 1 1 0; display: flex; flex-direction: column; gap: 6px; font-weight: 600; font-size: 15px;">Jumlah stel
-<input type="number" min="1" value="1" style="min-width: 0; min-height: 44px; padding: 0 12px; border: 1px solid #9a7a5a; border-radius: 2px; background: #fffaf3; font-family: inherit; font-size: 16px;">
+<input onChange="{{fh.v1}}" type="number" min="1" value="{{ff.v1}}" style="min-width: 0; min-height: 44px; padding: 0 12px; border: 1px solid #9a7a5a; border-radius: 2px; background: #fffaf3; font-family: inherit; font-size: 16px;">
 </label>
 </div>
 <label style="display: flex; flex-direction: column; gap: 6px; font-weight: 600; font-size: 15px;">Tanggal masuk
-<input type="date" value="2026-11-14" style="min-height: 44px; padding: 0 12px; border: 1px solid #9a7a5a; border-radius: 2px; background: #fffaf3; font-family: inherit; font-size: 16px; box-sizing: border-box;">
+<input onChange="{{fh.v2}}" type="date" value="{{ff.v2}}" style="min-height: 44px; padding: 0 12px; border: 1px solid #9a7a5a; border-radius: 2px; background: #fffaf3; font-family: inherit; font-size: 16px; box-sizing: border-box;">
 </label>
 <label style="display: flex; flex-direction: column; gap: 6px; font-weight: 600; font-size: 15px;">Biaya pembelian / jahit
 <input type="text" inputmode="numeric" placeholder="Rp" style="min-height: 44px; padding: 0 12px; border: 1px solid #9a7a5a; border-radius: 2px; background: #fffaf3; font-family: inherit; font-size: 16px;">
 </label>
-<label style="display: flex; align-items: flex-start; gap: 8px; font-size: 16px;"><input type="checkbox" checked style="width: 18px; height: 18px; margin-top: 4px; accent-color: #730020;"> Catat biaya sebagai kas keluar di Agen Kasir</label>
+<label style="display: flex; align-items: flex-start; gap: 8px; font-size: 16px;"><input checked="{{ff.cb1}}" onChange="{{fh.cb1}}" type="checkbox" style="width: 18px; height: 18px; margin-top: 4px; accent-color: #730020;"> Catat biaya sebagai kas keluar di Agen Kasir</label>
 <button type="button" class="btn-p" style="min-height: 44px; border: 0; border-radius: 2px; background: #730020; color: #fdf3e7; font-family: inherit; font-size: 16px; font-weight: 600; cursor: pointer;">Tambah ke stok</button>
 </form>
 </div>
@@ -242,7 +242,7 @@ class Component extends DCLogic {
     super(props);
     this.state = { sel: 2 };
   }
-  renderVals() {
+  _rv() {
     const P = [
       { code: 'Koleksi 008', name: 'Srikandi Kemuning', img: '../assets/foto/koleksi-008-srikandi-kemuning.jpg', sizes: '1 · 2 · 2 · 1', total: 6, avail: 4, out: 1, care: 1,
         hist: [
@@ -310,6 +310,24 @@ class Component extends DCLogic {
         { item: 'Srikandi Kemuning (XL)', note: 'Kancing kedua dijahit ulang, lalu laundry', status: 'Laundry', sb: '#fbe7c0', sf: '#7a4a00', ready: 'Rab, 18 Nov' }
       ]
     };
+  }
+
+  _ff() {
+    const D = {"rd_kondisi_0": false, "rd_kondisi_1": false, "rd_kondisi_2": true, "rd_kondisi_3": false, "v1": "1", "v2": "2026-11-14", "cb1": true};
+    const R = {"kondisi": ["rd_kondisi_0", "rd_kondisi_1", "rd_kondisi_2", "rd_kondisi_3"]};
+    const cur = Object.assign({}, D, (this.state && this.state.__f) || {});
+    const put = (patch) => this.setState((st) => ({ __f: Object.assign({}, D, (st && st.__f) || {}, patch) }));
+    const ff = {}, fh = {};
+    Object.keys(D).forEach((k) => {
+      ff[k] = cur[k];
+      if (k.indexOf('cb') === 0) fh[k] = (e) => put({ [k]: !!(e && e.target && e.target.checked) });
+      else if (k.indexOf('rd_') === 0) { const g = k.slice(3, k.lastIndexOf('_')); fh[k] = () => { const patch = {}; R[g].forEach((x) => { patch[x] = x === k; }); put(patch); }; }
+      else fh[k] = (e) => put({ [k]: e && e.target ? e.target.value : '' });
+    });
+    return { ff, fh };
+  }
+  renderVals() {
+    return Object.assign({}, this._rv(), this._ff());
   }
 }
 </script>

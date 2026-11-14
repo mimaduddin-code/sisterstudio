@@ -127,8 +127,8 @@ a{color:#730020}a:hover{color:#4e0014}
 <h2 id="catat" style="margin: 0; font-size: 22px; line-height: 30px; font-weight: 600; color: #4e0014;">Catat transaksi</h2>
 <fieldset style="margin: 0; padding: 0; border: 0; display: flex; gap: 16px;">
 <legend style="font-weight: 600; font-size: 15px; padding: 0; margin-bottom: 6px;">Jenis</legend>
-<label style="display: flex; align-items: center; gap: 6px; min-height: 36px;"><input type="radio" name="jenis" checked style="width: 18px; height: 18px; accent-color: #730020;"> Kas masuk</label>
-<label style="display: flex; align-items: center; gap: 6px; min-height: 36px;"><input type="radio" name="jenis" style="width: 18px; height: 18px; accent-color: #730020;"> Kas keluar</label>
+<label style="display: flex; align-items: center; gap: 6px; min-height: 36px;"><input checked="{{ff.rd_jenis_0}}" onChange="{{fh.rd_jenis_0}}" type="radio" name="jenis" style="width: 18px; height: 18px; accent-color: #730020;"> Kas masuk</label>
+<label style="display: flex; align-items: center; gap: 6px; min-height: 36px;"><input checked="{{ff.rd_jenis_1}}" onChange="{{fh.rd_jenis_1}}" type="radio" name="jenis" style="width: 18px; height: 18px; accent-color: #730020;"> Kas keluar</label>
 </fieldset>
 <label style="display: flex; flex-direction: column; gap: 6px; font-weight: 600; font-size: 15px;">Kategori
 <select style="min-height: 44px; padding: 0 12px; border: 1px solid #9a7a5a; border-radius: 2px; background: #fffaf3; font-family: inherit; font-size: 16px;">
@@ -208,7 +208,7 @@ class Component extends DCLogic {
     super(props);
     this.state = { f: 'Semua' };
   }
-  renderVals() {
+  _rv() {
     const S = {
       lunas: { sb: '#dcefee', sf: '#155e63', status: 'Lunas', action: 'Lihat' },
       dp: { sb: '#fbe7c0', sf: '#7a4a00', status: 'DP diterima', action: 'Catat pelunasan' },
@@ -270,6 +270,24 @@ class Component extends DCLogic {
         { cat: 'Operasional', v: 'Rp150.000' }
       ]
     };
+  }
+
+  _ff() {
+    const D = {"rd_jenis_0": true, "rd_jenis_1": false};
+    const R = {"jenis": ["rd_jenis_0", "rd_jenis_1"]};
+    const cur = Object.assign({}, D, (this.state && this.state.__f) || {});
+    const put = (patch) => this.setState((st) => ({ __f: Object.assign({}, D, (st && st.__f) || {}, patch) }));
+    const ff = {}, fh = {};
+    Object.keys(D).forEach((k) => {
+      ff[k] = cur[k];
+      if (k.indexOf('cb') === 0) fh[k] = (e) => put({ [k]: !!(e && e.target && e.target.checked) });
+      else if (k.indexOf('rd_') === 0) { const g = k.slice(3, k.lastIndexOf('_')); fh[k] = () => { const patch = {}; R[g].forEach((x) => { patch[x] = x === k; }); put(patch); }; }
+      else fh[k] = (e) => put({ [k]: e && e.target ? e.target.value : '' });
+    });
+    return { ff, fh };
+  }
+  renderVals() {
+    return Object.assign({}, this._rv(), this._ff());
   }
 }
 </script>

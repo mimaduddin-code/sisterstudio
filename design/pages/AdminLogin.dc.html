@@ -42,12 +42,12 @@ a{color:#730020}a:hover{color:#4e0014}
 </label>
 <label style="display: flex; flex-direction: column; gap: 6px; font-weight: 600; font-size: 16px;">Kata sandi
 <span style="display: flex; gap: 8px;">
-<input type="{{pwType}}" autocomplete="current-password" value="contohsandi" style="flex: 1 1 auto; min-width: 0; min-height: 48px; padding: 0 14px; border: 1px solid #9a7a5a; border-radius: 2px; background: #fffaf3; font-family: inherit; font-size: 17px; color: #1f0a0a;">
+<input onChange="{{fh.v1}}" type="{{pwType}}" autocomplete="current-password" value="{{ff.v1}}" style="flex: 1 1 auto; min-width: 0; min-height: 48px; padding: 0 14px; border: 1px solid #9a7a5a; border-radius: 2px; background: #fffaf3; font-family: inherit; font-size: 17px; color: #1f0a0a;">
 <button type="button" class="btn-s" onClick="{{togglePw}}" aria-pressed="{{showPw}}" style="min-width: 88px; min-height: 48px; border: 1px solid #9a7a5a; border-radius: 2px; background: #fffaf3; color: #730020; font-family: inherit; font-size: 15px; font-weight: 600; cursor: pointer;">{{pwLabel}}</button>
 </span>
 </label>
 <div style="display: flex; flex-wrap: wrap; align-items: center; justify-content: space-between; gap: 8px; font-size: 16px;">
-<label style="display: flex; align-items: center; gap: 8px; min-height: 44px;"><input type="checkbox" checked style="width: 20px; height: 20px; accent-color: #730020;"> Ingat perangkat ini</label>
+<label style="display: flex; align-items: center; gap: 8px; min-height: 44px;"><input checked="{{ff.cb1}}" onChange="{{fh.cb1}}" type="checkbox" style="width: 20px; height: 20px; accent-color: #730020;"> Ingat perangkat ini</label>
 <a href="#" style="font-weight: 600;">Lupa kata sandi?</a>
 </div>
 <a class="btn-p" href="AdminDashboard.dc.html" style="display: flex; align-items: center; justify-content: center; min-height: 52px; background: #730020; color: #fdf3e7; border-radius: 2px; font-size: 19px; font-weight: 600; text-decoration: none;">Masuk</a>
@@ -75,7 +75,7 @@ class Component extends DCLogic {
     super(props);
     this.state = { showPw: false };
   }
-  renderVals() {
+  _rv() {
     const show = this.state.showPw;
     return {
       showPw: show,
@@ -83,6 +83,24 @@ class Component extends DCLogic {
       pwLabel: show ? 'Sembunyi' : 'Lihat',
       togglePw: () => this.setState({ showPw: !show })
     };
+  }
+
+  _ff() {
+    const D = {"v1": "contohsandi", "cb1": true};
+    const R = {};
+    const cur = Object.assign({}, D, (this.state && this.state.__f) || {});
+    const put = (patch) => this.setState((st) => ({ __f: Object.assign({}, D, (st && st.__f) || {}, patch) }));
+    const ff = {}, fh = {};
+    Object.keys(D).forEach((k) => {
+      ff[k] = cur[k];
+      if (k.indexOf('cb') === 0) fh[k] = (e) => put({ [k]: !!(e && e.target && e.target.checked) });
+      else if (k.indexOf('rd_') === 0) { const g = k.slice(3, k.lastIndexOf('_')); fh[k] = () => { const patch = {}; R[g].forEach((x) => { patch[x] = x === k; }); put(patch); }; }
+      else fh[k] = (e) => put({ [k]: e && e.target ? e.target.value : '' });
+    });
+    return { ff, fh };
+  }
+  renderVals() {
+    return Object.assign({}, this._rv(), this._ff());
   }
 }
 </script>

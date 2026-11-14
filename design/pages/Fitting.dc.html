@@ -39,8 +39,8 @@ a{color:#730020}a:hover{color:#4e0014}
 </nav>
 <sc-if value="{{loggedIn}}" hint-placeholder-val="{{false}}">
 <a href="AkunSaya.dc.html" style="display: inline-flex; align-items: center; gap: 10px; min-height: 44px; text-decoration: none; color: #1f0a0a; font-size: 16px;">
-<span aria-hidden="true" style="width: 36px; height: 36px; border-radius: 9999px; background: #f6dfdc; color: #730020; display: inline-flex; align-items: center; justify-content: center; font-weight: 700;">N</span>
-<span>[nama@gmail.com]</span>
+<span aria-hidden="true" style="width: 36px; height: 36px; border-radius: 9999px; background: #f6dfdc; color: #730020; display: inline-flex; align-items: center; justify-content: center; font-weight: 700;">{{initial}}</span>
+<span>{{account}}</span>
 </a>
 </sc-if>
 <sc-if value="{{loggedOut}}" hint-placeholder-val="{{true}}">
@@ -109,7 +109,7 @@ Masuk dengan Google
 </fieldset>
 <div style="display: flex; flex-wrap: wrap; gap: 16px;">
 <label style="flex: 1 1 220px; display: flex; flex-direction: column; gap: 6px; font-weight: 600; font-size: 16px;">Tanggal acara
-<input type="date" value="2026-12-05" style="min-height: 44px; padding: 0 12px; border: 1px solid #9a7a5a; border-radius: 2px; background: #fffaf3; font-family: inherit; font-size: 17px; color: #1f0a0a; box-sizing: border-box;">
+<input type="date" value="{{fm.acara}}" onChange="{{fh.acara}}" style="min-height: 44px; padding: 0 12px; border: 1px solid #9a7a5a; border-radius: 2px; background: #fffaf3; font-family: inherit; font-size: 17px; color: #1f0a0a; box-sizing: border-box;">
 </label>
 <label style="flex: 1 1 220px; display: flex; flex-direction: column; gap: 6px; font-weight: 600; font-size: 16px;">Momen
 <select style="min-height: 44px; padding: 0 12px; border: 1px solid #9a7a5a; border-radius: 2px; background: #fffaf3; font-family: inherit; font-size: 17px; color: #1f0a0a;">
@@ -154,30 +154,46 @@ Masuk dengan Google
 
 <sc-if value="{{s4}}" hint-placeholder-val="{{false}}">
 <div style="display: flex; flex-direction: column; gap: 20px;">
+<div style="display: flex; flex-direction: column; gap: 4px;">
 <h2 style="margin: 0; font-size: 30px; line-height: 38px; font-weight: 600; color: #4e0014;">Konfirmasi data</h2>
-<div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(220px, 1fr)); gap: 16px;">
-<label style="display: flex; flex-direction: column; gap: 6px; font-weight: 600; font-size: 16px;">Nama (dari Google)
-<input type="text" value="[Nama lengkap]" style="min-height: 44px; padding: 0 12px; border: 1px solid #9a7a5a; border-radius: 2px; background: #fffaf3; font-family: inherit; font-size: 17px; color: #1f0a0a;">
-</label>
-<label style="display: flex; flex-direction: column; gap: 6px; font-weight: 600; font-size: 16px;">Email
-<input type="email" value="[nama@gmail.com]" readonly style="min-height: 44px; padding: 0 12px; border: 1px solid #e6c9a5; border-radius: 2px; background: #fbe9d7; font-family: inherit; font-size: 17px; color: #6a4a44;">
-</label>
-<label style="display: flex; flex-direction: column; gap: 6px; font-weight: 600; font-size: 16px;">Nomor WhatsApp
-<input type="tel" placeholder="08xx xxxx xxxx" style="min-height: 44px; padding: 0 12px; border: 1px solid #9a7a5a; border-radius: 2px; background: #fffaf3; font-family: inherit; font-size: 17px; color: #1f0a0a;">
-</label>
+<p style="margin: 0; font-size: 16px; line-height: 24px; color: #6a4a44;">Invoice dikirim ke email ini dan pengingat ke nomor WhatsApp ini. Pastikan keduanya benar.</p>
 </div>
-<fieldset style="margin: 0; padding: 16px 20px; border: 1px solid #e6c9a5; border-radius: 12px; display: flex; flex-direction: column; gap: 8px;">
+<sc-if value="{{fe.any}}" hint-placeholder-val="{{false}}">
+<div role="alert" style="padding: 12px 16px; border-radius: 12px; background: #fbe0da; color: #a11d12; font-weight: 600;">Periksa kembali isian yang ditandai merah.</div>
+</sc-if>
+<div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(220px, 1fr)); gap: 16px;">
+<div style="display: flex; flex-direction: column; gap: 6px;">
+<label for="f-nama" style="font-weight: 600; font-size: 16px;">Nama lengkap</label>
+<input id="f-nama" type="text" autocomplete="name" placeholder="Nama sesuai identitas" value="{{fm.nama}}" onChange="{{fh.nama}}" aria-invalid="{{fe.namaBad}}" aria-describedby="e-nama" style="min-height: 44px; padding: 0 12px; border-radius: 2px; background: #fffaf3; font-family: inherit; font-size: 17px; color: #1f0a0a; border: {{fe.namaBorder}};">
+<span id="e-nama" style="font-size: 14px; line-height: 20px; color: #a11d12;">{{fe.nama}}</span>
+</div>
+<div style="display: flex; flex-direction: column; gap: 6px;">
+<label for="f-email" style="font-weight: 600; font-size: 16px;">Email</label>
+<input id="f-email" type="email" inputmode="email" autocomplete="email" placeholder="nama@gmail.com" value="{{fm.email}}" onChange="{{fh.email}}" aria-invalid="{{fe.emailBad}}" aria-describedby="e-email" style="min-height: 44px; padding: 0 12px; border-radius: 2px; background: #fffaf3; font-family: inherit; font-size: 17px; color: #1f0a0a; border: {{fe.emailBorder}};">
+<span id="e-email" style="font-size: 14px; line-height: 20px; color: {{fe.emailColor}};">{{fe.emailMsg}}</span>
+</div>
+<div style="display: flex; flex-direction: column; gap: 6px;">
+<label for="f-wa" style="font-weight: 600; font-size: 16px;">Nomor WhatsApp</label>
+<input id="f-wa" type="tel" inputmode="tel" autocomplete="tel" placeholder="0812 3456 7890" value="{{fm.wa}}" onChange="{{fh.wa}}" aria-invalid="{{fe.waBad}}" aria-describedby="e-wa" style="min-height: 44px; padding: 0 12px; border-radius: 2px; background: #fffaf3; font-family: inherit; font-size: 17px; color: #1f0a0a; border: {{fe.waBorder}};">
+<span id="e-wa" style="font-size: 14px; line-height: 20px; color: {{fe.waColor}};">{{fe.waMsg}}</span>
+</div>
+</div>
+<fieldset aria-describedby="e-chan" style="margin: 0; padding: 16px 20px; border: 1px solid #e6c9a5; border-radius: 12px; display: flex; flex-direction: column; gap: 8px;">
 <legend style="font-weight: 600; font-size: 16px; padding: 0 6px;">Kirim pengingat lewat</legend>
-<label style="display: flex; align-items: center; gap: 10px; min-height: 36px;"><input type="checkbox" checked style="width: 20px; height: 20px; accent-color: #730020;"> WhatsApp (H-1 fitting, pengambilan, dan pengembalian)</label>
-<label style="display: flex; align-items: center; gap: 10px; min-height: 36px;"><input type="checkbox" checked style="width: 20px; height: 20px; accent-color: #730020;"> Email</label>
+<label style="display: flex; align-items: center; gap: 10px; min-height: 36px;"><input type="checkbox" checked="{{fm.waOn}}" onChange="{{fh.waOn}}" style="width: 20px; height: 20px; accent-color: #730020;"> WhatsApp (H-1 fitting, pengambilan, dan pengembalian)</label>
+<label style="display: flex; align-items: center; gap: 10px; min-height: 36px;"><input type="checkbox" checked="{{fm.emailOn}}" onChange="{{fh.emailOn}}" style="width: 20px; height: 20px; accent-color: #730020;"> Email</label>
+<span id="e-chan" style="font-size: 14px; line-height: 20px; color: #a11d12;">{{fe.chan}}</span>
 </fieldset>
 <fieldset style="margin: 0; padding: 16px 20px; border: 1px solid #e6c9a5; border-radius: 12px; display: flex; flex-direction: column; gap: 8px;">
 <legend style="font-weight: 600; font-size: 16px; padding: 0 6px;">Cara bayar DP</legend>
-<label style="display: flex; align-items: center; gap: 10px; min-height: 36px;"><input type="radio" name="bayar" checked style="width: 20px; height: 20px; accent-color: #730020;"> Transfer bank</label>
-<label style="display: flex; align-items: center; gap: 10px; min-height: 36px;"><input type="radio" name="bayar" style="width: 20px; height: 20px; accent-color: #730020;"> QRIS</label>
-<label style="display: flex; align-items: center; gap: 10px; min-height: 36px;"><input type="radio" name="bayar" style="width: 20px; height: 20px; accent-color: #730020;"> Tunai saat fitting</label>
+<sc-for list="{{pays}}" as="py" hint-placeholder-count="3">
+<label style="display: flex; align-items: center; gap: 10px; min-height: 36px;"><input type="radio" name="bayar" checked="{{py.on}}" onChange="{{py.pick}}" style="width: 20px; height: 20px; accent-color: #730020;"> {{py.label}}</label>
+</sc-for>
 </fieldset>
-<label style="display: flex; align-items: flex-start; gap: 10px;"><input type="checkbox" style="width: 20px; height: 20px; margin-top: 4px; accent-color: #730020;"> <span>Saya sudah membaca <a href="Kontak.dc.html">syarat &amp; ketentuan sewa</a>, termasuk denda keterlambatan dan kerusakan.</span></label>
+<div style="display: flex; flex-direction: column; gap: 4px;">
+<label style="display: flex; align-items: flex-start; gap: 10px;"><input type="checkbox" checked="{{fm.agree}}" onChange="{{fh.agree}}" aria-describedby="e-agree" style="width: 20px; height: 20px; accent-color: #730020; margin-top: 4px;"> <span>Saya sudah membaca <a href="Kontak.dc.html">syarat &amp; ketentuan sewa</a>, termasuk denda keterlambatan dan kerusakan.</span></label>
+<span id="e-agree" style="font-size: 14px; line-height: 20px; color: #a11d12;">{{fe.agree}}</span>
+</div>
 </div>
 </sc-if>
 
@@ -189,7 +205,7 @@ Masuk dengan Google
 </span>
 <div style="display: flex; flex-direction: column;">
 <h2 style="margin: 0; font-size: 30px; line-height: 38px; font-weight: 600; color: #4e0014;">Reservasi tercatat</h2>
-<span style="color: #6a4a44;">Invoice INV-2026-11-0042 sudah dikirim ke [nama@gmail.com].</span>
+<span style="color: #6a4a44;">{{sentLine}}</span>
 </div>
 </div>
 <div style="display: flex; flex-wrap: wrap; align-items: center; justify-content: space-between; gap: 12px; padding: 16px 20px; background: #fbe7c0; border-radius: 12px; color: #7a4a00;">
@@ -199,10 +215,10 @@ Masuk dengan Google
 <div style="display: flex; flex-direction: column; gap: 8px;">
 <h3 style="margin: 0; font-size: 22px; line-height: 30px; font-weight: 600; color: #4e0014;">Pengingat yang sudah dijadwalkan</h3>
 <ul style="list-style: none; margin: 0; padding: 0; display: flex; flex-direction: column;">
-<li style="display: flex; flex-wrap: wrap; justify-content: space-between; gap: 8px; padding: 12px 0; border-bottom: 1px solid #e6c9a5;"><span>Pengingat bayar DP</span><span style="color: #6a4a44;">Sen, 16 Nov · 10.00 · WhatsApp &amp; email</span></li>
-<li style="display: flex; flex-wrap: wrap; justify-content: space-between; gap: 8px; padding: 12px 0; border-bottom: 1px solid #e6c9a5;"><span>H-1 fitting</span><span style="color: #6a4a44;">{{reminderFit}} · WhatsApp &amp; email</span></li>
-<li style="display: flex; flex-wrap: wrap; justify-content: space-between; gap: 8px; padding: 12px 0; border-bottom: 1px solid #e6c9a5;"><span>H-1 pengambilan kebaya</span><span style="color: #6a4a44;">Kam, 3 Des · 10.00 · WhatsApp</span></li>
-<li style="display: flex; flex-wrap: wrap; justify-content: space-between; gap: 8px; padding: 12px 0;"><span>Hari pengembalian</span><span style="color: #6a4a44;">Min, 6 Des · 09.00 · WhatsApp</span></li>
+<li style="display: flex; flex-wrap: wrap; justify-content: space-between; gap: 8px; padding: 12px 0; border-bottom: 1px solid #e6c9a5;"><span>Pengingat bayar DP</span><span style="color: #6a4a44;">Sen, 16 Nov · 10.00 · {{chan}}</span></li>
+<li style="display: flex; flex-wrap: wrap; justify-content: space-between; gap: 8px; padding: 12px 0; border-bottom: 1px solid #e6c9a5;"><span>H-1 fitting</span><span style="color: #6a4a44;">{{reminderFit}} · {{chan}}</span></li>
+<li style="display: flex; flex-wrap: wrap; justify-content: space-between; gap: 8px; padding: 12px 0; border-bottom: 1px solid #e6c9a5;"><span>H-1 pengambilan kebaya</span><span style="color: #6a4a44;">{{h1Ambil}} · 10.00 · {{chan}}</span></li>
+<li style="display: flex; flex-wrap: wrap; justify-content: space-between; gap: 8px; padding: 12px 0;"><span>Hari pengembalian</span><span style="color: #6a4a44;">{{kembaliLabel}} · 09.00 · {{chan}}</span></li>
 </ul>
 </div>
 <a href="AkunSaya.dc.html" style="font-weight: 600; min-height: 44px; display: inline-flex; align-items: center;">Kelola reservasi di Akun saya →</a>
@@ -227,7 +243,7 @@ Masuk dengan Google
 <dl style="margin: 0; display: flex; flex-direction: column; gap: 12px; font-size: 17px;">
 <div style="display: flex; justify-content: space-between; gap: 12px;"><dt style="color: #f2d08c;">Akun</dt><dd style="margin: 0; text-align: right;">{{account}}</dd></div>
 <div style="display: flex; justify-content: space-between; gap: 12px;"><dt style="color: #f2d08c;">Fitting</dt><dd style="margin: 0; text-align: right;">{{fitLabel}}</dd></div>
-<div style="display: flex; justify-content: space-between; gap: 12px;"><dt style="color: #f2d08c;">Acara</dt><dd style="margin: 0; text-align: right;">Sab, 5 Des 2026</dd></div>
+<div style="display: flex; justify-content: space-between; gap: 12px;"><dt style="color: #f2d08c;">Acara</dt><dd style="margin: 0; text-align: right;">{{acaraLabel}}</dd></div>
 <div style="display: flex; justify-content: space-between; gap: 12px;"><dt style="color: #f2d08c;">Sewa</dt><dd style="margin: 0; text-align: right;">{{sel.price}}</dd></div>
 </dl>
 <div style="display: flex; flex-direction: column; align-items: center; padding: 12px; border: 2px solid #c8924a; border-radius: 12px; background: #4e0014;">
@@ -244,7 +260,7 @@ Masuk dengan Google
 class Component extends DCLogic {
   constructor(props) {
     super(props);
-    this.state = { step: 1, product: 0, size: 'M', day: 21, slot: '10.00' };
+    this.state = { step: 1, product: 0, size: 'M', day: 21, slot: '10.00', nama: '', email: '', wa: '', waOn: true, emailOn: true, pay: 'Transfer bank', agree: false, acara: '2026-12-05', tried: false };
   }
   renderVals() {
     const rp = (n) => 'Rp' + String(n).replace(/\B(?=(\d{3})+(?!\d))/g, '.');
@@ -312,20 +328,58 @@ class Component extends DCLogic {
     const dayLabel = dname(st.day) + ', ' + st.day + ' Nov 2026';
     const loggedIn = st.step > 1;
     const prevDay = st.day - 1;
+    // Validasi data pelanggan (langkah Konfirmasi)
+    const nama = (st.nama || '').trim(), email = (st.email || '').trim();
+    let wa62 = (st.wa || '').replace(/[^0-9+]/g, '').replace(/^\+/, '');
+    if (wa62.indexOf('0') === 0) wa62 = '62' + wa62.slice(1);
+    const namaOk = nama.length >= 2;
+    const emailOk = /^[^\s@]+@[^\s@]+\.[^\s@]{2,}$/.test(email);
+    const waOk = /^628[0-9]{7,11}$/.test(wa62);
+    const chanOk = st.waOn || st.emailOn;
+    const valid = namaOk && emailOk && waOk && chanOk && st.agree;
+    const waPretty = waOk ? '+62 ' + wa62.slice(2, 5) + '-' + wa62.slice(5, 9) + '-' + wa62.slice(9) : '';
+    const t = st.tried, RED = '2px solid #a11d12', NORMAL = '1px solid #9a7a5a';
+    const fe = {
+      any: t && !valid,
+      nama: t && !namaOk ? 'Isi nama lengkap Anda.' : '', namaBad: t && !namaOk ? 'true' : 'false', namaBorder: t && !namaOk ? RED : NORMAL,
+      emailBad: t && !emailOk ? 'true' : 'false', emailBorder: t && !emailOk ? RED : NORMAL,
+      emailMsg: t && !emailOk ? 'Tulis email yang benar, misalnya nama@gmail.com.' : 'Terisi dari akun Google; bisa diubah.',
+      emailColor: t && !emailOk ? '#a11d12' : '#6a4a44',
+      waBad: t && !waOk ? 'true' : 'false', waBorder: t && !waOk ? RED : NORMAL,
+      waMsg: t && !waOk ? 'Tulis nomor WhatsApp aktif yang diawali 08 atau +62.' : (waOk ? 'Pengingat dikirim ke ' + waPretty : 'Diawali 08 atau +62.'),
+      waColor: t && !waOk ? '#a11d12' : (waOk ? '#155e63' : '#6a4a44'),
+      chan: t && !chanOk ? 'Pilih minimal satu: WhatsApp atau email.' : '',
+      agree: t && !st.agree ? 'Centang persetujuan ini untuk melanjutkan.' : ''
+    };
+    const DN2 = ['Min', 'Sen', 'Sel', 'Rab', 'Kam', 'Jum', 'Sab'], MN = ['Jan', 'Feb', 'Mar', 'Apr', 'Mei', 'Jun', 'Jul', 'Agu', 'Sep', 'Okt', 'Nov', 'Des'];
+    const m = /^(\d{4})-(\d{2})-(\d{2})$/.exec(st.acara || '');
+    const base = m ? Date.UTC(+m[1], +m[2] - 1, +m[3]) : Date.UTC(2026, 11, 5);
+    const fmtD = (offset, withYear) => { const d = new Date(base + offset * 86400000); return DN2[d.getUTCDay()] + ', ' + d.getUTCDate() + ' ' + MN[d.getUTCMonth()] + (withYear ? ' ' + d.getUTCFullYear() : ''); };
+    const chanList = [st.waOn ? 'WhatsApp' : '', st.emailOn ? 'email' : ''].filter(Boolean);
+    const field = (k) => (e) => this.setState({ [k]: e.target.value });
+    const flag = (k) => (e) => this.setState({ [k]: !!e.target.checked });
     return {
+      fm: { nama: st.nama, email: st.email, wa: st.wa, waOn: st.waOn, emailOn: st.emailOn, agree: st.agree, acara: st.acara },
+      fh: { nama: field('nama'), email: field('email'), wa: field('wa'), acara: field('acara'), waOn: flag('waOn'), emailOn: flag('emailOn'), agree: flag('agree') },
+      fe,
+      pays: ['Transfer bank', 'QRIS', 'Tunai saat fitting'].map((label) => ({ label, on: st.pay === label, pick: () => this.setState({ pay: label }) })),
+      initial: (nama.charAt(0) || 'G').toUpperCase(),
+      chan: chanList.length ? chanList.join(' & ') : '—',
+      sentLine: 'Invoice INV-2026-11-0042 sudah dikirim ke ' + (st.emailOn ? email : 'akun Anda') + (st.waOn ? ', pengingat ke WhatsApp ' + waPretty : '') + '.',
+      acaraLabel: fmtD(0, true), h1Ambil: fmtD(-2, false), kembaliLabel: fmtD(1, false),
       steps, products, sizes, days, slots, sel,
       size: st.size,
       s1: st.step === 1, s2: st.step === 2, s3: st.step === 3, s4: st.step === 4, s5: st.step === 5,
       showNav: st.step > 1 && st.step < 5,
       nextLabel: st.step === 4 ? 'Konfirmasi & kirim invoice' : 'Lanjut',
       loggedIn, loggedOut: !loggedIn,
-      account: loggedIn ? '[nama@gmail.com]' : 'Belum masuk',
+      account: loggedIn ? (emailOk ? email : 'Akun Google') : 'Belum masuk',
       dayLabel,
       fitLabel: st.step >= 3 ? dayLabel + ' · ' + st.slot : 'Belum dipilih',
       reminderFit: dname(prevDay) + ', ' + prevDay + ' Nov · ' + st.slot,
       dp: rp(sel.n / 2),
       login: () => this.setState({ step: Math.max(2, st.step) }),
-      next: () => this.setState({ step: Math.min(5, st.step + 1) }),
+      next: () => { if (st.step === 4 && !valid) { this.setState({ tried: true }); return; } this.setState({ step: Math.min(5, st.step + 1) }); },
       back: () => this.setState({ step: Math.max(2, st.step - 1) })
     };
   }

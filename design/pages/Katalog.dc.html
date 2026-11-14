@@ -66,7 +66,7 @@ Masuk dengan Google
 </select>
 </label>
 <label style="display: flex; flex-direction: column; gap: 4px; font-size: 15px; font-weight: 600;">Tanggal acara
-<input type="date" value="2026-12-05" style="min-height: 44px; padding: 0 12px; border: 1px solid #9a7a5a; border-radius: 2px; background: #fffaf3; font-family: inherit; font-size: 17px; color: #1f0a0a; box-sizing: border-box;">
+<input onChange="{{fh.v1}}" type="date" value="{{ff.v1}}" style="min-height: 44px; padding: 0 12px; border: 1px solid #9a7a5a; border-radius: 2px; background: #fffaf3; font-family: inherit; font-size: 17px; color: #1f0a0a; box-sizing: border-box;">
 </label>
 <label style="display: flex; flex-direction: column; gap: 4px; font-size: 15px; font-weight: 600;">Urutkan
 <select style="min-height: 44px; min-width: 160px; padding: 0 12px; border: 1px solid #9a7a5a; border-radius: 2px; background: #fffaf3; font-family: inherit; font-size: 17px; color: #1f0a0a;">
@@ -123,7 +123,7 @@ class Component extends DCLogic {
     super(props);
     this.state = { cat: 'Semua' };
   }
-  renderVals() {
+  _rv() {
     const ST = {
       ok: { sb: '#dcefee', sf: '#155e63' },
       out: { sb: '#e4e8f3', sf: '#3a4a72' },
@@ -149,6 +149,24 @@ class Component extends DCLogic {
     });
     const shown = c === 'Semua' ? raw : (c === 'Tersedia' ? raw.filter((p) => p.st === 'ok') : raw.filter((p) => p.st !== 'ok'));
     return { chips, shown, count: shown.length };
+  }
+
+  _ff() {
+    const D = {"v1": "2026-12-05"};
+    const R = {};
+    const cur = Object.assign({}, D, (this.state && this.state.__f) || {});
+    const put = (patch) => this.setState((st) => ({ __f: Object.assign({}, D, (st && st.__f) || {}, patch) }));
+    const ff = {}, fh = {};
+    Object.keys(D).forEach((k) => {
+      ff[k] = cur[k];
+      if (k.indexOf('cb') === 0) fh[k] = (e) => put({ [k]: !!(e && e.target && e.target.checked) });
+      else if (k.indexOf('rd_') === 0) { const g = k.slice(3, k.lastIndexOf('_')); fh[k] = () => { const patch = {}; R[g].forEach((x) => { patch[x] = x === k; }); put(patch); }; }
+      else fh[k] = (e) => put({ [k]: e && e.target ? e.target.value : '' });
+    });
+    return { ff, fh };
+  }
+  renderVals() {
+    return Object.assign({}, this._rv(), this._ff());
   }
 }
 </script>
