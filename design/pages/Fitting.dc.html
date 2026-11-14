@@ -1,0 +1,335 @@
+<!doctype html>
+<html lang="id">
+<head>
+<meta charset="utf-8">
+<title>Sister Studio — Pesan fitting</title>
+<script src="./support.js"></script>
+</head>
+<body>
+<x-dc>
+<helmet>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Crimson+Pro:ital,wght@0,400;0,600;0,700;1,400&amp;family=Great+Vibes&amp;display=swap">
+<style>
+body{margin:0;background:#fdf3e7}
+a{color:#730020}a:hover{color:#4e0014}
+:focus-visible{outline:2px solid #730020;outline-offset:2px}
+.btn-p:hover{background:#4e0014 !important;color:#fdf3e7 !important}
+.btn-s:hover{background:#f6dfdc !important;color:#730020 !important}
+.nav a:hover{color:#4e0014 !important;text-decoration:underline !important}
+.day:disabled{cursor:not-allowed}
+</style>
+</helmet>
+<div style="min-height: 100vh; background: #fdf3e7; color: #1f0a0a; font-family: 'Crimson Pro', Georgia, 'Times New Roman', serif; font-size: 18px; line-height: 28px;">
+
+<header style="border-bottom: 1px solid #e6c9a5; background: #fdf3e7;">
+<div style="max-width: 1200px; margin: 0 auto; padding: 16px 24px; display: flex; flex-wrap: wrap; align-items: center; justify-content: space-between; gap: 16px 32px;">
+<a href="Main.dc.html" style="display: flex; align-items: center; gap: 12px; text-decoration: none;">
+<img src="../assets/logo/logo-sister-studio.png" alt="" style="width: 60px; height: 60px; object-fit: contain;">
+<span style="display: flex; flex-direction: column; gap: 2px;">
+<span style="font-size: 28px; line-height: 30px; font-weight: 600; color: #4e0014;">Sister Studio</span>
+<span style="font-size: 11px; line-height: 14px; letter-spacing: 0.16em; font-weight: 600; color: #85561c;">SEWA KEBAYA &amp; DRESS</span>
+</span>
+</a>
+<nav class="nav" aria-label="Menu utama" style="display: flex; flex-wrap: wrap; gap: 4px 28px; font-size: 18px; font-weight: 600;">
+<a href="Main.dc.html" style="color: #1f0a0a; text-decoration: none; padding: 8px 0;">Home</a>
+<a href="Testimoni.dc.html" style="color: #1f0a0a; text-decoration: none; padding: 8px 0;">Testimoni</a>
+<a href="Katalog.dc.html" style="color: #1f0a0a; text-decoration: none; padding: 8px 0;">Katalog</a>
+<a href="Fitting.dc.html" aria-current="page" style="color: #730020; text-decoration: underline; text-decoration-color: #c8924a; text-underline-offset: 6px; text-decoration-thickness: 2px; padding: 8px 0;">Fitting</a>
+<a href="Kontak.dc.html" style="color: #1f0a0a; text-decoration: none; padding: 8px 0;">Kontak</a>
+</nav>
+<sc-if value="{{loggedIn}}" hint-placeholder-val="{{false}}">
+<a href="AkunSaya.dc.html" style="display: inline-flex; align-items: center; gap: 10px; min-height: 44px; text-decoration: none; color: #1f0a0a; font-size: 16px;">
+<span aria-hidden="true" style="width: 36px; height: 36px; border-radius: 9999px; background: #f6dfdc; color: #730020; display: inline-flex; align-items: center; justify-content: center; font-weight: 700;">N</span>
+<span>[nama@gmail.com]</span>
+</a>
+</sc-if>
+<sc-if value="{{loggedOut}}" hint-placeholder-val="{{true}}">
+<button type="button" class="btn-s" onClick="{{login}}" style="display: inline-flex; align-items: center; gap: 10px; min-height: 44px; padding: 0 16px; border: 1px solid #9a7a5a; border-radius: 2px; color: #730020; font-family: inherit; font-weight: 600; font-size: 16px; background: #fffaf3; cursor: pointer;">
+<span aria-hidden="true" style="width: 22px; height: 22px; border-radius: 9999px; border: 1.5px solid #730020; display: inline-flex; align-items: center; justify-content: center; font-family: Arial, sans-serif; font-weight: 700; font-size: 13px; line-height: 1;">G</span>
+Masuk dengan Google
+</button>
+</sc-if>
+</div>
+</header>
+
+<main style="max-width: 1200px; margin: 0 auto; padding: 48px 24px 72px; display: flex; flex-direction: column; gap: 32px;">
+<div style="display: flex; flex-direction: column; gap: 8px;">
+<span style="font-size: 13px; line-height: 16px; letter-spacing: 0.16em; font-weight: 600; color: #85561c;">RESERVASI FITTING</span>
+<h1 style="margin: 0; font-size: 48px; line-height: 52px; font-weight: 600; color: #4e0014;">Pesan jadwal fitting</h1>
+<p style="margin: 0; color: #6a4a44;">Fitting gratis sekitar 45 menit di studio. Invoice dan pengingat jadwal dikirim otomatis setelah Anda konfirmasi.</p>
+</div>
+
+<ol aria-label="Langkah reservasi" style="list-style: none; margin: 0; padding: 0; display: flex; flex-wrap: wrap; gap: 8px 0;">
+<sc-for list="{{steps}}" as="s" hint-placeholder-count="5">
+<li aria-current="{{s.aria}}" style="display: flex; align-items: center; gap: 10px; flex: 1 1 180px;">
+<span style="width: 36px; height: 36px; flex-shrink: 0; border-radius: 9999px; border: 2px solid {{s.ring}}; background: {{s.bg}}; color: {{s.fg}}; display: flex; align-items: center; justify-content: center; font-weight: 600;">{{s.n}}</span>
+<span style="font-weight: 600; color: {{s.text}};">{{s.label}}</span>
+<span aria-hidden="true" style="flex: 1 1 auto; height: 1px; margin: 0 12px; background: #e6c9a5;"></span>
+</li>
+</sc-for>
+</ol>
+
+<div style="display: flex; flex-wrap: wrap; align-items: flex-start; gap: 32px;">
+<section style="flex: 999 1 560px; min-width: 0; background: #fffaf3; border: 1px solid #e6c9a5; border-radius: 12px; padding: 32px; display: flex; flex-direction: column; gap: 24px; box-shadow: 0 1px 2px rgba(78,0,20,0.06), 0 4px 16px rgba(78,0,20,0.06);">
+
+<sc-if value="{{s1}}" hint-placeholder-val="{{true}}">
+<div style="display: flex; flex-direction: column; align-items: flex-start; gap: 20px;">
+<h2 style="margin: 0; font-size: 30px; line-height: 38px; font-weight: 600; color: #4e0014;">Masuk untuk memesan</h2>
+<p style="margin: 0; max-width: 560px;">Kami memakai akun Google Anda untuk menyimpan reservasi, mengirim invoice, dan mengingatkan jadwal fitting, pengambilan, serta pengembalian.</p>
+<button type="button" class="btn-s" onClick="{{login}}" style="display: inline-flex; align-items: center; gap: 12px; min-height: 52px; padding: 0 24px; border: 1px solid #9a7a5a; border-radius: 2px; background: #fffaf3; color: #1f0a0a; font-family: inherit; font-size: 19px; font-weight: 600; cursor: pointer;">
+<span aria-hidden="true" style="width: 26px; height: 26px; border-radius: 9999px; border: 1.5px solid #1f0a0a; display: inline-flex; align-items: center; justify-content: center; font-family: Arial, sans-serif; font-weight: 700; font-size: 15px; line-height: 1;">G</span>
+Masuk dengan Google
+</button>
+<p style="margin: 0; font-size: 15px; line-height: 22px; color: #6a4a44;">Yang kami simpan: nama, email, dan foto profil. Nomor WhatsApp Anda isi sendiri di langkah konfirmasi.</p>
+</div>
+</sc-if>
+
+<sc-if value="{{s2}}" hint-placeholder-val="{{false}}">
+<div style="display: flex; flex-direction: column; gap: 20px;">
+<h2 style="margin: 0; font-size: 30px; line-height: 38px; font-weight: 600; color: #4e0014;">Kebaya yang ingin dicoba</h2>
+<div role="radiogroup" aria-label="Pilih kebaya" style="display: grid; grid-template-columns: repeat(auto-fill, minmax(260px, 1fr)); gap: 12px;">
+<sc-for list="{{products}}" as="p" hint-placeholder-count="4">
+<button type="button" role="radio" aria-checked="{{p.on}}" onClick="{{p.pick}}" style="display: flex; align-items: center; gap: 14px; padding: 12px; border: 2px solid {{p.border}}; border-radius: 12px; background: {{p.bg}}; font-family: inherit; text-align: left; cursor: pointer; color: #1f0a0a;">
+<img src="{{p.img}}" alt="" style="width: 64px; height: 88px; flex-shrink: 0; object-fit: cover; object-position: 50% 12%; border: 1.5px solid #c8924a; border-radius: 999px 999px 4px 4px;">
+<span style="display: flex; flex-direction: column; gap: 2px; min-width: 0;">
+<span style="font-size: 13px; line-height: 16px; letter-spacing: 0.16em; font-weight: 600; color: #85561c;">{{p.codeUp}}</span>
+<span style="font-family: 'Great Vibes', cursive; font-size: 28px; line-height: 34px; color: #4e0014;">{{p.name}}</span>
+<span style="font-size: 16px; font-weight: 600; color: #730020;">{{p.price}} / stel</span>
+</span>
+</button>
+</sc-for>
+</div>
+<fieldset style="margin: 0; padding: 0; border: 0;">
+<legend style="font-weight: 600; font-size: 16px; padding: 0; margin-bottom: 8px;">Ukuran</legend>
+<div style="display: flex; flex-wrap: wrap; gap: 8px;">
+<sc-for list="{{sizes}}" as="z" hint-placeholder-count="5">
+<button type="button" aria-pressed="{{z.on}}" onClick="{{z.pick}}" style="min-width: 56px; min-height: 44px; padding: 0 14px; border: 1px solid {{z.border}}; border-radius: 2px; background: {{z.bg}}; color: {{z.fg}}; font-family: inherit; font-size: 17px; font-weight: 600; cursor: pointer;">{{z.label}}</button>
+</sc-for>
+</div>
+</fieldset>
+<div style="display: flex; flex-wrap: wrap; gap: 16px;">
+<label style="flex: 1 1 220px; display: flex; flex-direction: column; gap: 6px; font-weight: 600; font-size: 16px;">Tanggal acara
+<input type="date" value="2026-12-05" style="min-height: 44px; padding: 0 12px; border: 1px solid #9a7a5a; border-radius: 2px; background: #fffaf3; font-family: inherit; font-size: 17px; color: #1f0a0a; box-sizing: border-box;">
+</label>
+<label style="flex: 1 1 220px; display: flex; flex-direction: column; gap: 6px; font-weight: 600; font-size: 16px;">Momen
+<select style="min-height: 44px; padding: 0 12px; border: 1px solid #9a7a5a; border-radius: 2px; background: #fffaf3; font-family: inherit; font-size: 17px; color: #1f0a0a;">
+<option>Wisuda</option><option>Lamaran</option><option>Akad</option><option>Kondangan</option><option>Foto keluarga</option>
+</select>
+</label>
+</div>
+</div>
+</sc-if>
+
+<sc-if value="{{s3}}" hint-placeholder-val="{{false}}">
+<div style="display: flex; flex-direction: column; gap: 20px;">
+<div style="display: flex; flex-wrap: wrap; align-items: baseline; justify-content: space-between; gap: 8px;">
+<h2 style="margin: 0; font-size: 30px; line-height: 38px; font-weight: 600; color: #4e0014;">Pilih tanggal dan jam</h2>
+<span style="font-size: 20px; font-weight: 600; color: #730020;">November 2026</span>
+</div>
+<div style="display: grid; grid-template-columns: repeat(7, minmax(0, 1fr)); gap: 6px; text-align: center;">
+<span style="font-size: 14px; font-weight: 600; color: #6a4a44;">Sen</span>
+<span style="font-size: 14px; font-weight: 600; color: #6a4a44;">Sel</span>
+<span style="font-size: 14px; font-weight: 600; color: #6a4a44;">Rab</span>
+<span style="font-size: 14px; font-weight: 600; color: #6a4a44;">Kam</span>
+<span style="font-size: 14px; font-weight: 600; color: #6a4a44;">Jum</span>
+<span style="font-size: 14px; font-weight: 600; color: #6a4a44;">Sab</span>
+<span style="font-size: 14px; font-weight: 600; color: #6a4a44;">Min</span>
+<sc-for list="{{days}}" as="d" hint-placeholder-count="36">
+<sc-if value="{{d.blank}}" hint-placeholder-val="{{false}}"><span aria-hidden="true"></span></sc-if>
+<sc-if value="{{d.real}}" hint-placeholder-val="{{true}}">
+<button type="button" class="day" disabled="{{d.disabled}}" aria-pressed="{{d.on}}" aria-label="{{d.aria}}" onClick="{{d.pick}}" style="min-height: 48px; border: 1px solid {{d.border}}; border-radius: 2px; background: {{d.bg}}; color: {{d.fg}}; font-family: inherit; font-size: 18px; font-weight: 600; text-decoration: {{d.deco}}; cursor: pointer;">{{d.n}}</button>
+</sc-if>
+</sc-for>
+</div>
+<fieldset style="margin: 0; padding: 0; border: 0;">
+<legend style="font-weight: 600; font-size: 16px; padding: 0; margin-bottom: 8px;">Jam tersedia · {{dayLabel}}</legend>
+<div style="display: grid; grid-template-columns: repeat(auto-fill, minmax(110px, 1fr)); gap: 8px;">
+<sc-for list="{{slots}}" as="t" hint-placeholder-count="6">
+<button type="button" disabled="{{t.full}}" aria-pressed="{{t.on}}" onClick="{{t.pick}}" style="min-height: 48px; border: 1px solid {{t.border}}; border-radius: 2px; background: {{t.bg}}; color: {{t.fg}}; font-family: inherit; font-size: 17px; font-weight: 600; cursor: pointer; display: flex; flex-direction: column; align-items: center; justify-content: center; line-height: 20px;">{{t.time}}<span style="font-size: 13px; font-weight: 400;">{{t.note}}</span></button>
+</sc-for>
+</div>
+</fieldset>
+</div>
+</sc-if>
+
+<sc-if value="{{s4}}" hint-placeholder-val="{{false}}">
+<div style="display: flex; flex-direction: column; gap: 20px;">
+<h2 style="margin: 0; font-size: 30px; line-height: 38px; font-weight: 600; color: #4e0014;">Konfirmasi data</h2>
+<div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(220px, 1fr)); gap: 16px;">
+<label style="display: flex; flex-direction: column; gap: 6px; font-weight: 600; font-size: 16px;">Nama (dari Google)
+<input type="text" value="[Nama lengkap]" style="min-height: 44px; padding: 0 12px; border: 1px solid #9a7a5a; border-radius: 2px; background: #fffaf3; font-family: inherit; font-size: 17px; color: #1f0a0a;">
+</label>
+<label style="display: flex; flex-direction: column; gap: 6px; font-weight: 600; font-size: 16px;">Email
+<input type="email" value="[nama@gmail.com]" readonly style="min-height: 44px; padding: 0 12px; border: 1px solid #e6c9a5; border-radius: 2px; background: #fbe9d7; font-family: inherit; font-size: 17px; color: #6a4a44;">
+</label>
+<label style="display: flex; flex-direction: column; gap: 6px; font-weight: 600; font-size: 16px;">Nomor WhatsApp
+<input type="tel" placeholder="08xx xxxx xxxx" style="min-height: 44px; padding: 0 12px; border: 1px solid #9a7a5a; border-radius: 2px; background: #fffaf3; font-family: inherit; font-size: 17px; color: #1f0a0a;">
+</label>
+</div>
+<fieldset style="margin: 0; padding: 16px 20px; border: 1px solid #e6c9a5; border-radius: 12px; display: flex; flex-direction: column; gap: 8px;">
+<legend style="font-weight: 600; font-size: 16px; padding: 0 6px;">Kirim pengingat lewat</legend>
+<label style="display: flex; align-items: center; gap: 10px; min-height: 36px;"><input type="checkbox" checked style="width: 20px; height: 20px; accent-color: #730020;"> WhatsApp (H-1 fitting, pengambilan, dan pengembalian)</label>
+<label style="display: flex; align-items: center; gap: 10px; min-height: 36px;"><input type="checkbox" checked style="width: 20px; height: 20px; accent-color: #730020;"> Email</label>
+</fieldset>
+<fieldset style="margin: 0; padding: 16px 20px; border: 1px solid #e6c9a5; border-radius: 12px; display: flex; flex-direction: column; gap: 8px;">
+<legend style="font-weight: 600; font-size: 16px; padding: 0 6px;">Cara bayar DP</legend>
+<label style="display: flex; align-items: center; gap: 10px; min-height: 36px;"><input type="radio" name="bayar" checked style="width: 20px; height: 20px; accent-color: #730020;"> Transfer bank</label>
+<label style="display: flex; align-items: center; gap: 10px; min-height: 36px;"><input type="radio" name="bayar" style="width: 20px; height: 20px; accent-color: #730020;"> QRIS</label>
+<label style="display: flex; align-items: center; gap: 10px; min-height: 36px;"><input type="radio" name="bayar" style="width: 20px; height: 20px; accent-color: #730020;"> Tunai saat fitting</label>
+</fieldset>
+<label style="display: flex; align-items: flex-start; gap: 10px;"><input type="checkbox" style="width: 20px; height: 20px; margin-top: 4px; accent-color: #730020;"> <span>Saya sudah membaca <a href="Kontak.dc.html">syarat &amp; ketentuan sewa</a>, termasuk denda keterlambatan dan kerusakan.</span></label>
+</div>
+</sc-if>
+
+<sc-if value="{{s5}}" hint-placeholder-val="{{false}}">
+<div style="display: flex; flex-direction: column; gap: 20px;">
+<div style="display: flex; align-items: center; gap: 16px;">
+<span aria-hidden="true" style="width: 56px; height: 56px; border-radius: 9999px; background: #dcefee; display: flex; align-items: center; justify-content: center;">
+<svg width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="#155e63" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12.5l4.5 4.5L19 7.5"/></svg>
+</span>
+<div style="display: flex; flex-direction: column;">
+<h2 style="margin: 0; font-size: 30px; line-height: 38px; font-weight: 600; color: #4e0014;">Reservasi tercatat</h2>
+<span style="color: #6a4a44;">Invoice INV-2026-11-0042 sudah dikirim ke [nama@gmail.com].</span>
+</div>
+</div>
+<div style="display: flex; flex-wrap: wrap; align-items: center; justify-content: space-between; gap: 12px; padding: 16px 20px; background: #fbe7c0; border-radius: 12px; color: #7a4a00;">
+<span><strong>Menunggu DP {{dp}}</strong> · bayar paling lambat Sen, 16 Nov 2026 pukul 23.59 agar jadwal tidak dilepas.</span>
+<a class="btn-p" href="Invoice.dc.html" style="display: inline-flex; align-items: center; min-height: 44px; padding: 0 20px; background: #730020; color: #fdf3e7; border-radius: 2px; font-weight: 600; text-decoration: none;">Lihat invoice</a>
+</div>
+<div style="display: flex; flex-direction: column; gap: 8px;">
+<h3 style="margin: 0; font-size: 22px; line-height: 30px; font-weight: 600; color: #4e0014;">Pengingat yang sudah dijadwalkan</h3>
+<ul style="list-style: none; margin: 0; padding: 0; display: flex; flex-direction: column;">
+<li style="display: flex; flex-wrap: wrap; justify-content: space-between; gap: 8px; padding: 12px 0; border-bottom: 1px solid #e6c9a5;"><span>Pengingat bayar DP</span><span style="color: #6a4a44;">Sen, 16 Nov · 10.00 · WhatsApp &amp; email</span></li>
+<li style="display: flex; flex-wrap: wrap; justify-content: space-between; gap: 8px; padding: 12px 0; border-bottom: 1px solid #e6c9a5;"><span>H-1 fitting</span><span style="color: #6a4a44;">{{reminderFit}} · WhatsApp &amp; email</span></li>
+<li style="display: flex; flex-wrap: wrap; justify-content: space-between; gap: 8px; padding: 12px 0; border-bottom: 1px solid #e6c9a5;"><span>H-1 pengambilan kebaya</span><span style="color: #6a4a44;">Kam, 3 Des · 10.00 · WhatsApp</span></li>
+<li style="display: flex; flex-wrap: wrap; justify-content: space-between; gap: 8px; padding: 12px 0;"><span>Hari pengembalian</span><span style="color: #6a4a44;">Min, 6 Des · 09.00 · WhatsApp</span></li>
+</ul>
+</div>
+<a href="AkunSaya.dc.html" style="font-weight: 600; min-height: 44px; display: inline-flex; align-items: center;">Kelola reservasi di Akun saya →</a>
+</div>
+</sc-if>
+
+<sc-if value="{{showNav}}" hint-placeholder-val="{{false}}">
+<div style="display: flex; justify-content: space-between; gap: 12px; padding-top: 20px; border-top: 1px solid #e6c9a5;">
+<button type="button" class="btn-s" onClick="{{back}}" style="min-height: 48px; padding: 0 24px; border: 1px solid #9a7a5a; border-radius: 2px; background: transparent; color: #730020; font-family: inherit; font-size: 18px; font-weight: 600; cursor: pointer;">Kembali</button>
+<button type="button" class="btn-p" onClick="{{next}}" style="min-height: 48px; padding: 0 28px; border: 1px solid #730020; border-radius: 2px; background: #730020; color: #fdf3e7; font-family: inherit; font-size: 18px; font-weight: 600; cursor: pointer;">{{nextLabel}}</button>
+</div>
+</sc-if>
+</section>
+
+<aside aria-label="Ringkasan reservasi" style="flex: 1 1 320px; min-width: 0; background: #730020; color: #fdf3e7; border: 2px solid #c8924a; border-radius: 12px; padding: 28px; display: flex; flex-direction: column; gap: 16px;">
+<span style="font-size: 13px; line-height: 16px; letter-spacing: 0.16em; font-weight: 600; color: #f2d08c;">RINGKASAN</span>
+<img src="{{sel.img}}" alt="{{sel.alt}}" style="display: block; align-self: center; width: 180px; height: 240px; object-fit: cover; object-position: 50% 12%; border: 2px solid #c8924a; border-radius: 999px 999px 12px 12px;">
+<div style="display: flex; flex-direction: column; align-items: center; gap: 4px; text-align: center; padding-bottom: 16px; border-bottom: 1px solid rgba(242,208,140,0.5);">
+<span style="font-size: 15px; color: #f2d08c;">{{sel.code}} · Ukuran {{size}}</span>
+<span style="font-family: 'Great Vibes', cursive; font-size: 38px; line-height: 46px; color: #fdf3e7;">{{sel.name}}</span>
+</div>
+<dl style="margin: 0; display: flex; flex-direction: column; gap: 12px; font-size: 17px;">
+<div style="display: flex; justify-content: space-between; gap: 12px;"><dt style="color: #f2d08c;">Akun</dt><dd style="margin: 0; text-align: right;">{{account}}</dd></div>
+<div style="display: flex; justify-content: space-between; gap: 12px;"><dt style="color: #f2d08c;">Fitting</dt><dd style="margin: 0; text-align: right;">{{fitLabel}}</dd></div>
+<div style="display: flex; justify-content: space-between; gap: 12px;"><dt style="color: #f2d08c;">Acara</dt><dd style="margin: 0; text-align: right;">Sab, 5 Des 2026</dd></div>
+<div style="display: flex; justify-content: space-between; gap: 12px;"><dt style="color: #f2d08c;">Sewa</dt><dd style="margin: 0; text-align: right;">{{sel.price}}</dd></div>
+</dl>
+<div style="display: flex; flex-direction: column; align-items: center; padding: 12px; border: 2px solid #c8924a; border-radius: 12px; background: #4e0014;">
+<span style="font-size: 15px; color: #f2d08c;">DP 50% untuk mengunci tanggal</span>
+<span style="font-size: 36px; line-height: 44px; font-weight: 600;">{{dp}}</span>
+</div>
+<p style="margin: 0; font-size: 15px; line-height: 22px; color: #fdf3e7;">Pelunasan saat pengambilan. Kebaya dicuci dan disetrika sebelum diserahkan.</p>
+</aside>
+</div>
+</main>
+</div>
+</x-dc>
+<script type="text/x-dc" data-dc-script data-props='{"$preview":{"width":1440,"height":1400}}'>
+class Component extends DCLogic {
+  constructor(props) {
+    super(props);
+    this.state = { step: 1, product: 0, size: 'M', day: 21, slot: '10.00' };
+  }
+  renderVals() {
+    const rp = (n) => 'Rp' + String(n).replace(/\B(?=(\d{3})+(?!\d))/g, '.');
+    const st = this.state;
+    const PR = [
+      { code: 'Koleksi 008', name: 'Srikandi Kemuning', n: 250000, img: '../assets/foto/koleksi-008-srikandi-kemuning.jpg', alt: 'Kebaya renda cokelat tua dengan rok songket emas' },
+      { code: 'Koleksi 009', name: 'Fuchsia Glam', n: 300000, img: '../assets/foto/koleksi-009-fuchsia-glam.jpg', alt: 'Kebaya fuchsia berpayet' },
+      { code: 'Koleksi 010', name: 'Candrakirana Nusantara', n: 300000, img: '../assets/foto/koleksi-010-candrakirana-nusantara.jpg', alt: 'Kebaya hijau sage bersulam bunga' },
+      { code: 'Koleksi 011', name: 'Mocha Elegance', n: 200000, img: '../assets/foto/koleksi-011-mocha-elegance.jpg', alt: 'Kebaya renda mocha' }
+    ];
+    const products = PR.map((p, i) => {
+      const on = i === st.product;
+      return Object.assign({}, p, {
+        on, price: rp(p.n), codeUp: p.code.toUpperCase(),
+        border: on ? '#730020' : '#e6c9a5', bg: on ? '#f6dfdc' : '#fffaf3',
+        pick: () => this.setState({ product: i })
+      });
+    });
+    const sizes = ['S', 'M', 'L', 'XL', 'Belum tahu'].map((label) => {
+      const on = label === st.size;
+      return { label, on, bg: on ? '#730020' : '#fffaf3', fg: on ? '#fdf3e7' : '#730020', border: on ? '#730020' : '#9a7a5a', pick: () => this.setState({ size: label }) };
+    });
+    const DN = ['Min', 'Sen', 'Sel', 'Rab', 'Kam', 'Jum', 'Sab'];
+    const dname = (d) => DN[(d - 1) % 7];
+    const days = [];
+    for (let i = 0; i < 6; i++) days.push({ blank: true, real: false });
+    for (let d = 1; d <= 30; d++) {
+      const past = d < 15;
+      const on = d === st.day;
+      days.push({
+        blank: false, real: true, n: d, on, disabled: past,
+        aria: dname(d) + ', ' + d + ' November 2026' + (past ? ', tidak tersedia' : ''),
+        bg: on ? '#730020' : (past ? 'transparent' : '#fffaf3'),
+        fg: on ? '#fdf3e7' : (past ? '#6a4a44' : '#1f0a0a'),
+        border: on ? '#730020' : (past ? 'transparent' : '#9a7a5a'),
+        deco: past ? 'line-through' : 'none',
+        pick: () => this.setState({ day: d })
+      });
+    }
+    const T = ['10.00', '11.30', '13.00', '14.30', '16.00', '19.00'];
+    const slots = T.map((time, i) => {
+      const full = (st.day + i) % 4 === 0;
+      const on = !full && time === st.slot;
+      return {
+        time, full, on, note: full ? 'Penuh' : 'Kosong',
+        bg: on ? '#730020' : (full ? '#fbe9d7' : '#fffaf3'),
+        fg: on ? '#fdf3e7' : (full ? '#6a4a44' : '#1f0a0a'),
+        border: on ? '#730020' : (full ? '#e6c9a5' : '#9a7a5a'),
+        pick: () => this.setState({ slot: time })
+      };
+    });
+    const LBL = ['Masuk', 'Kebaya', 'Jadwal', 'Konfirmasi', 'Selesai'];
+    const steps = LBL.map((label, i) => {
+      const n = i + 1;
+      const done = n < st.step, cur = n === st.step;
+      return {
+        n: done ? '✓' : String(n), label, aria: cur ? 'step' : 'false',
+        bg: done || cur ? '#730020' : '#fffaf3',
+        fg: done || cur ? '#fdf3e7' : '#6a4a44',
+        ring: done || cur ? '#c8924a' : '#9a7a5a',
+        text: cur ? '#4e0014' : '#6a4a44'
+      };
+    });
+    const sel = products[st.product];
+    const dayLabel = dname(st.day) + ', ' + st.day + ' Nov 2026';
+    const loggedIn = st.step > 1;
+    const prevDay = st.day - 1;
+    return {
+      steps, products, sizes, days, slots, sel,
+      size: st.size,
+      s1: st.step === 1, s2: st.step === 2, s3: st.step === 3, s4: st.step === 4, s5: st.step === 5,
+      showNav: st.step > 1 && st.step < 5,
+      nextLabel: st.step === 4 ? 'Konfirmasi & kirim invoice' : 'Lanjut',
+      loggedIn, loggedOut: !loggedIn,
+      account: loggedIn ? '[nama@gmail.com]' : 'Belum masuk',
+      dayLabel,
+      fitLabel: st.step >= 3 ? dayLabel + ' · ' + st.slot : 'Belum dipilih',
+      reminderFit: dname(prevDay) + ', ' + prevDay + ' Nov · ' + st.slot,
+      dp: rp(sel.n / 2),
+      login: () => this.setState({ step: Math.max(2, st.step) }),
+      next: () => this.setState({ step: Math.min(5, st.step + 1) }),
+      back: () => this.setState({ step: Math.max(2, st.step - 1) })
+    };
+  }
+}
+</script>
+</body>
+</html>
