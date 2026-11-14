@@ -1,0 +1,87 @@
+<!doctype html>
+<html lang="id">
+<head>
+<meta charset="utf-8">
+<title>Menu admin</title>
+<script src="./support.js"></script>
+</head>
+<body>
+<x-dc>
+<helmet>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Crimson+Pro:ital,wght@0,400;0,600;0,700;1,400&amp;family=Great+Vibes&amp;display=swap">
+<style>
+body{margin:0}
+</style>
+</helmet>
+<nav aria-label="Menu admin" style="box-sizing: border-box; width: 100%; background: #4e0014; color: #fdf3e7; font-family: 'Crimson Pro', Georgia, 'Times New Roman', serif; font-size: 17px; line-height: 24px; padding: 24px 16px; display: flex; flex-direction: column; gap: 24px;">
+<a href="AdminDashboard.dc.html" style="display: flex; align-items: center; gap: 12px; padding: 0 8px; text-decoration: none; color: #fdf3e7;">
+<span style="width: 48px; height: 48px; flex-shrink: 0; border-radius: 9999px; background: #fdf3e7; border: 2px solid #c8924a; display: flex; align-items: center; justify-content: center; overflow: hidden;">
+<img src="../assets/logo/logo-sister-studio.png" alt="" style="width: 42px; height: 42px; object-fit: contain;">
+</span>
+<span style="display: flex; flex-direction: column;">
+<span style="font-size: 22px; line-height: 26px; font-weight: 600;">Sister Studio</span>
+<span style="font-size: 11px; line-height: 14px; letter-spacing: 0.16em; font-weight: 600; color: #f2d08c;">RUANG KERJA ADMIN</span>
+</span>
+</a>
+
+<ul style="list-style: none; margin: 0; padding: 0; display: flex; flex-direction: column; gap: 4px;">
+<sc-for list="{{items}}" as="it" hint-placeholder-count="5">
+<li>
+<a href="{{it.href}}" aria-current="{{it.aria}}" style="display: flex; align-items: center; gap: 12px; min-height: 56px; padding: 8px 12px; border-radius: 2px; background: {{it.bg}}; color: {{it.fg}}; text-decoration: none;">
+<svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="{{it.fg}}" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="{{it.icon}}"/></svg>
+<span style="flex: 1 1 auto; display: flex; flex-direction: column; min-width: 0;">
+<span style="font-weight: 600;">{{it.label}}</span>
+<span style="font-size: 14px; line-height: 18px; color: #e6c9a5;">{{it.sub}}</span>
+</span>
+<sc-if value="{{it.hasBadge}}" hint-placeholder-val="{{false}}">
+<span aria-label="{{it.badgeLabel}}" style="min-width: 24px; padding: 0 6px; border-radius: 9999px; background: #f2d08c; color: #4e0014; font-size: 14px; line-height: 22px; font-weight: 700; text-align: center;">{{it.badge}}</span>
+</sc-if>
+</a>
+</li>
+</sc-for>
+</ul>
+
+<div style="height: 1px; background: rgba(242,208,140,0.4);"></div>
+
+<a href="Main.dc.html" style="display: flex; align-items: center; gap: 12px; min-height: 44px; padding: 0 12px; color: #fdf3e7; text-decoration: none;">
+<svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="#fdf3e7" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="12" cy="12" r="9"/><path d="M3 12h18M12 3c3 3.5 3 14.5 0 18M12 3c-3 3.5-3 14.5 0 18"/></svg>
+Lihat website
+</a>
+
+<div style="margin-top: auto; display: flex; align-items: center; gap: 12px; padding: 16px 12px 0; border-top: 1px solid rgba(242,208,140,0.4);">
+<span aria-hidden="true" style="width: 40px; height: 40px; flex-shrink: 0; border-radius: 9999px; background: #730020; border: 2px solid #c8924a; color: #f2d08c; display: flex; align-items: center; justify-content: center; font-weight: 700;">O</span>
+<span style="flex: 1 1 auto; display: flex; flex-direction: column; min-width: 0;">
+<span style="font-weight: 600;">[Nama owner]</span>
+<span style="font-size: 14px; line-height: 18px; color: #e6c9a5;">Owner</span>
+</span>
+<a href="AdminLogin.dc.html" style="min-height: 44px; display: inline-flex; align-items: center; color: #f2d08c; font-size: 15px; font-weight: 600;">Keluar</a>
+</div>
+</nav>
+</x-dc>
+<script type="text/x-dc" data-dc-script data-props='{"active":{"editor":"enum","options":["admin","cs","kreator","kasir","stok"],"default":"admin"},"$preview":{"width":280,"height":960}}'>
+class Component extends DCLogic {
+  renderVals() {
+    const active = this.props.active ?? 'admin';
+    const list = [
+      { key: 'admin', href: 'AdminDashboard.dc.html', label: 'Admin Agen', sub: 'Ringkasan & perintah', badge: '3', badgeLabel: '3 perlu keputusan', icon: 'M4 5h7v6H4zM13 5h7v4h-7zM13 11h7v8h-7zM4 13h7v6H4z' },
+      { key: 'cs', href: 'AgenCS.dc.html', label: 'Agen CS', sub: 'FAQ, reminder, S/K', badge: '3', badgeLabel: '3 chat perlu admin', icon: 'M5 5h14v10H9l-4 4zM8 9h8M8 12h5' },
+      { key: 'kreator', href: 'AgenKreator.dc.html', label: 'Agen Kreator', sub: 'Katalog & medsos', badge: '', badgeLabel: '', icon: 'M4 20l4-1 11-11-3-3L5 16zM14 6l3 3' },
+      { key: 'kasir', href: 'AgenKasir.dc.html', label: 'Agen Kasir', sub: 'Invoice & keuangan', badge: '2', badgeLabel: '2 invoice lewat tempo', icon: 'M6 3h12v18l-3-2-3 2-3-2-3 2zM9 8h6M9 12h6M9 16h3' },
+      { key: 'stok', href: 'AgenStok.dc.html', label: 'Agen Stok', sub: 'Inventaris & perawatan', badge: '2', badgeLabel: '2 kebaya terlambat kembali', icon: 'M3 8l9-5 9 5v8l-9 5-9-5zM3 8l9 5 9-5M12 13v8' }
+    ];
+    return {
+      items: list.map((it) => {
+        const on = it.key === active;
+        return Object.assign({}, it, {
+          aria: on ? 'page' : 'false',
+          bg: on ? '#730020' : 'transparent',
+          fg: on ? '#f2d08c' : '#fdf3e7',
+          hasBadge: it.badge !== ''
+        });
+      })
+    };
+  }
+}
+</script>
+</body>
+</html>

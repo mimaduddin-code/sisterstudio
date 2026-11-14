@@ -1,0 +1,11 @@
+{
+  "nama": "Rina",
+  "email": "[email]",
+  "whatsapp": "[08xx]",
+  "login": "Google",
+  "pengingat": [
+    "WhatsApp",
+    "Email"
+  ],
+  "contoh": true
+}

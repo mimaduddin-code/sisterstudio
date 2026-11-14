@@ -1,0 +1,38 @@
+{
+  "kode": "Koleksi 009",
+  "nama": "Fuchsia Glam",
+  "kategori": "Kebaya",
+  "harga": 300000,
+  "satuan": "stel",
+  "deskripsi": "Kebaya modern bernuansa elegan dengan taburan payet yang berkilau, memancarkan pesona anggun dan glamor di setiap momen istimewa.",
+  "foto": "design/assets/foto/koleksi-009-fuchsia-glam.jpg",
+  "tampil": true,
+  "stok": {
+    "S": {
+      "total": 1,
+      "tersedia": 0,
+      "disewa": 0,
+      "perawatan": 1
+    },
+    "M": {
+      "total": 2,
+      "tersedia": 1,
+      "disewa": 1,
+      "perawatan": 0
+    },
+    "L": {
+      "total": 2,
+      "tersedia": 1,
+      "disewa": 1,
+      "perawatan": 0
+    },
+    "XL": {
+      "total": 1,
+      "tersedia": 0,
+      "disewa": 1,
+      "perawatan": 0
+    }
+  },
+  "stok_sumber": "contoh",
+  "contoh": false
+}

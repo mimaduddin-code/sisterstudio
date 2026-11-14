@@ -1,0 +1,38 @@
+{
+  "kode": "Koleksi 008",
+  "nama": "Srikandi Kemuning",
+  "kategori": "Kebaya",
+  "harga": 250000,
+  "satuan": "stel",
+  "deskripsi": "Perpaduan gaya Jawa yang anggun dengan sentuhan Melayu yang mewah, melambangkan kelembutan, ketegasan, dan keanggunan seorang wanita Nusantara.",
+  "foto": "design/assets/foto/koleksi-008-srikandi-kemuning.jpg",
+  "tampil": true,
+  "stok": {
+    "S": {
+      "total": 1,
+      "tersedia": 0,
+      "disewa": 1,
+      "perawatan": 0
+    },
+    "M": {
+      "total": 2,
+      "tersedia": 2,
+      "disewa": 0,
+      "perawatan": 0
+    },
+    "L": {
+      "total": 2,
+      "tersedia": 2,
+      "disewa": 0,
+      "perawatan": 0
+    },
+    "XL": {
+      "total": 1,
+      "tersedia": 0,
+      "disewa": 0,
+      "perawatan": 1
+    }
+  },
+  "stok_sumber": "contoh",
+  "contoh": false
+}

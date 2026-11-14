@@ -1,27 +1,199 @@
 {
   "v": 3,
-  "createdOnFiles": {"v": 1, "at": "2026-11-14T10:00:00Z"},
-  "title": "Sister Studio — Sewa Kebaya",
-  "launch": {"view": "canvas", "page": "website"},
-  "pages": [
-    {"id": "website", "name": "Website publik"},
-    {"id": "pelanggan", "name": "Akun pelanggan"},
-    {"id": "admin", "name": "Admin & Agen"}
-  ],
+  "attachments": {},
   "boards": {
-    "Main.dc.html": {"x": 0, "y": 0, "w": 1440, "h": 3200, "title": "Home", "page": "website", "expand": "fill", "is_interactive": true},
-    "Testimoni.dc.html": {"x": 1520, "y": 0, "w": 1440, "h": 2000, "title": "Testimoni", "page": "website", "expand": "fill", "is_interactive": true},
-    "Katalog.dc.html": {"x": 3040, "y": 0, "w": 1440, "h": 2300, "title": "Katalog", "page": "website", "expand": "fill", "is_interactive": true},
-    "Fitting.dc.html": {"x": 4560, "y": 0, "w": 1440, "h": 1400, "title": "Fitting (reservasi)", "page": "website", "expand": "fill", "is_interactive": true},
-    "Kontak.dc.html": {"x": 6080, "y": 0, "w": 1440, "h": 2400, "title": "Kontak, FAQ & S/K", "page": "website", "expand": "fill", "is_interactive": true},
-    "AkunSaya.dc.html": {"x": 0, "y": 0, "w": 1440, "h": 1600, "title": "Akun saya (login Google)", "page": "pelanggan", "expand": "fill", "is_interactive": true},
-    "Invoice.dc.html": {"x": 1520, "y": 0, "w": 880, "h": 1240, "title": "Invoice", "page": "pelanggan"},
-    "AdminLogin.dc.html": {"x": 0, "y": 0, "w": 1440, "h": 900, "title": "Admin login", "page": "admin", "expand": "fill", "is_interactive": true},
-    "AdminDashboard.dc.html": {"x": 1520, "y": 0, "w": 1440, "h": 1500, "title": "Admin Agen — ringkasan & perintah", "page": "admin", "expand": "fill", "is_interactive": true},
-    "AgenCS.dc.html": {"x": 0, "y": 1920, "w": 1440, "h": 1400, "title": "Agen CS", "page": "admin", "expand": "fill", "is_interactive": true},
-    "AgenKreator.dc.html": {"x": 1520, "y": 1920, "w": 1440, "h": 1700, "title": "Agen Kreator", "page": "admin", "expand": "fill", "is_interactive": true},
-    "AgenKasir.dc.html": {"x": 3040, "y": 1920, "w": 1440, "h": 1800, "title": "Agen Kasir & Akuntan", "page": "admin", "expand": "fill", "is_interactive": true},
-    "AgenStok.dc.html": {"x": 4560, "y": 1920, "w": 1440, "h": 1800, "title": "Agen Stok Inventaris", "page": "admin", "expand": "fill", "is_interactive": true}
+    "AdminDashboard.dc.html": {
+      "expand": "fill",
+      "h": 1700,
+      "is_interactive": true,
+      "page": "admin",
+      "title": "Admin Agen — ringkasan & perintah",
+      "w": 1440,
+      "x": 1520,
+      "y": 0
+    },
+    "AdminLogin.dc.html": {
+      "expand": "fill",
+      "h": 900,
+      "is_interactive": true,
+      "page": "admin",
+      "title": "Admin login",
+      "w": 1440,
+      "x": 0,
+      "y": 0
+    },
+    "AdminNav.dc.html": {
+      "h": 960,
+      "is_interactive": true,
+      "page": "admin",
+      "title": "Komponen: menu admin",
+      "w": 280,
+      "x": -440,
+      "y": 0
+    },
+    "AgenCS.dc.html": {
+      "expand": "fill",
+      "h": 1500,
+      "is_interactive": true,
+      "page": "admin",
+      "title": "Agen CS",
+      "w": 1440,
+      "x": 0,
+      "y": 2200
+    },
+    "AgenKasir.dc.html": {
+      "expand": "fill",
+      "h": 2000,
+      "is_interactive": true,
+      "page": "admin",
+      "title": "Agen Kasir & Akuntan",
+      "w": 1440,
+      "x": 3040,
+      "y": 2200
+    },
+    "AgenKreator.dc.html": {
+      "expand": "fill",
+      "h": 2100,
+      "is_interactive": true,
+      "page": "admin",
+      "title": "Agen Kreator",
+      "w": 1440,
+      "x": 1520,
+      "y": 2200
+    },
+    "AgenStok.dc.html": {
+      "expand": "fill",
+      "h": 2200,
+      "is_interactive": true,
+      "page": "admin",
+      "title": "Agen Stok Inventaris",
+      "w": 1440,
+      "x": 4560,
+      "y": 2200
+    },
+    "AkunSaya.dc.html": {
+      "expand": "fill",
+      "h": 1600,
+      "is_interactive": true,
+      "page": "pelanggan",
+      "title": "Akun saya (login Google)",
+      "w": 1440,
+      "x": 0,
+      "y": 0
+    },
+    "Fitting.dc.html": {
+      "expand": "fill",
+      "h": 1400,
+      "is_interactive": true,
+      "page": "website",
+      "title": "Fitting (reservasi)",
+      "w": 1440,
+      "x": 4560,
+      "y": 0
+    },
+    "Invoice.dc.html": {
+      "h": 1240,
+      "page": "pelanggan",
+      "title": "Invoice",
+      "w": 880,
+      "x": 1520,
+      "y": 0
+    },
+    "Katalog.dc.html": {
+      "expand": "fill",
+      "h": 2300,
+      "is_interactive": true,
+      "page": "website",
+      "title": "Katalog",
+      "w": 1440,
+      "x": 3040,
+      "y": 0
+    },
+    "Kontak.dc.html": {
+      "expand": "fill",
+      "h": 2400,
+      "is_interactive": true,
+      "page": "website",
+      "title": "Kontak, FAQ & S/K",
+      "w": 1440,
+      "x": 6080,
+      "y": 0
+    },
+    "Main.dc.html": {
+      "expand": "fill",
+      "h": 3200,
+      "is_interactive": true,
+      "page": "website",
+      "title": "Home",
+      "w": 1440,
+      "x": 0,
+      "y": 0
+    },
+    "Testimoni.dc.html": {
+      "expand": "fill",
+      "h": 2000,
+      "is_interactive": true,
+      "page": "website",
+      "title": "Testimoni",
+      "w": 1440,
+      "x": 1520,
+      "y": 0
+    }
+  },
+  "createdOnFiles": {
+    "at": "2026-11-14T10:00:00Z",
+    "v": 1
+  },
+  "designSystems": [
+    {
+      "artifact": "https://claude.ai/code/artifact/087c2653-ae1d-4147-b84b-799fda47345a",
+      "copiedAt": "2026-11-14T10:00:00Z",
+      "namespace": "sisterstudio",
+      "title": "Sister Studio",
+      "version": "1794669935-4fab"
+    }
+  ],
+  "launch": {
+    "page": "website",
+    "view": "canvas"
+  },
+  "notes": {
+    "tAdmin": {
+      "kind": "title1",
+      "maxW": 3400,
+      "page": "admin",
+      "text": "Admin login & Admin Agen",
+      "w": 240,
+      "x": -440,
+      "y": -300
+    },
+    "tAgen": {
+      "kind": "title1",
+      "maxW": 6000,
+      "page": "admin",
+      "text": "Agen: CS · Kreator · Kasir & Akuntan · Stok Inventaris",
+      "w": 240,
+      "x": 0,
+      "y": 1880
+    },
+    "tPelanggan": {
+      "kind": "title1",
+      "maxW": 2400,
+      "page": "pelanggan",
+      "text": "Pelanggan: login Google → reservasi → invoice → reminder",
+      "w": 240,
+      "x": 0,
+      "y": -300
+    },
+    "tWebsite": {
+      "kind": "title1",
+      "maxW": 7520,
+      "page": "website",
+      "text": "sisterstudio.com — Home · Testimoni · Katalog · Fitting · Kontak",
+      "w": 240,
+      "x": 0,
+      "y": -300
+    }
   },
   "order": [
     "Main.dc.html",
@@ -31,6 +203,7 @@
     "Kontak.dc.html",
     "AkunSaya.dc.html",
     "Invoice.dc.html",
+    "AdminNav.dc.html",
     "AdminLogin.dc.html",
     "AdminDashboard.dc.html",
     "AgenCS.dc.html",
@@ -38,13 +211,19 @@
     "AgenKasir.dc.html",
     "AgenStok.dc.html"
   ],
-  "notes": {
-    "tWebsite": {"x": 0, "y": -300, "text": "sisterstudio.com — Home · Testimoni · Katalog · Fitting · Kontak", "kind": "title1", "maxW": 7520, "page": "website"},
-    "tPelanggan": {"x": 0, "y": -300, "text": "Pelanggan: login Google → reservasi → invoice → reminder", "kind": "title1", "maxW": 2400, "page": "pelanggan"},
-    "tAdmin": {"x": 0, "y": -300, "text": "Admin login & Admin Agen", "kind": "title1", "maxW": 2960, "page": "admin"},
-    "tAgen": {"x": 0, "y": 1620, "text": "Agen: CS · Kreator · Kasir & Akuntan · Stok Inventaris", "kind": "title1", "maxW": 6000, "page": "admin"}
-  },
-  "designSystems": [
-    {"title": "Sister Studio", "namespace": "sisterstudio", "artifact": "https://claude.ai/code/artifact/087c2653-ae1d-4147-b84b-799fda47345a", "version": "1794669935-4fab", "copiedAt": "2026-11-14T10:00:00Z"}
-  ]
+  "pages": [
+    {
+      "id": "website",
+      "name": "Website publik"
+    },
+    {
+      "id": "pelanggan",
+      "name": "Akun pelanggan"
+    },
+    {
+      "id": "admin",
+      "name": "Admin & Agen"
+    }
+  ],
+  "title": "Sister Studio — Sewa Kebaya"
 }

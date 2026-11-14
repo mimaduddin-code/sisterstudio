@@ -1,0 +1,18 @@
+{
+  "reservasi": "RSV-2026-11-0042",
+  "pelanggan": "nur",
+  "item": [
+    {
+      "keterangan": "Sewa Srikandi Kemuning (M)",
+      "jumlah": 1,
+      "harga": 250000
+    }
+  ],
+  "total": 250000,
+  "dp": 125000,
+  "dibayar": 0,
+  "sisa": 250000,
+  "status": "Menunggu DP",
+  "terbit": "2026-11-14",
+  "contoh": true
+}

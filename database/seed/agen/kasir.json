@@ -1,0 +1,10 @@
+{
+  "nama": "Agen Kasir & Akuntan",
+  "tugas": [
+    "Invoice dan pembayaran",
+    "Kas masuk dan keluar",
+    "Rekap keuangan dan analisa usaha"
+  ],
+  "status": "Aktif",
+  "contoh": false
+}

@@ -1,0 +1,283 @@
+<!doctype html>
+<html lang="id">
+<head>
+<meta charset="utf-8">
+<title>Agen CS — Sister Studio</title>
+<script src="./support.js"></script>
+</head>
+<body>
+<x-dc>
+<helmet>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Crimson+Pro:ital,wght@0,400;0,600;0,700;1,400&amp;family=Great+Vibes&amp;display=swap">
+<style>
+body{margin:0;background:#fdf3e7}
+a{color:#730020}a:hover{color:#4e0014}
+:focus-visible{outline:2px solid #730020;outline-offset:2px}
+.btn-p:hover{background:#4e0014 !important;color:#fdf3e7 !important}
+.btn-s:hover{background:#f6dfdc !important}
+</style>
+</helmet>
+<div style="min-height: 100vh; display: flex; flex-wrap: wrap; background: #fdf3e7; color: #1f0a0a; font-family: 'Crimson Pro', Georgia, 'Times New Roman', serif; font-size: 17px; line-height: 26px;">
+<div style="flex: 1 1 240px; background: #4e0014;">
+<dc-import name="AdminNav" active="cs" hint-size="100%,960px"></dc-import>
+</div>
+
+<main style="flex: 999 1 560px; min-width: 0; padding: 32px; box-sizing: border-box; display: flex; flex-direction: column; gap: 24px;">
+<header style="display: flex; flex-wrap: wrap; align-items: flex-end; justify-content: space-between; gap: 16px;">
+<div style="display: flex; flex-direction: column; gap: 4px;">
+<span style="display: flex; align-items: center; gap: 10px;">
+<span style="font-size: 13px; line-height: 16px; letter-spacing: 0.16em; font-weight: 600; color: #85561c;">AGEN CS</span>
+<span style="padding: 0 10px; border-radius: 2px; background: #dcefee; color: #155e63; font-size: 14px; line-height: 22px; font-weight: 600;">Aktif</span>
+</span>
+<h1 style="margin: 0; font-size: 36px; line-height: 44px; font-weight: 600; color: #4e0014;">Customer service</h1>
+<span style="color: #6a4a44;">Menjawab FAQ, mengirim reminder reservasi, dan membagikan S/K serta kontak sewa.</span>
+</div>
+<div style="display: flex; flex-wrap: wrap; align-items: center; gap: 12px;">
+<span style="font-size: 15px; color: #6a4a44;">Hari ini: 18 chat · 15 dijawab otomatis · 3 ke admin</span>
+<button type="button" onClick="{{toggleAuto}}" aria-pressed="{{auto}}" style="display: inline-flex; align-items: center; gap: 10px; min-height: 44px; padding: 0 14px; border: 1px solid #9a7a5a; border-radius: 2px; background: #fffaf3; font-family: inherit; font-size: 16px; font-weight: 600; color: #1f0a0a; cursor: pointer;">
+<span aria-hidden="true" style="width: 40px; height: 22px; border-radius: 9999px; background: {{autoTrack}}; display: flex; align-items: center; padding: 2px; box-sizing: border-box; justify-content: {{autoJustify}};"><span style="width: 18px; height: 18px; border-radius: 9999px; background: #fffaf3;"></span></span>
+Balas otomatis {{autoLabel}}
+</button>
+</div>
+</header>
+
+<div style="display: flex; flex-wrap: wrap; align-items: stretch; gap: 24px;">
+<section aria-labelledby="inbox" style="flex: 1 1 300px; min-width: 0; background: #fffaf3; border: 1px solid #e6c9a5; border-radius: 12px; overflow: hidden; display: flex; flex-direction: column;">
+<div style="padding: 16px 20px; border-bottom: 1px solid #e6c9a5; display: flex; align-items: center; justify-content: space-between;">
+<h2 id="inbox" style="margin: 0; font-size: 22px; line-height: 30px; font-weight: 600; color: #4e0014;">Kotak masuk</h2>
+<span style="font-size: 14px; color: #6a4a44;">WhatsApp · Web · Instagram</span>
+</div>
+<ul style="list-style: none; margin: 0; padding: 0;">
+<sc-for list="{{convos}}" as="c" hint-placeholder-count="4">
+<li>
+<button type="button" onClick="{{c.pick}}" aria-current="{{c.aria}}" style="width: 100%; display: flex; flex-direction: column; gap: 4px; padding: 14px 20px; border: 0; border-bottom: 1px solid #e6c9a5; background: {{c.bg}}; font-family: inherit; text-align: left; color: #1f0a0a; cursor: pointer;">
+<span style="display: flex; justify-content: space-between; gap: 8px; width: 100%;">
+<span style="font-weight: 600; color: #4e0014;">{{c.name}}</span>
+<span style="font-size: 14px; color: #6a4a44;">{{c.time}}</span>
+</span>
+<span style="font-size: 15px; line-height: 22px; color: #6a4a44; overflow: hidden; text-overflow: ellipsis; white-space: nowrap; width: 100%;">{{c.channel}} · {{c.excerpt}}</span>
+<span style="padding: 0 8px; border-radius: 2px; font-size: 13px; line-height: 20px; font-weight: 600; background: {{c.sb}}; color: {{c.sf}};">{{c.status}}</span>
+</button>
+</li>
+</sc-for>
+</ul>
+</section>
+
+<section aria-label="Percakapan" style="flex: 999 1 460px; min-width: 0; background: #fffaf3; border: 1px solid #e6c9a5; border-radius: 12px; overflow: hidden; display: flex; flex-direction: column;">
+<div style="padding: 16px 20px; border-bottom: 1px solid #e6c9a5; display: flex; flex-wrap: wrap; align-items: center; justify-content: space-between; gap: 8px;">
+<div style="display: flex; flex-direction: column;">
+<span style="font-size: 22px; line-height: 30px; font-weight: 600; color: #4e0014;">{{cur.name}}</span>
+<span style="font-size: 15px; color: #6a4a44;">{{cur.channel}} · {{cur.context}}</span>
+</div>
+<button type="button" class="btn-s" style="min-height: 40px; padding: 0 14px; border: 1px solid #9a7a5a; border-radius: 2px; background: #fffaf3; color: #730020; font-family: inherit; font-size: 15px; font-weight: 600; cursor: pointer;">Ambil alih chat</button>
+</div>
+<div style="flex: 1 1 auto; padding: 20px; background: #fdf3e7; display: flex; flex-direction: column; gap: 12px;">
+<sc-for list="{{cur.msgs}}" as="m" hint-placeholder-count="4">
+<div style="align-self: {{m.align}}; max-width: 82%; display: flex; flex-direction: column; gap: 2px; align-items: {{m.align}};">
+<span style="font-size: 13px; color: #6a4a44;">{{m.who}} · {{m.time}}</span>
+<div style="background: {{m.bg}}; color: {{m.fg}}; border: 1px solid {{m.border}}; border-radius: {{m.radius}}; padding: 10px 14px; white-space: pre-line;">{{m.text}}</div>
+</div>
+</sc-for>
+<sc-if value="{{cur.needsAdmin}}" hint-placeholder-val="{{true}}">
+<div style="border: 2px solid #c8924a; border-radius: 12px; background: #fffaf3; padding: 16px; display: flex; flex-direction: column; gap: 10px;">
+<span style="font-size: 13px; line-height: 16px; letter-spacing: 0.16em; font-weight: 600; color: #85561c;">USULAN BALASAN · MENUNGGU ADMIN</span>
+<label style="display: flex; flex-direction: column; gap: 6px; font-size: 15px; font-weight: 600;">Pesan yang akan dikirim
+<textarea rows="3" style="padding: 10px 12px; border: 1px solid #9a7a5a; border-radius: 2px; background: #fffaf3; font-family: inherit; font-size: 16px; line-height: 24px; font-weight: 400; resize: vertical;">Kak Rina, perpanjangan 1 hari sampai Sen, 16 Nov disetujui. Biaya tambahan [Rp…] dibayar saat pengembalian. Terima kasih sudah memberi tahu lebih awal.</textarea>
+</label>
+<span style="display: flex; flex-wrap: wrap; gap: 8px;">
+<button type="button" class="btn-p" style="min-height: 44px; padding: 0 16px; border: 0; border-radius: 2px; background: #730020; color: #fdf3e7; font-family: inherit; font-size: 16px; font-weight: 600; cursor: pointer;">Setujui &amp; kirim</button>
+<button type="button" class="btn-s" style="min-height: 44px; padding: 0 16px; border: 1px solid #9a7a5a; border-radius: 2px; background: #fffaf3; color: #730020; font-family: inherit; font-size: 16px; font-weight: 600; cursor: pointer;">Tolak dengan sopan</button>
+</span>
+</div>
+</sc-if>
+</div>
+<div style="padding: 12px 16px; border-top: 1px solid #e6c9a5; display: flex; flex-direction: column; gap: 10px;">
+<div role="group" aria-label="Sisipkan jawaban siap pakai" style="display: flex; flex-wrap: wrap; gap: 6px;">
+<button type="button" style="min-height: 36px; padding: 0 12px; border: 1px solid #9a7a5a; border-radius: 9999px; background: #fffaf3; color: #730020; font-family: inherit; font-size: 14px; font-weight: 600; cursor: pointer;">FAQ</button>
+<button type="button" style="min-height: 36px; padding: 0 12px; border: 1px solid #9a7a5a; border-radius: 9999px; background: #fffaf3; color: #730020; font-family: inherit; font-size: 14px; font-weight: 600; cursor: pointer;">Kirim S/K sewa</button>
+<button type="button" style="min-height: 36px; padding: 0 12px; border: 1px solid #9a7a5a; border-radius: 9999px; background: #fffaf3; color: #730020; font-family: inherit; font-size: 14px; font-weight: 600; cursor: pointer;">Kirim kontak admin</button>
+<button type="button" style="min-height: 36px; padding: 0 12px; border: 1px solid #9a7a5a; border-radius: 9999px; background: #fffaf3; color: #730020; font-family: inherit; font-size: 14px; font-weight: 600; cursor: pointer;">Cek ketersediaan</button>
+<button type="button" style="min-height: 36px; padding: 0 12px; border: 1px solid #9a7a5a; border-radius: 9999px; background: #fffaf3; color: #730020; font-family: inherit; font-size: 14px; font-weight: 600; cursor: pointer;">Tautan pesan fitting</button>
+</div>
+<form style="display: flex; gap: 8px;">
+<label style="flex: 1 1 auto; display: flex;"><span style="position: absolute; width: 1px; height: 1px; overflow: hidden; clip: rect(0 0 0 0);">Balas</span>
+<input type="text" placeholder="Balas sebagai admin…" style="flex: 1 1 auto; min-width: 0; min-height: 44px; padding: 0 12px; border: 1px solid #9a7a5a; border-radius: 2px; background: #fffaf3; font-family: inherit; font-size: 16px;">
+</label>
+<button type="button" class="btn-p" style="min-height: 44px; padding: 0 20px; border: 0; border-radius: 2px; background: #730020; color: #fdf3e7; font-family: inherit; font-size: 16px; font-weight: 600; cursor: pointer;">Kirim</button>
+</form>
+</div>
+</section>
+</div>
+
+<section aria-labelledby="antrean" style="background: #fffaf3; border: 1px solid #e6c9a5; border-radius: 12px; padding: 20px 24px; display: flex; flex-direction: column; gap: 12px;">
+<div style="display: flex; flex-wrap: wrap; align-items: center; justify-content: space-between; gap: 12px;">
+<div style="display: flex; flex-direction: column;">
+<h2 id="antrean" style="margin: 0; font-size: 24px; line-height: 32px; font-weight: 600; color: #4e0014;">Antrean reminder reservasi</h2>
+<span style="font-size: 15px; color: #6a4a44;">Pengingat H-1 dikirim otomatis pukul 09.00 · batas DP 9 jam sebelum tenggat</span>
+</div>
+<span style="display: flex; flex-wrap: wrap; gap: 8px;">
+<button type="button" class="btn-s" style="min-height: 40px; padding: 0 14px; border: 1px solid #9a7a5a; border-radius: 2px; background: #fffaf3; color: #730020; font-family: inherit; font-size: 15px; font-weight: 600; cursor: pointer;">Ubah template pesan</button>
+<button type="button" class="btn-p" style="min-height: 40px; padding: 0 14px; border: 0; border-radius: 2px; background: #730020; color: #fdf3e7; font-family: inherit; font-size: 15px; font-weight: 600; cursor: pointer;">Kirim yang terjadwal sekarang</button>
+</span>
+</div>
+<div style="overflow-x: auto; border: 1px solid #e6c9a5; border-radius: 12px;">
+<table style="width: 100%; min-width: 760px; border-collapse: collapse; font-size: 16px; line-height: 24px;">
+<thead>
+<tr style="background: #fbe9d7; text-align: left;">
+<th scope="col" style="padding: 10px 12px; font-weight: 600;">Waktu kirim</th>
+<th scope="col" style="padding: 10px 12px; font-weight: 600;">Pelanggan</th>
+<th scope="col" style="padding: 10px 12px; font-weight: 600;">Jenis</th>
+<th scope="col" style="padding: 10px 12px; font-weight: 600;">Jadwal</th>
+<th scope="col" style="padding: 10px 12px; font-weight: 600;">Kanal</th>
+<th scope="col" style="padding: 10px 12px; font-weight: 600;">Status</th>
+</tr>
+</thead>
+<tbody>
+<sc-for list="{{reminders}}" as="r" hint-placeholder-count="7">
+<tr style="border-top: 1px solid #e6c9a5;">
+<td style="padding: 10px 12px; white-space: nowrap;">{{r.send}}</td>
+<td style="padding: 10px 12px; font-weight: 600;">{{r.who}}</td>
+<td style="padding: 10px 12px;">{{r.type}}</td>
+<td style="padding: 10px 12px; white-space: nowrap;">{{r.when}}</td>
+<td style="padding: 10px 12px;">{{r.channel}}</td>
+<td style="padding: 10px 12px;"><span style="padding: 0 8px; border-radius: 2px; font-size: 14px; line-height: 22px; font-weight: 600; background: {{r.sb}}; color: {{r.sf}}; white-space: nowrap;">{{r.status}}</span></td>
+</tr>
+</sc-for>
+</tbody>
+</table>
+</div>
+</section>
+
+<div style="display: flex; flex-wrap: wrap; align-items: flex-start; gap: 24px;">
+<section aria-labelledby="faq" style="flex: 1 1 420px; min-width: 0; background: #fffaf3; border: 1px solid #e6c9a5; border-radius: 12px; padding: 20px 24px; display: flex; flex-direction: column; gap: 12px;">
+<div style="display: flex; align-items: center; justify-content: space-between; gap: 12px;">
+<h2 id="faq" style="margin: 0; font-size: 24px; line-height: 32px; font-weight: 600; color: #4e0014;">FAQ yang dipakai agen</h2>
+<button type="button" class="btn-p" style="min-height: 40px; padding: 0 14px; border: 0; border-radius: 2px; background: #730020; color: #fdf3e7; font-family: inherit; font-size: 15px; font-weight: 600; cursor: pointer;">Tambah FAQ</button>
+</div>
+<ul style="list-style: none; margin: 0; padding: 0; display: flex; flex-direction: column;">
+<sc-for list="{{faq}}" as="f" hint-placeholder-count="5">
+<li style="display: flex; align-items: center; gap: 12px; padding: 10px 0; border-bottom: 1px solid #e6c9a5;">
+<span style="flex: 1 1 auto; display: flex; flex-direction: column; min-width: 0;">
+<span style="font-weight: 600;">{{f.q}}</span>
+<span style="font-size: 14px; line-height: 20px; color: #6a4a44;">Dipakai {{f.uses}}× minggu ini</span>
+</span>
+<button type="button" class="btn-s" aria-label="Edit FAQ" style="min-height: 40px; padding: 0 12px; border: 1px solid #9a7a5a; border-radius: 2px; background: #fffaf3; color: #730020; font-family: inherit; font-size: 15px; font-weight: 600; cursor: pointer;">Edit</button>
+</li>
+</sc-for>
+</ul>
+<div style="padding: 12px 16px; background: #fbe7c0; border-radius: 12px; color: #7a4a00; display: flex; flex-wrap: wrap; align-items: center; justify-content: space-between; gap: 8px;">
+<span><strong>Pertanyaan baru tanpa jawaban:</strong> “Apakah bisa sewa aksesori seperti sanggul dan selop?” (4 kali)</span>
+<button type="button" style="min-height: 40px; padding: 0 12px; border: 1px solid #7a4a00; border-radius: 2px; background: transparent; color: #7a4a00; font-family: inherit; font-size: 15px; font-weight: 600; cursor: pointer;">Buat FAQ</button>
+</div>
+</section>
+
+<section aria-labelledby="sk" style="flex: 1 1 420px; min-width: 0; background: #fffaf3; border: 1px solid #e6c9a5; border-radius: 12px; padding: 20px 24px; display: flex; flex-direction: column; gap: 12px;">
+<h2 id="sk" style="margin: 0; font-size: 24px; line-height: 32px; font-weight: 600; color: #4e0014;">S/K dan kontak sewa</h2>
+<sc-for list="{{docs}}" as="d" hint-placeholder-count="3">
+<div style="border: 1px solid #e6c9a5; border-radius: 12px; padding: 14px 16px; display: flex; flex-wrap: wrap; align-items: center; gap: 8px 16px;">
+<span style="flex: 1 1 220px; display: flex; flex-direction: column; min-width: 0;">
+<span style="font-weight: 600; color: #4e0014;">{{d.title}}</span>
+<span style="font-size: 15px; line-height: 22px; color: #6a4a44;">{{d.meta}}</span>
+</span>
+<span style="display: flex; gap: 8px;">
+<button type="button" class="btn-s" style="min-height: 40px; padding: 0 12px; border: 1px solid #9a7a5a; border-radius: 2px; background: #fffaf3; color: #730020; font-family: inherit; font-size: 15px; font-weight: 600; cursor: pointer;">Edit</button>
+<a href="Kontak.dc.html" style="min-height: 40px; display: inline-flex; align-items: center; padding: 0 4px; font-size: 15px; font-weight: 600;">Lihat di website</a>
+</span>
+</div>
+</sc-for>
+</section>
+</div>
+</main>
+</div>
+</x-dc>
+<script type="text/x-dc" data-dc-script data-props='{"$preview":{"width":1440,"height":1500}}'>
+class Component extends DCLogic {
+  constructor(props) {
+    super(props);
+    this.state = { c: 0, auto: true };
+  }
+  renderVals() {
+    const ST = {
+      admin: { sb: '#fbe0da', sf: '#a11d12', status: 'Perlu admin' },
+      bot: { sb: '#dcefee', sf: '#155e63', status: 'Dijawab bot' },
+      wait: { sb: '#fbe7c0', sf: '#7a4a00', status: 'Menunggu pelanggan' }
+    };
+    const M = (who, time, text) => {
+      const cust = who !== 'Agen CS' && who !== 'Sistem';
+      const sys = who === 'Sistem';
+      return {
+        who, time, text,
+        align: cust ? 'flex-start' : (sys ? 'center' : 'flex-end'),
+        bg: cust ? '#fffaf3' : (sys ? '#e4e8f3' : '#730020'),
+        fg: cust ? '#1f0a0a' : (sys ? '#3a4a72' : '#fdf3e7'),
+        border: cust ? '#e6c9a5' : (sys ? '#e4e8f3' : '#730020'),
+        radius: cust ? '12px 12px 12px 2px' : (sys ? '9999px' : '12px 12px 2px 12px')
+      };
+    };
+    const C = [
+      { name: 'Rina', channel: 'WhatsApp', time: '12.15', st: 'admin', excerpt: 'Bisa diperpanjang 1 hari?', context: 'Sedang menyewa Candrakirana Nusantara (M)', needsAdmin: true,
+        msgs: [
+          M('Rina', '12.10', 'Kak, acara keluarga saya mundur ke Senin. Kebaya Candrakirana bisa diperpanjang 1 hari?'),
+          M('Agen CS', '12.11', 'Bisa saya bantu cek, Kak Rina. Candrakirana Nusantara ukuran M belum dipesan siapa pun sampai Rab, 18 Nov.\nPerpanjangan perlu persetujuan admin, jadi saya teruskan sekarang ya.'),
+          M('Sistem', '12.15', 'Diteruskan ke admin · menunggu persetujuan')
+        ] },
+      { name: 'Sari', channel: 'Web chat', time: '11.02', st: 'bot', excerpt: 'Besok jam berapa fitting saya?', context: 'Fitting Min, 15 Nov 10.00 · Fuchsia Glam', needsAdmin: false,
+        msgs: [
+          M('Sari', '11.01', 'Halo, besok jam berapa jadwal fitting saya?'),
+          M('Agen CS', '11.01', 'Halo Kak Sari. Jadwal fitting Anda Min, 15 Nov 2026 pukul 10.00 untuk Kebaya Fuchsia Glam.\nMohon datang 10 menit lebih awal. Sampai bertemu di studio.'),
+          M('Sari', '11.02', 'Siap, terima kasih kak')
+        ] },
+      { name: 'Nadia', channel: 'Instagram', time: '10.47', st: 'bot', excerpt: 'Fuchsia Glam tgl 28 Nov ada?', context: 'Calon pelanggan', needsAdmin: false,
+        msgs: [
+          M('Nadia', '10.45', 'Kak, Fuchsia Glam untuk tanggal 28 Nov masih ada? Harganya berapa?'),
+          M('Agen CS', '10.46', 'Halo Kak Nadia. Fuchsia Glam (Koleksi 009) tersedia untuk Sab, 28 Nov. Harga sewanya Rp300.000 / stel.\nSilakan pesan jadwal fitting lewat sisterstudio.com/fitting agar tanggalnya kami kunci.')
+        ] },
+      { name: 'Maya', channel: 'WhatsApp', time: '09.30', st: 'wait', excerpt: 'Instruksi DP sudah dikirim', context: 'Fitting Sen, 16 Nov 14.30 · Mocha Elegance', needsAdmin: false,
+        msgs: [
+          M('Maya', '09.28', 'Kak, DP-nya transfer ke mana ya?'),
+          M('Agen CS', '09.30', 'Invoice INV-2026-11-0043 sudah saya kirim ke email Kak Maya. DP Rp100.000 bisa lewat transfer bank atau QRIS, paling lambat hari ini pukul 23.59.')
+        ] }
+    ];
+    const ci = this.state.c;
+    const convos = C.map((c, i) => Object.assign({}, c, ST[c.st], {
+      aria: i === ci ? 'true' : 'false',
+      bg: i === ci ? '#f6dfdc' : '#fffaf3',
+      pick: () => this.setState({ c: i })
+    }));
+    const OK = { sb: '#dcefee', sf: '#155e63', status: 'Terkirim' };
+    const PLAN = { sb: '#e4e8f3', sf: '#3a4a72', status: 'Terjadwal' };
+    const auto = this.state.auto;
+    return {
+      convos, cur: C[ci],
+      auto,
+      autoLabel: auto ? 'aktif' : 'mati',
+      autoTrack: auto ? '#155e63' : '#9a7a5a',
+      autoJustify: auto ? 'flex-end' : 'flex-start',
+      toggleAuto: () => this.setState({ auto: !auto }),
+      reminders: [
+        Object.assign({ send: 'Sab, 14 Nov 09.00', who: 'Sari', type: 'H-1 fitting', when: 'Min, 15 Nov 10.00', channel: 'WhatsApp + email' }, OK),
+        Object.assign({ send: 'Sab, 14 Nov 09.00', who: 'Ayu', type: 'H-1 pengambilan', when: 'Min, 15 Nov 11.30', channel: 'WhatsApp' }, OK),
+        Object.assign({ send: 'Sab, 14 Nov 09.00', who: 'Dewi', type: 'H-1 fitting', when: 'Min, 15 Nov 13.00', channel: 'WhatsApp + email' }, OK),
+        { send: 'Sab, 14 Nov 09.00', who: 'Lestari', type: 'Terlambat kembali', when: 'Jum, 13 Nov', channel: 'WhatsApp', sb: '#fbe0da', sf: '#a11d12', status: 'Gagal · nomor tidak aktif' },
+        Object.assign({ send: 'Sab, 14 Nov 15.00', who: 'Maya', type: 'Batas bayar DP', when: 'Sab, 14 Nov 23.59', channel: 'WhatsApp' }, PLAN),
+        Object.assign({ send: 'Min, 15 Nov 09.00', who: 'Rina', type: 'Hari pengembalian', when: 'Sen, 16 Nov 09.00', channel: 'WhatsApp' }, PLAN),
+        Object.assign({ send: 'Min, 15 Nov 09.00', who: 'Maya', type: 'H-1 fitting', when: 'Sen, 16 Nov 14.30', channel: 'WhatsApp + email' }, PLAN)
+      ],
+      faq: [
+        { q: 'Berapa harga sewa dan apa yang termasuk?', uses: 42 },
+        { q: 'Apakah koleksi tersedia di tanggal saya?', uses: 37 },
+        { q: 'Bagaimana cara pesan jadwal fitting?', uses: 25 },
+        { q: 'Kapan kebaya diambil dan dikembalikan?', uses: 18 },
+        { q: 'Metode pembayaran dan DP', uses: 14 }
+      ],
+      docs: [
+        { title: 'Syarat & ketentuan sewa', meta: 'Versi 3 · diperbarui Sen, 2 Nov 2026 · dikirim 23× minggu ini' },
+        { title: 'Kontak sewa', meta: 'Admin 1 0812 7111 6292 · Admin 2 0813 6868 5449 · Admin 3 0822 1621 9763 · @sisterstudio.plg' },
+        { title: 'Lokasi dan jam buka studio', meta: '[Alamat studio] · [Jam buka]' }
+      ]
+    };
+  }
+}
+</script>
+</body>
+</html>

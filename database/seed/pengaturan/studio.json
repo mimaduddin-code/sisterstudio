@@ -1,0 +1,37 @@
+{
+  "nama": "Sister Studio",
+  "tagline": "Sewa Kebaya & Dress",
+  "website": "sisterstudio.com",
+  "instagram": "@sisterstudio.plg",
+  "admin": [
+    {
+      "nama": "Admin 1",
+      "whatsapp": "081271116292"
+    },
+    {
+      "nama": "Admin 2",
+      "whatsapp": "081368685449"
+    },
+    {
+      "nama": "Admin 3",
+      "whatsapp": "082216219763"
+    }
+  ],
+  "alamat": "[Alamat studio]",
+  "jam_buka": "[Hari dan jam buka]",
+  "email": "[email]@sisterstudio.com",
+  "maps": "[Tautan Google Maps]",
+  "dp_persen": 50,
+  "lama_sewa_hari": 3,
+  "jam_fitting": [
+    "10.00",
+    "11.30",
+    "13.00",
+    "14.30",
+    "16.00",
+    "19.00"
+  ],
+  "jam_kirim_pengingat": "09.00",
+  "catatan": "DP, lama sewa, dan jam fitting adalah nilai contoh dari desain; sesuaikan.",
+  "contoh": false
+}

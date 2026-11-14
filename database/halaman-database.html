@@ -1,0 +1,449 @@
+<title>Database Sister Studio</title>
+<meta name="claude:viewport-fit-sides" content="cover">
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Crimson+Pro:ital,wght@0,400;0,600;0,700;1,400&display=swap">
+<style>
+/* Layout: maroon header band, collection index on the left, record table centre, record editor docked right (stacks on phones). Tokens follow the Sister Studio design system. */
+:root {
+  --bg: #fdf3e7; --surface: #fffaf3; --panel: #fbe9d7; --ink: #1f0a0a; --muted: #6a4a44;
+  --line: #e6c9a5; --control: #9a7a5a; --brand: #730020; --brand-strong: #4e0014; --on-brand: #fdf3e7;
+  --gold: #f2d08c; --frame: #c8924a; --gold-text: #85561c; --tint: #f6dfdc; --band: #4e0014; --on-band: #fdf3e7; --band-sub: #f2d08c;
+  --ok: #155e63; --ok-bg: #dcefee; --warn: #7a4a00; --warn-bg: #fbe7c0; --bad: #a11d12; --bad-bg: #fbe0da; --info: #3a4a72; --info-bg: #e4e8f3;
+  --serif: "Crimson Pro", Georgia, "Times New Roman", serif;
+  --shadow: 0 1px 2px rgba(78,0,20,0.06), 0 4px 16px rgba(78,0,20,0.06);
+}
+@media (prefers-color-scheme: dark) { :root:not([data-theme="light"]) {
+  --bg: #1a0b0c; --surface: #241113; --panel: #2e1619; --ink: #fdf3e7; --muted: #d9bfa8;
+  --line: #4a2a2a; --control: #a88b6e; --brand: #f2d08c; --brand-strong: #f7dfae; --on-brand: #3a000f;
+  --gold: #f2d08c; --frame: #c8924a; --gold-text: #e8c48a; --tint: #3a1a1e; --band: #3a000f; --on-band: #fdf3e7; --band-sub: #f2d08c;
+  --ok: #8fd3d6; --ok-bg: #10393b; --warn: #f2c46b; --warn-bg: #3e2a08; --bad: #f4a097; --bad-bg: #4a1510; --info: #b7c3e8; --info-bg: #1f2944;
+  --shadow: none; color-scheme: dark; } }
+:root[data-theme="dark"] {
+  --bg: #1a0b0c; --surface: #241113; --panel: #2e1619; --ink: #fdf3e7; --muted: #d9bfa8;
+  --line: #4a2a2a; --control: #a88b6e; --brand: #f2d08c; --brand-strong: #f7dfae; --on-brand: #3a000f;
+  --gold: #f2d08c; --frame: #c8924a; --gold-text: #e8c48a; --tint: #3a1a1e; --band: #3a000f; --on-band: #fdf3e7; --band-sub: #f2d08c;
+  --ok: #8fd3d6; --ok-bg: #10393b; --warn: #f2c46b; --warn-bg: #3e2a08; --bad: #f4a097; --bad-bg: #4a1510; --info: #b7c3e8; --info-bg: #1f2944;
+  --shadow: none; color-scheme: dark; }
+* { box-sizing: border-box; }
+body { background: var(--bg); color: var(--ink); font-family: var(--serif); font-size: 17px; line-height: 1.5; }
+button, input, select, textarea { font: inherit; color: inherit; }
+:focus-visible { outline: 2px solid var(--brand); outline-offset: 2px; }
+.wrap { max-width: 1440px; margin: 0 auto; padding-left: max(16px, env(safe-area-inset-left, 0px)); padding-right: max(16px, env(safe-area-inset-right, 0px)); }
+header.band { background: var(--band); color: var(--on-band); border-bottom: 2px solid var(--frame); }
+header.band .wrap { padding-block: 20px; display: flex; flex-wrap: wrap; align-items: flex-end; justify-content: space-between; gap: 16px; }
+.eyebrow { font-size: 12px; letter-spacing: 0.16em; font-weight: 600; text-transform: uppercase; }
+header.band .eyebrow { color: var(--band-sub); }
+h1 { margin: 2px 0 0; font-size: 34px; line-height: 1.15; font-weight: 600; text-wrap: balance; }
+.sub { color: var(--band-sub); font-size: 16px; }
+.hstats { display: flex; flex-wrap: wrap; gap: 8px 20px; align-items: center; font-size: 16px; }
+.live { display: inline-flex; align-items: center; gap: 8px; }
+.dot { width: 10px; height: 10px; border-radius: 50%; background: var(--control); }
+.dot.on { background: #4fb3a9; }
+.btn { min-height: 44px; padding: 0 16px; border-radius: 2px; border: 1px solid var(--control); background: var(--surface); color: var(--brand); font-weight: 600; cursor: pointer; display: inline-flex; align-items: center; gap: 8px; }
+.btn:hover { background: var(--tint); }
+.btn.primary { background: var(--brand); border-color: var(--brand); color: var(--on-brand); }
+.btn.primary:hover { background: var(--brand-strong); }
+.btn.danger { border-color: var(--bad); color: var(--bad); }
+.btn.danger:hover { background: var(--bad-bg); }
+.btn.on-band { background: transparent; border-color: var(--band-sub); color: var(--on-band); }
+.btn.on-band:hover { background: rgba(242,208,140,0.15); }
+.btn:disabled { opacity: 0.55; cursor: not-allowed; }
+main .wrap { padding-block: 24px 48px; display: flex; flex-wrap: wrap; gap: 24px; align-items: flex-start; }
+nav.index { flex: 1 1 230px; max-width: 100%; display: flex; flex-direction: column; gap: 16px; }
+nav.index h2 { margin: 0 0 4px; font-size: 13px; letter-spacing: 0.16em; text-transform: uppercase; color: var(--gold-text); font-weight: 600; }
+nav.index ul { list-style: none; margin: 0; padding: 0; display: flex; flex-direction: column; gap: 2px; }
+nav.index a { display: flex; justify-content: space-between; gap: 8px; min-height: 40px; align-items: center; padding: 0 12px; border-radius: 2px; color: var(--ink); text-decoration: none; }
+nav.index a:hover { background: var(--tint); }
+nav.index a[aria-current="page"] { background: var(--brand); color: var(--on-brand); font-weight: 600; }
+nav.index .n { font-variant-numeric: tabular-nums; font-size: 15px; opacity: 0.85; }
+section.records { flex: 999 1 560px; min-width: 0; display: flex; flex-direction: column; gap: 16px; }
+.card { background: var(--surface); border: 1px solid var(--line); border-radius: 12px; box-shadow: var(--shadow); }
+.rec-head { display: flex; flex-wrap: wrap; align-items: flex-end; justify-content: space-between; gap: 12px; }
+.rec-head h2 { margin: 0; font-size: 30px; line-height: 1.2; font-weight: 600; color: var(--brand-strong); }
+:root:not([data-theme="dark"]) .rec-head h2 { color: #4e0014; }
+.rec-head p { margin: 4px 0 0; color: var(--muted); max-width: 64ch; }
+.tools { display: flex; flex-wrap: wrap; gap: 8px; }
+input[type="search"], .field input, .field select, .field textarea { min-height: 44px; padding: 8px 12px; border: 1px solid var(--control); border-radius: 2px; background: var(--surface); width: 100%; }
+input[type="search"] { width: 240px; max-width: 100%; }
+.table-box { overflow-x: auto; }
+table { width: 100%; border-collapse: collapse; font-size: 16px; font-variant-numeric: tabular-nums; }
+th { text-align: left; font-weight: 600; background: var(--panel); padding: 10px 12px; white-space: nowrap; }
+td { padding: 10px 12px; border-top: 1px solid var(--line); vertical-align: top; }
+td.num, th.num { text-align: right; white-space: nowrap; }
+tbody tr { cursor: pointer; }
+tbody tr:hover { background: var(--tint); }
+tbody tr[aria-selected="true"] { background: var(--tint); box-shadow: inset 3px 0 0 var(--brand); }
+.id { font-weight: 600; white-space: nowrap; }
+.pill { display: inline-block; padding: 0 8px; border-radius: 2px; font-size: 14px; line-height: 22px; font-weight: 600; white-space: nowrap; }
+.t-ok { background: var(--ok-bg); color: var(--ok); } .t-warn { background: var(--warn-bg); color: var(--warn); }
+.t-bad { background: var(--bad-bg); color: var(--bad); } .t-info { background: var(--info-bg); color: var(--info); }
+.t-neutral { background: var(--panel); color: var(--muted); }
+.empty { padding: 32px 20px; text-align: center; color: var(--muted); }
+.note { padding: 12px 16px; border-radius: 12px; background: var(--panel); color: var(--muted); font-size: 16px; }
+.note.err { background: var(--bad-bg); color: var(--bad); }
+.note.ok { background: var(--ok-bg); color: var(--ok); }
+aside.editor { flex: 1 1 380px; min-width: 0; padding: 20px; display: flex; flex-direction: column; gap: 14px; }
+aside.editor h3 { margin: 0; font-size: 22px; font-weight: 600; word-break: break-word; }
+.field { display: flex; flex-direction: column; gap: 4px; }
+.field label, .field .lab { font-size: 15px; font-weight: 600; }
+.field .hint { font-size: 13px; color: var(--muted); font-weight: 400; }
+.field textarea { min-height: 88px; resize: vertical; line-height: 1.45; }
+.field textarea.json { font-family: ui-monospace, SFMono-Regular, Menlo, Consolas, monospace; font-size: 13px; min-height: 120px; }
+.check { display: flex; align-items: center; gap: 8px; min-height: 36px; }
+.check input { width: 20px; height: 20px; accent-color: var(--brand); }
+.row { display: flex; flex-wrap: wrap; gap: 8px; }
+.confirm { padding: 12px 14px; border: 1px solid var(--bad); border-radius: 12px; background: var(--bad-bg); color: var(--bad); display: flex; flex-direction: column; gap: 10px; }
+footer.foot .wrap { padding-block: 0 32px; color: var(--muted); font-size: 15px; }
+@media (prefers-reduced-motion: no-preference) { tbody tr { transition: background-color .12s; } }
+</style>
+
+<header class="band">
+  <div class="wrap">
+    <div>
+      <div class="eyebrow">Sister Studio · sisterstudio.com</div>
+      <h1>Database</h1>
+      <div class="sub">Semua data website, reservasi, keuangan, stok, dan agen di satu tempat.</div>
+    </div>
+    <div class="hstats">
+      <span class="live"><span class="dot" id="liveDot"></span><span id="liveText">Menghubungkan…</span></span>
+      <span id="totalText">— dokumen</span>
+      <span id="sampleText"></span>
+      <button class="btn on-band" id="exportBtn" type="button" hidden>Unduh JSON</button>
+      <button class="btn on-band" id="purgeBtn" type="button" hidden>Hapus data contoh</button>
+    </div>
+  </div>
+</header>
+
+<main>
+  <div class="wrap">
+    <nav class="index" id="index" aria-label="Koleksi data"></nav>
+    <section class="records" aria-labelledby="recTitle">
+      <div id="purgeBox"></div>
+      <div class="rec-head">
+        <div>
+          <div class="eyebrow" id="recGroup" style="color: var(--gold-text)"></div>
+          <h2 id="recTitle">Database</h2>
+          <p id="recDesc">Memuat koleksi…</p>
+        </div>
+        <div class="tools">
+          <label for="q" style="position:absolute;width:1px;height:1px;overflow:hidden;clip:rect(0 0 0 0)">Cari di koleksi ini</label>
+          <input type="search" id="q" placeholder="Cari di koleksi ini…">
+          <button class="btn primary" id="addBtn" type="button" hidden>+ Tambah dokumen</button>
+        </div>
+      </div>
+      <div id="status"></div>
+      <div class="card table-box"><table id="table"><thead></thead><tbody></tbody></table><div class="empty" id="emptyBox">Menghubungkan ke database…</div></div>
+    </section>
+    <aside class="editor card" id="editor" hidden aria-labelledby="edTitle"></aside>
+  </div>
+</main>
+<footer class="foot"><div class="wrap">Dokumen bertanda <span class="pill t-neutral">Contoh</span> berasal dari desain dan bisa dihapus sekaligus. Data katalog, harga, kontak, FAQ, dan draf S/K adalah data asli studio.</div></footer>
+
+<script>
+(function () {
+  const SCHEMA = [
+    { id: 'koleksi', label: 'Koleksi', group: 'Katalog & stok', desc: 'Katalog website: kode, harga, deskripsi, foto, dan stok per ukuran. Dikelola Agen Kreator dan Agen Stok.', cols: [['kode','Kode'],['nama','Nama'],['harga','Harga','rp'],['stok','Tersedia','stok'],['tampil','Di website','bool']] },
+    { id: 'gerak_stok', label: 'Keluar & kembali', group: 'Katalog & stok', desc: 'Riwayat peminjaman: setiap kebaya keluar dan kembali, dengan kondisinya. Dicatat Agen Stok.', cols: [['waktu','Waktu','date'],['gerak','Gerak','status'],['koleksi','Koleksi'],['ukuran','Ukuran'],['pelanggan','Pelanggan'],['catatan','Catatan']] },
+    { id: 'perawatan', label: 'Perawatan', group: 'Katalog & stok', desc: 'Laundry dan perbaikan yang sedang berjalan.', cols: [['koleksi','Koleksi'],['ukuran','Ukuran'],['jenis','Jenis'],['status','Status','status'],['siap','Siap','date']] },
+    { id: 'pelanggan', label: 'Pelanggan', group: 'Pelanggan & reservasi', desc: 'Akun pelanggan yang masuk dengan Google, beserta saluran pengingatnya.', cols: [['nama','Nama'],['login','Login'],['whatsapp','WhatsApp'],['pengingat','Pengingat','list']] },
+    { id: 'reservasi', label: 'Reservasi', group: 'Pelanggan & reservasi', desc: 'Jadwal fitting, pengambilan, acara, dan pengembalian per pelanggan.', cols: [['pelanggan','Pelanggan'],['koleksi','Koleksi'],['ukuran','Ukuran'],['fitting','Fitting','date'],['acara','Acara','date'],['kembali','Kembali','date'],['status','Status','status']] },
+    { id: 'pengingat', label: 'Pengingat', group: 'Pelanggan & reservasi', desc: 'Reminder reservasi, DP, pengambilan, dan pengembalian. Dikirim Agen CS dan Agen Stok.', cols: [['kirim','Dikirim','date'],['pelanggan','Pelanggan'],['jenis','Jenis'],['jadwal','Jadwal','date'],['kanal','Kanal'],['status','Status','status']] },
+    { id: 'testimoni', label: 'Testimoni', group: 'Pelanggan & reservasi', desc: 'Ulasan pelanggan yang tampil di website setelah disetujui admin. Belum ada ulasan asli.', cols: [['pelanggan','Pelanggan'],['koleksi','Koleksi'],['momen','Momen'],['ulasan','Ulasan'],['status','Status','status']] },
+    { id: 'invoice', label: 'Invoice', group: 'Keuangan', desc: 'Tagihan sewa, DP, dan pelunasan. Dikelola Agen Kasir.', cols: [['pelanggan','Pelanggan'],['total','Total','rp'],['dibayar','Dibayar','rp'],['sisa','Sisa','rp'],['status','Status','status'],['terbit','Terbit','date']] },
+    { id: 'kas', label: 'Kas masuk & keluar', group: 'Keuangan', desc: 'Buku kas harian.', cols: [['waktu','Waktu','date'],['keterangan','Keterangan'],['kategori','Kategori'],['masuk','Masuk','rp'],['keluar','Keluar','rp']] },
+    { id: 'rekap', label: 'Rekap & analisa', group: 'Keuangan', desc: 'Rekap bulanan dan analisa usaha dari Agen Kasir.', cols: [['periode','Periode'],['kas_masuk','Kas masuk','rp'],['kas_keluar','Kas keluar','rp'],['saldo','Saldo','rp'],['piutang','Piutang','rp']] },
+    { id: 'faq', label: 'FAQ', group: 'Layanan & konten', desc: 'Jawaban yang dipakai Agen CS dan tampil di halaman Kontak.', cols: [['pertanyaan','Pertanyaan'],['dipakai_minggu_ini','Dipakai','num'],['tampil_di_website','Di website','bool']] },
+    { id: 'dokumen', label: 'S/K & kontak', group: 'Layanan & konten', desc: 'Syarat dan ketentuan sewa, kontak, serta lokasi yang dibagikan Agen CS.', cols: [['judul','Judul'],['status','Status'],['diperbarui','Diperbarui','date']] },
+    { id: 'konten', label: 'Konten medsos', group: 'Layanan & konten', desc: 'Jadwal posting dan ide konten dari Agen Kreator.', cols: [['tayang','Tayang','date'],['judul','Judul'],['kanal','Kanal','list'],['status','Status','status']] },
+    { id: 'keputusan', label: 'Keputusan owner', group: 'Agen & owner', desc: 'Hal yang diteruskan agen kepada owner untuk disetujui.', cols: [['agen','Agen'],['teks','Perihal'],['status','Status','status'],['dibuat','Dibuat','date']] },
+    { id: 'aktivitas', label: 'Log aktivitas agen', group: 'Agen & owner', desc: 'Catatan Admin Agen, satu dokumen per hari.', cols: [['tanggal','Tanggal','date'],['entri','Entri','count']] },
+    { id: 'agen', label: 'Agen', group: 'Agen & owner', desc: 'Lima agen dan tugasnya.', cols: [['nama','Nama'],['tugas','Tugas','list'],['status','Status','status']] },
+    { id: 'pengaturan', label: 'Pengaturan studio', group: 'Agen & owner', desc: 'Nama, kontak, dan aturan dasar studio.', cols: [['nama','Nama'],['website','Website'],['instagram','Instagram'],['dp_persen','DP %','num']] }
+  ];
+  const byId = Object.fromEntries(SCHEMA.map(s => [s.id, s]));
+  const cache = {}; SCHEMA.forEach(s => { cache[s.id] = null; });
+  let db = null, canEdit = false, downloads = null;
+  let current = 'koleksi', selected = null, isNew = false, confirmDelete = false, purgeAsk = false, query = '';
+  const $ = (id) => document.getElementById(id);
+
+  function h(tag, attrs, ...kids) {
+    const el = document.createElement(tag);
+    if (attrs) for (const [k, v] of Object.entries(attrs)) {
+      if (v === null || v === undefined || v === false) continue;
+      if (k === 'class') el.className = v;
+      else if (k.startsWith('on')) el.addEventListener(k.slice(2), v);
+      else if (k === 'text') el.textContent = v;
+      else el.setAttribute(k, v === true ? '' : v);
+    }
+    for (const kid of kids.flat()) if (kid !== null && kid !== undefined && kid !== false) el.append(kid.nodeType ? kid : String(kid));
+    return el;
+  }
+  const DAYS = ['Min','Sen','Sel','Rab','Kam','Jum','Sab'];
+  const MON = ['Jan','Feb','Mar','Apr','Mei','Jun','Jul','Agu','Sep','Okt','Nov','Des'];
+  function fmtDate(v) {
+    if (typeof v !== 'string') return v == null ? '—' : String(v);
+    const m = v.match(/^(\d{4})-(\d{2})-(\d{2})(?:T(\d{2}):(\d{2}))?/);
+    if (!m) return v;
+    const d = new Date(Date.UTC(+m[1], +m[2] - 1, +m[3]));
+    return DAYS[d.getUTCDay()] + ', ' + (+m[3]) + ' ' + MON[+m[2] - 1] + ' ' + m[1] + (m[4] ? ' · ' + m[4] + '.' + m[5] : '');
+  }
+  const rp = (n) => typeof n === 'number' ? 'Rp' + Math.round(n).toString().replace(/\B(?=(\d{3})+(?!\d))/g, '.') : (n == null ? '—' : String(n));
+  function tone(v) {
+    const s = String(v || '').toLowerCase();
+    if (/(lewat|gagal|terlambat|belum lunas|habis|tolak)/.test(s)) return 't-bad';
+    if (/(lunas|terkirim|aktif|selesai|tersedia|kembali|disetujui)/.test(s)) return 't-ok';
+    if (/(menunggu|draf|proses|dp|perbaikan|laundry)/.test(s)) return 't-warn';
+    if (/(dipesan|disewa|terjadwal|keluar|baru)/.test(s)) return 't-info';
+    return 't-neutral';
+  }
+  function cell(val, kind) {
+    if (kind === 'rp') return h('td', { class: 'num' }, rp(val));
+    if (kind === 'num') return h('td', { class: 'num' }, val == null ? '—' : String(val));
+    if (kind === 'date') return h('td', { style: 'white-space:nowrap' }, val ? fmtDate(val) : '—');
+    if (kind === 'bool') return h('td', null, h('span', { class: 'pill ' + (val ? 't-ok' : 't-neutral') }, val ? 'Ya' : 'Tidak'));
+    if (kind === 'list') return h('td', null, Array.isArray(val) ? val.join(', ') : (val == null ? '—' : String(val)));
+    if (kind === 'count') return h('td', { class: 'num' }, Array.isArray(val) ? val.length + ' entri' : '—');
+    if (kind === 'status') return h('td', null, val ? h('span', { class: 'pill ' + tone(val) }, String(val)) : '—');
+    if (kind === 'stok') {
+      if (!val || typeof val !== 'object') return h('td', null, '—');
+      let t = 0, a = 0; Object.values(val).forEach(x => { t += +x.total || 0; a += +x.tersedia || 0; });
+      return h('td', { class: 'num' }, a + ' dari ' + t);
+    }
+    if (val == null || val === '') return h('td', null, '—');
+    if (typeof val === 'object') return h('td', null, Array.isArray(val) ? val.length + ' item' : '{…}');
+    const s = String(val);
+    return h('td', null, s.length > 90 ? s.slice(0, 88) + '…' : s);
+  }
+
+  function totals() {
+    let n = 0, c = 0, loaded = 0;
+    for (const s of SCHEMA) { const list = cache[s.id]; if (!list) continue; loaded++; n += list.length; c += list.filter(d => d.data.contoh === true).length; }
+    return { n, c, loaded };
+  }
+  function renderHeader() {
+    const t = totals();
+    $('totalText').textContent = t.loaded ? t.n + ' dokumen di ' + SCHEMA.length + ' koleksi' : '— dokumen';
+    $('sampleText').textContent = t.c ? t.c + ' contoh' : '';
+    $('purgeBtn').hidden = !(canEdit && t.c > 0);
+    $('exportBtn').hidden = !downloads || !t.loaded;
+  }
+  function renderIndex() {
+    const nav = $('index'); nav.replaceChildren();
+    const groups = [];
+    SCHEMA.forEach(s => { let g = groups.find(x => x.name === s.group); if (!g) { g = { name: s.group, items: [] }; groups.push(g); } g.items.push(s); });
+    for (const g of groups) {
+      nav.append(h('div', null, h('h2', null, g.name), h('ul', null, g.items.map(s =>
+        h('li', null, h('a', { href: '#' + s.id.replace(/_/g, '-'), 'aria-current': s.id === current ? 'page' : null },
+          h('span', null, s.label), h('span', { class: 'n' }, cache[s.id] ? String(cache[s.id].length) : '·')))))));
+    }
+  }
+  function filtered() {
+    const list = cache[current] || [];
+    if (!query) return list;
+    const q = query.toLowerCase();
+    return list.filter(d => d.id.toLowerCase().includes(q) || JSON.stringify(d.data).toLowerCase().includes(q));
+  }
+  function renderTable() {
+    const s = byId[current];
+    $('recGroup').textContent = s.group; $('recTitle').textContent = s.label; $('recDesc').textContent = s.desc;
+    $('addBtn').hidden = !canEdit;
+    const thead = $('table').tHead, tbody = $('table').tBodies[0];
+    thead.replaceChildren(h('tr', null, h('th', { scope: 'col' }, 'ID'), s.cols.map(c => h('th', { scope: 'col', class: (c[2] === 'rp' || c[2] === 'num' || c[2] === 'count' || c[2] === 'stok') ? 'num' : null }, c[1])), h('th', { scope: 'col' }, h('span', { style: 'position:absolute;width:1px;height:1px;overflow:hidden;clip:rect(0 0 0 0)' }, 'Sumber'))));
+    tbody.replaceChildren();
+    const list = cache[current];
+    const empty = $('emptyBox');
+    if (!db) { empty.hidden = false; return; }
+    if (!list) { empty.hidden = false; empty.textContent = 'Memuat ' + s.label.toLowerCase() + '…'; return; }
+    const rows = filtered();
+    if (!rows.length) {
+      empty.hidden = false;
+      empty.textContent = query ? 'Tidak ada dokumen yang cocok dengan “' + query + '”.' : 'Belum ada dokumen di ' + s.label + '.' + (canEdit ? ' Pilih “Tambah dokumen” untuk membuat yang pertama.' : '');
+      return;
+    }
+    empty.hidden = true;
+    for (const d of rows) {
+      const tr = h('tr', { tabindex: '0', 'aria-selected': d.id === selected && !isNew ? 'true' : 'false',
+        onclick: () => openDoc(d.id), onkeydown: (e) => { if (e.key === 'Enter' || e.key === ' ') { e.preventDefault(); openDoc(d.id); } } },
+        h('td', { class: 'id' }, d.id), s.cols.map(c => cell(d.data[c[0]], c[2])),
+        h('td', null, d.data.contoh === true ? h('span', { class: 'pill t-neutral' }, 'Contoh') : ''));
+      tbody.append(tr);
+    }
+  }
+  function openDoc(id) { selected = id; isNew = false; confirmDelete = false; renderTable(); renderEditor(); }
+
+  function fieldFor(key, val) {
+    const id = 'f_' + key;
+    if (typeof val === 'boolean') return h('div', { class: 'field' }, h('label', { class: 'check' }, h('input', { type: 'checkbox', id, 'data-key': key, 'data-type': 'bool', checked: val, disabled: !canEdit }), key));
+    if (typeof val === 'number') return h('div', { class: 'field' }, h('label', { for: id }, key), h('input', { type: 'number', step: 'any', id, 'data-key': key, 'data-type': 'num', value: String(val), readonly: !canEdit }));
+    if (val !== null && typeof val === 'object') {
+      const ta = h('textarea', { id, class: 'json', 'data-key': key, 'data-type': 'json', readonly: !canEdit, spellcheck: 'false' }); ta.value = JSON.stringify(val, null, 2);
+      return h('div', { class: 'field' }, h('label', { for: id }, key, ' ', h('span', { class: 'hint' }, Array.isArray(val) ? '(daftar, format JSON)' : '(objek, format JSON)')), ta);
+    }
+    const s = val == null ? '' : String(val);
+    if (s.length > 70 || s.includes('\n')) { const ta = h('textarea', { id, 'data-key': key, 'data-type': val == null ? 'nullable' : 'str', readonly: !canEdit }); ta.value = s; return h('div', { class: 'field' }, h('label', { for: id }, key), ta); }
+    return h('div', { class: 'field' }, h('label', { for: id }, key, val == null ? h('span', { class: 'hint' }, ' (kosong)') : ''), h('input', { type: 'text', id, 'data-key': key, 'data-type': val == null ? 'nullable' : 'str', value: s, readonly: !canEdit }));
+  }
+  function templateFor(col) {
+    const list = cache[col] || []; const s = byId[col];
+    const sample = list.find(d => d.data.contoh !== true) || list[0];
+    const t = {};
+    if (sample) for (const [k, v] of Object.entries(sample.data)) t[k] = typeof v === 'number' ? 0 : typeof v === 'boolean' ? false : Array.isArray(v) ? [] : (v && typeof v === 'object') ? {} : '';
+    else s.cols.forEach(c => { t[c[0]] = c[2] === 'rp' || c[2] === 'num' ? 0 : c[2] === 'bool' ? false : c[2] === 'list' || c[2] === 'count' ? [] : ''; });
+    t.contoh = false;
+    return t;
+  }
+  let editorMsg = null;
+  function renderEditor() {
+    const ed = $('editor');
+    if (!selected && !isNew) { ed.hidden = true; ed.replaceChildren(); return; }
+    const list = cache[current] || [];
+    const doc = isNew ? { id: '', data: templateFor(current) } : list.find(d => d.id === selected);
+    if (!doc) { ed.hidden = true; selected = null; return; }
+    ed.hidden = false;
+    const s = byId[current];
+    const keys = Object.keys(doc.data);
+    const order = s.cols.map(c => c[0]);
+    keys.sort((a, b) => { const ia = order.indexOf(a), ib = order.indexOf(b); if (a === 'contoh') return 1; if (b === 'contoh') return -1; return (ia < 0 ? 99 : ia) - (ib < 0 ? 99 : ib); });
+    const form = h('form', { id: 'edForm', onsubmit: (e) => { e.preventDefault(); save(doc); } });
+    if (isNew) form.append(h('div', { class: 'field' }, h('label', { for: 'f__id' }, 'ID dokumen ', h('span', { class: 'hint' }, '(huruf, angka, - _ . ~ : @ +)')), h('input', { type: 'text', id: 'f__id', required: true, placeholder: 'mis. ' + (list[0] ? list[0].id : 'dokumen-1') })));
+    keys.forEach(k => form.append(fieldFor(k, doc.data[k])));
+    if (canEdit) form.append(h('details', null, h('summary', { style: 'cursor:pointer;font-weight:600;font-size:15px;min-height:32px' }, 'Tambah field'),
+      h('div', { class: 'row', style: 'margin-top:8px' }, h('input', { type: 'text', id: 'newKey', placeholder: 'nama_field', 'aria-label': 'Nama field baru', style: 'flex:1 1 140px;min-height:40px;padding:6px 10px;border:1px solid var(--control);border-radius:2px;background:var(--surface)' }),
+        h('input', { type: 'text', id: 'newVal', placeholder: 'nilai', 'aria-label': 'Nilai field baru', style: 'flex:2 1 180px;min-height:40px;padding:6px 10px;border:1px solid var(--control);border-radius:2px;background:var(--surface)' }))));
+    const actions = h('div', { class: 'row' });
+    if (canEdit) {
+      actions.append(h('button', { class: 'btn primary', type: 'submit' }, isNew ? 'Simpan dokumen baru' : 'Simpan perubahan'));
+      if (!isNew) actions.append(h('button', { class: 'btn danger', type: 'button', onclick: () => { confirmDelete = true; renderEditor(); } }, 'Hapus'));
+    }
+    actions.append(h('button', { class: 'btn', type: 'button', onclick: () => { selected = null; isNew = false; editorMsg = null; renderTable(); renderEditor(); } }, 'Tutup'));
+    form.append(actions);
+    const parts = [h('div', null, h('div', { class: 'eyebrow', style: 'color:var(--gold-text)' }, s.label), h('h3', { id: 'edTitle' }, isNew ? 'Dokumen baru' : doc.id))];
+    if (!canEdit) parts.push(h('div', { class: 'note' }, 'Anda hanya bisa melihat data ini. Mengubah data perlu akses edit dari owner.'));
+    if (confirmDelete) parts.push(h('div', { class: 'confirm', role: 'alert' }, h('strong', null, 'Hapus ' + doc.id + '? Tindakan ini tidak bisa dibatalkan.'),
+      h('div', { class: 'row' }, h('button', { class: 'btn danger', type: 'button', onclick: () => remove(doc.id) }, 'Ya, hapus'), h('button', { class: 'btn', type: 'button', onclick: () => { confirmDelete = false; renderEditor(); } }, 'Batal'))));
+    if (editorMsg) parts.push(h('div', { class: 'note ' + editorMsg.kind, role: 'status' }, editorMsg.text));
+    parts.push(form);
+    ed.replaceChildren(...parts);
+  }
+  function collect() {
+    const out = {};
+    for (const el of document.querySelectorAll('#edForm [data-key]')) {
+      const k = el.getAttribute('data-key'), t = el.getAttribute('data-type');
+      if (t === 'bool') out[k] = el.checked;
+      else if (t === 'num') { if (el.value.trim() === '' || isNaN(+el.value)) throw new Error('Field ' + k + ' harus berupa angka.'); out[k] = +el.value; }
+      else if (t === 'json') { try { out[k] = JSON.parse(el.value); } catch (e) { throw new Error('Field ' + k + ' bukan JSON yang valid. Periksa tanda kutip dan koma.'); } }
+      else if (t === 'nullable') out[k] = el.value === '' ? null : el.value;
+      else out[k] = el.value;
+    }
+    const nk = document.getElementById('newKey'), nv = document.getElementById('newVal');
+    if (nk && nk.value.trim()) {
+      const key = nk.value.trim();
+      if (!/^[A-Za-z_][A-Za-z0-9_]*$/.test(key)) throw new Error('Nama field hanya boleh huruf, angka, dan garis bawah.');
+      const raw = nv ? nv.value : '';
+      out[key] = raw === 'true' ? true : raw === 'false' ? false : (raw.trim() !== '' && !isNaN(+raw)) ? +raw : raw;
+    }
+    return out;
+  }
+  async function save(doc) {
+    editorMsg = null;
+    let data;
+    try { data = collect(); } catch (e) { editorMsg = { kind: 'err', text: e.message }; renderEditor(); return; }
+    try {
+      if (isNew) {
+        const id = ($('f__id').value || '').trim();
+        if (!/^[A-Za-z0-9_\-.~:@+]{1,200}$/.test(id) || id === '.' || id === '..') { editorMsg = { kind: 'err', text: 'ID hanya boleh huruf, angka, dan - _ . ~ : @ + (tanpa spasi).' }; renderEditor(); return; }
+        const ref = db.collection(current).doc(id);
+        const snap = await ref.get();
+        if (snap.exists) { editorMsg = { kind: 'err', text: 'ID ' + id + ' sudah dipakai. Pilih ID lain.' }; renderEditor(); return; }
+        await ref.set(data);
+        isNew = false; selected = id; editorMsg = { kind: 'ok', text: 'Tersimpan.' };
+      } else {
+        await db.collection(current).doc(doc.id).set(data);
+        editorMsg = { kind: 'ok', text: 'Perubahan tersimpan.' };
+      }
+    } catch (e) { editorMsg = { kind: 'err', text: explain(e) }; }
+    renderTable(); renderEditor();
+  }
+  async function remove(id) {
+    try { await db.collection(current).doc(id).delete(); selected = null; confirmDelete = false; editorMsg = null; setStatus('ok', id + ' dihapus.'); }
+    catch (e) { editorMsg = { kind: 'err', text: explain(e) }; confirmDelete = false; }
+    renderTable(); renderEditor();
+  }
+  function explain(e) {
+    const c = e && e.code;
+    if (c === 'invalid_argument') return 'Data ditolak: periksa isian, atau akun Anda belum punya akses edit.';
+    if (c === 'quota_exceeded') return 'Database penuh. Hapus dokumen yang tidak dipakai lalu coba lagi.';
+    if (c === 'resource_exhausted') return 'Terlalu banyak perubahan dalam waktu singkat. Tunggu sebentar lalu coba lagi.';
+    if (c === 'revoked' || c === 'not_granted') return 'Akses ke database tidak tersedia lagi di tampilan ini. Muat ulang halaman.';
+    return 'Gagal menyimpan. Coba lagi sebentar lagi.';
+  }
+  function setStatus(kind, text) { const el = $('status'); el.replaceChildren(text ? h('div', { class: 'note ' + kind, role: 'status' }, text) : ''); }
+
+  function renderPurge() {
+    const box = $('purgeBox');
+    if (!purgeAsk) { box.replaceChildren(); return; }
+    const t = totals();
+    box.replaceChildren(h('div', { class: 'confirm', role: 'alert' },
+      h('strong', null, 'Hapus ' + t.c + ' dokumen contoh dari semua koleksi?'),
+      h('span', null, 'Data asli studio (katalog, harga, kontak, FAQ, S/K, pengaturan) tidak ikut terhapus. Tindakan ini tidak bisa dibatalkan.'),
+      h('div', { class: 'row' }, h('button', { class: 'btn danger', type: 'button', id: 'purgeGo', onclick: purge }, 'Ya, hapus data contoh'),
+        h('button', { class: 'btn', type: 'button', onclick: () => { purgeAsk = false; renderPurge(); } }, 'Batal'))));
+  }
+  async function purge() {
+    const go = $('purgeGo'); if (go) { go.disabled = true; go.textContent = 'Menghapus…'; }
+    let done = 0, fail = 0;
+    for (const s of SCHEMA) for (const d of (cache[s.id] || []).filter(x => x.data.contoh === true)) {
+      try { await db.collection(s.id).doc(d.id).delete(); done++; } catch (e) { fail++; if (e && e.code === 'resource_exhausted') await new Promise(r => setTimeout(r, 1500)); }
+    }
+    purgeAsk = false; renderPurge(); selected = null; renderEditor();
+    setStatus(fail ? 'err' : 'ok', done + ' dokumen contoh dihapus.' + (fail ? ' ' + fail + ' gagal; coba lagi.' : ''));
+  }
+  async function exportAll() {
+    const out = {};
+    for (const s of SCHEMA) { out[s.id] = {}; for (const d of (cache[s.id] || [])) out[s.id][d.id] = d.data; }
+    try {
+      await downloads.save({ filename: 'sisterstudio-database-' + new Date().toISOString().slice(0, 10) + '.json', data: JSON.stringify(out, null, 2) });
+      setStatus('ok', 'File JSON siap diunduh.');
+    } catch (e) { if (!(e && e.code === 'declined')) setStatus('err', 'File tidak bisa diunduh di tampilan ini.'); }
+  }
+
+  function route() {
+    const hsh = (location.hash || '').slice(1).replace(/-/g, '_');
+    const next = byId[hsh] ? hsh : 'koleksi';
+    if (next !== current) { current = next; selected = null; isNew = false; editorMsg = null; }
+    renderIndex(); renderTable(); renderEditor();
+  }
+  window.addEventListener('hashchange', route);
+  $('q').addEventListener('input', (e) => { query = e.target.value.trim(); renderTable(); });
+  $('addBtn').addEventListener('click', () => { isNew = true; selected = null; editorMsg = null; confirmDelete = false; renderTable(); renderEditor(); const f = $('f__id'); if (f) f.focus(); });
+  $('purgeBtn').addEventListener('click', () => { purgeAsk = true; renderPurge(); });
+  $('exportBtn').addEventListener('click', exportAll);
+  route(); renderHeader();
+
+  (async function start() {
+    const api = window.claude && window.claude.use ? window.claude : null;
+    if (!api) { offline(); return; }
+    const [d, u, dl] = await Promise.all([api.use('db'), api.use('user'), api.use('downloads')]);
+    if (!d) { offline(); return; }
+    db = d; downloads = dl;
+    try { canEdit = u ? await u.canEdit() : false; } catch (e) { canEdit = false; }
+    $('liveDot').classList.add('on'); $('liveText').textContent = 'Terhubung · tersimpan otomatis';
+    $('emptyBox').textContent = 'Memuat…';
+    for (const s of SCHEMA) {
+      db.collection(s.id).onSnapshot((snap) => {
+        cache[s.id] = snap.docs.filter(x => x.exists).map(x => ({ id: x.id, data: x.data() || {} }));
+        if (s.id === current) { renderTable(); if (!confirmDelete) renderEditor(); }
+        renderIndex(); renderHeader();
+      }, (e) => {
+        if (s.id === current) setStatus('err', e && e.code === 'revoked' ? 'Akses database berakhir. Muat ulang halaman.' : 'Koleksi ' + s.label + ' tidak bisa dimuat. Muat ulang halaman.');
+        $('liveDot').classList.remove('on'); $('liveText').textContent = 'Terputus';
+      });
+    }
+    renderTable(); renderHeader();
+  })();
+  function offline() {
+    $('liveText').textContent = 'Database tidak tersedia';
+    $('emptyBox').hidden = false;
+    $('emptyBox').textContent = 'Database hanya bisa dibuka di claude.ai oleh anggota organisasi yang diberi akses ke halaman ini.';
+  }
+})();
+</script>

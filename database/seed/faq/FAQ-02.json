@@ -1,0 +1,7 @@
+{
+  "pertanyaan": "Berapa lama masa sewa?",
+  "jawaban": "Masa sewa standar [3] hari dari tanggal pengambilan. Perpanjangan bisa diajukan lewat CS sebelum tanggal kembali.",
+  "dipakai_minggu_ini": 18,
+  "tampil_di_website": true,
+  "contoh": false
+}

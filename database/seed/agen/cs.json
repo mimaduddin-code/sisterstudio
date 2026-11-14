@@ -1,0 +1,10 @@
+{
+  "nama": "Agen CS",
+  "tugas": [
+    "Menjawab FAQ",
+    "Reminder reservasi",
+    "Membagikan S/K dan kontak sewa"
+  ],
+  "status": "Aktif",
+  "contoh": false
+}

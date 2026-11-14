@@ -1,0 +1,18 @@
+{
+  "reservasi": "RSV-2026-11-0046",
+  "pelanggan": "dewi",
+  "item": [
+    {
+      "keterangan": "Sewa Candrakirana Nusantara (M)",
+      "jumlah": 1,
+      "harga": 300000
+    }
+  ],
+  "total": 300000,
+  "dp": 150000,
+  "dibayar": 150000,
+  "sisa": 150000,
+  "status": "DP diterima",
+  "terbit": "2026-11-11",
+  "contoh": true
+}

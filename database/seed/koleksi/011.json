@@ -1,0 +1,38 @@
+{
+  "kode": "Koleksi 011",
+  "nama": "Mocha Elegance",
+  "kategori": "Kebaya",
+  "harga": 200000,
+  "satuan": "stel",
+  "deskripsi": "Kebaya renda bernuansa mocha yang memancarkan kesan anggun, lembut, dan berkelas di setiap suasana istimewa.",
+  "foto": "design/assets/foto/koleksi-011-mocha-elegance.jpg",
+  "tampil": true,
+  "stok": {
+    "S": {
+      "total": 1,
+      "tersedia": 1,
+      "disewa": 0,
+      "perawatan": 0
+    },
+    "M": {
+      "total": 2,
+      "tersedia": 1,
+      "disewa": 0,
+      "perawatan": 1
+    },
+    "L": {
+      "total": 2,
+      "tersedia": 1,
+      "disewa": 1,
+      "perawatan": 0
+    },
+    "XL": {
+      "total": 1,
+      "tersedia": 1,
+      "disewa": 0,
+      "perawatan": 0
+    }
+  },
+  "stok_sumber": "contoh",
+  "contoh": false
+}

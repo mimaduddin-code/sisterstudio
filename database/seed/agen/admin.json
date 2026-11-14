@@ -1,0 +1,11 @@
+{
+  "nama": "Admin Agen",
+  "tugas": [
+    "Mengumpulkan dan mencatat aktivitas semua agen",
+    "Melaporkan ke owner",
+    "Reminder reservasi",
+    "Menerima perintah owner dan menjawab"
+  ],
+  "status": "Aktif",
+  "contoh": false
+}

@@ -1,0 +1,9 @@
+{
+  "nama": "Agen Kreator",
+  "tugas": [
+    "Tambah, edit, hapus katalog",
+    "Marketing media sosial"
+  ],
+  "status": "Aktif",
+  "contoh": false
+}

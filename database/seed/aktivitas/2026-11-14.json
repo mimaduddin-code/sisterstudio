@@ -1,0 +1,46 @@
+{
+  "tanggal": "2026-11-14",
+  "entri": [
+    {
+      "waktu": "08.00",
+      "agen": "admin",
+      "teks": "Mengirim laporan pagi ke WhatsApp owner."
+    },
+    {
+      "waktu": "08.30",
+      "agen": "kasir",
+      "teks": "Rekap Jum, 13 Nov: kas masuk Rp1.150.000, kas keluar Rp180.000."
+    },
+    {
+      "waktu": "09.00",
+      "agen": "stok",
+      "teks": "Mengirim pengingat pengembalian kedua ke 2 pelanggan yang terlambat."
+    },
+    {
+      "waktu": "09.40",
+      "agen": "kreator",
+      "teks": "Menyusun caption dan menjadwalkan posting Koleksi 009 Fuchsia Glam untuk Min, 15 Nov 19.00."
+    },
+    {
+      "waktu": "10.05",
+      "agen": "cs",
+      "teks": "Mengirim pengingat H-1 fitting ke 3 pelanggan lewat WhatsApp dan email."
+    },
+    {
+      "waktu": "11.30",
+      "agen": "stok",
+      "teks": "Mocha Elegance (M) kembali dari Wulan. Kondisi: payet lepas di lengan kiri. Masuk antrean perbaikan."
+    },
+    {
+      "waktu": "12.15",
+      "agen": "cs",
+      "teks": "Meneruskan permintaan perpanjangan sewa dari Rina (Candrakirana Nusantara, M) ke admin."
+    },
+    {
+      "waktu": "12.40",
+      "agen": "kasir",
+      "teks": "Mencatat pelunasan INV-2026-11-0038 sebesar Rp125.000 lewat QRIS. Status invoice: Lunas."
+    }
+  ],
+  "contoh": true
+}

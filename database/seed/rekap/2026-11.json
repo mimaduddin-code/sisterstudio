@@ -1,0 +1,26 @@
+{
+  "periode": "2026-11-01 s.d. 2026-11-14",
+  "kas_masuk": 6450000,
+  "kas_keluar": 1320000,
+  "saldo": 5130000,
+  "piutang": 675000,
+  "keluar_per_kategori": {
+    "Laundry": 540000,
+    "Iklan": 400000,
+    "Perbaikan": 230000,
+    "Operasional": 150000
+  },
+  "disewa_per_koleksi": {
+    "010": 6,
+    "009": 5,
+    "008": 4,
+    "011": 3
+  },
+  "analisa": [
+    "Pendapatan tertinggi pada Agustus dan Oktober, bersamaan dengan musim wisuda.",
+    "Laundry 8% dari pendapatan November.",
+    "Mocha Elegance paling jarang disewa.",
+    "2 DP lewat tempo minggu ini."
+  ],
+  "contoh": true
+}

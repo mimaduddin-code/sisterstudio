@@ -1,0 +1,23 @@
+{
+  "reservasi": "RSV-2026-11-0036",
+  "pelanggan": "wulan",
+  "item": [
+    {
+      "keterangan": "Sewa Mocha Elegance (M)",
+      "jumlah": 1,
+      "harga": 200000
+    },
+    {
+      "keterangan": "Biaya perbaikan payet",
+      "jumlah": 1,
+      "harga": 75000
+    }
+  ],
+  "total": 275000,
+  "dp": 137500,
+  "dibayar": 200000,
+  "sisa": 75000,
+  "status": "Belum lunas",
+  "terbit": "2026-11-05",
+  "contoh": true
+}

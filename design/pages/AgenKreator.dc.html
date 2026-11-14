@@ -1,0 +1,258 @@
+<!doctype html>
+<html lang="id">
+<head>
+<meta charset="utf-8">
+<title>Agen Kreator — Sister Studio</title>
+<script src="./support.js"></script>
+</head>
+<body>
+<x-dc>
+<helmet>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Crimson+Pro:ital,wght@0,400;0,600;0,700;1,400&amp;family=Great+Vibes&amp;display=swap">
+<style>
+body{margin:0;background:#fdf3e7}
+a{color:#730020}a:hover{color:#4e0014}
+:focus-visible{outline:2px solid #730020;outline-offset:2px}
+.btn-p:hover{background:#4e0014 !important;color:#fdf3e7 !important}
+.btn-s:hover{background:#f6dfdc !important}
+.btn-d:hover{background:#fbe0da !important}
+</style>
+</helmet>
+<div style="min-height: 100vh; display: flex; flex-wrap: wrap; background: #fdf3e7; color: #1f0a0a; font-family: 'Crimson Pro', Georgia, 'Times New Roman', serif; font-size: 17px; line-height: 26px;">
+<div style="flex: 1 1 240px; background: #4e0014;">
+<dc-import name="AdminNav" active="kreator" hint-size="100%,960px"></dc-import>
+</div>
+
+<main style="flex: 999 1 560px; min-width: 0; padding: 32px; box-sizing: border-box; display: flex; flex-direction: column; gap: 32px;">
+<header style="display: flex; flex-wrap: wrap; align-items: flex-end; justify-content: space-between; gap: 16px;">
+<div style="display: flex; flex-direction: column; gap: 4px;">
+<span style="display: flex; align-items: center; gap: 10px;">
+<span style="font-size: 13px; line-height: 16px; letter-spacing: 0.16em; font-weight: 600; color: #85561c;">AGEN KREATOR</span>
+<span style="padding: 0 10px; border-radius: 2px; background: #dcefee; color: #155e63; font-size: 14px; line-height: 22px; font-weight: 600;">Aktif</span>
+</span>
+<h1 style="margin: 0; font-size: 36px; line-height: 44px; font-weight: 600; color: #4e0014;">Katalog &amp; media sosial</h1>
+<span style="color: #6a4a44;">Tambah, ubah, dan hapus koleksi di website; siapkan dan jadwalkan konten marketing.</span>
+</div>
+<nav aria-label="Bagian halaman" style="display: flex; gap: 8px;">
+<a href="#katalog" class="btn-s" style="min-height: 44px; display: inline-flex; align-items: center; padding: 0 16px; border: 1px solid #9a7a5a; border-radius: 2px; background: #fffaf3; font-weight: 600; text-decoration: none;">Katalog</a>
+<a href="#medsos" class="btn-s" style="min-height: 44px; display: inline-flex; align-items: center; padding: 0 16px; border: 1px solid #9a7a5a; border-radius: 2px; background: #fffaf3; font-weight: 600; text-decoration: none;">Medsos</a>
+</nav>
+</header>
+
+<section id="katalog" aria-labelledby="katalog-h" style="display: flex; flex-direction: column; gap: 16px;">
+<div style="display: flex; flex-wrap: wrap; align-items: center; justify-content: space-between; gap: 12px;">
+<h2 id="katalog-h" style="margin: 0; font-size: 28px; line-height: 36px; font-weight: 600; color: #4e0014;">Katalog koleksi</h2>
+<div style="display: flex; flex-wrap: wrap; gap: 8px;">
+<label style="display: flex;"><span style="position: absolute; width: 1px; height: 1px; overflow: hidden; clip: rect(0 0 0 0);">Cari koleksi</span>
+<input type="search" placeholder="Cari nama atau kode…" style="width: 220px; min-height: 44px; padding: 0 12px; border: 1px solid #9a7a5a; border-radius: 2px; background: #fffaf3; font-family: inherit; font-size: 16px;">
+</label>
+<button type="button" class="btn-p" style="min-height: 44px; padding: 0 18px; border: 0; border-radius: 2px; background: #730020; color: #fdf3e7; font-family: inherit; font-size: 16px; font-weight: 600; cursor: pointer;">+ Tambah koleksi</button>
+</div>
+</div>
+
+<div style="display: flex; flex-wrap: wrap; align-items: flex-start; gap: 24px;">
+<div style="flex: 999 1 520px; min-width: 0; overflow-x: auto; background: #fffaf3; border: 1px solid #e6c9a5; border-radius: 12px;">
+<table style="width: 100%; min-width: 640px; border-collapse: collapse; font-size: 16px; line-height: 24px;">
+<thead>
+<tr style="background: #fbe9d7; text-align: left;">
+<th scope="col" style="padding: 10px 12px; font-weight: 600;">Koleksi</th>
+<th scope="col" style="padding: 10px 12px; font-weight: 600;">Harga</th>
+<th scope="col" style="padding: 10px 12px; font-weight: 600;">Di website</th>
+<th scope="col" style="padding: 10px 12px; font-weight: 600;">Disewa Nov</th>
+<th scope="col" style="padding: 10px 12px; font-weight: 600;"><span style="position: absolute; width: 1px; height: 1px; overflow: hidden; clip: rect(0 0 0 0);">Aksi</span></th>
+</tr>
+</thead>
+<tbody>
+<sc-for list="{{items}}" as="p" hint-placeholder-count="4">
+<tr style="border-top: 1px solid #e6c9a5; background: {{p.rowBg}};">
+<td style="padding: 10px 12px;">
+<span style="display: flex; align-items: center; gap: 12px;">
+<img src="{{p.img}}" alt="" style="width: 48px; height: 64px; flex-shrink: 0; object-fit: cover; object-position: 50% 12%; border: 1.5px solid #c8924a; border-radius: 999px 999px 4px 4px;">
+<span style="display: flex; flex-direction: column;">
+<span style="font-size: 13px; letter-spacing: 0.12em; font-weight: 600; color: #85561c;">{{p.codeUp}}</span>
+<span style="font-weight: 600; color: #4e0014;">{{p.name}}</span>
+</span>
+</span>
+</td>
+<td style="padding: 10px 12px; white-space: nowrap;">{{p.price}}</td>
+<td style="padding: 10px 12px;"><span style="padding: 0 8px; border-radius: 2px; font-size: 14px; line-height: 22px; font-weight: 600; background: {{p.sb}}; color: {{p.sf}};">{{p.web}}</span></td>
+<td style="padding: 10px 12px;">{{p.rented}}×</td>
+<td style="padding: 10px 12px;">
+<span style="display: flex; gap: 6px; justify-content: flex-end;">
+<button type="button" class="btn-s" onClick="{{p.pick}}" aria-label="{{p.editLabel}}" style="min-height: 40px; padding: 0 12px; border: 1px solid #9a7a5a; border-radius: 2px; background: #fffaf3; color: #730020; font-family: inherit; font-size: 15px; font-weight: 600; cursor: pointer;">Edit</button>
+<button type="button" class="btn-d" aria-label="{{p.delLabel}}" style="width: 40px; height: 40px; border: 1px solid #a11d12; border-radius: 2px; background: #fffaf3; display: flex; align-items: center; justify-content: center; cursor: pointer;">
+<svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="#a11d12" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M4 7h16M9 7V4h6v3M6 7l1 13h10l1-13M10 11v6M14 11v6"/></svg>
+</button>
+</span>
+</td>
+</tr>
+</sc-for>
+</tbody>
+</table>
+</div>
+
+<form aria-labelledby="edit-h" style="flex: 1 1 380px; min-width: 0; background: #fffaf3; border: 1px solid #e6c9a5; border-radius: 12px; padding: 20px 24px; display: flex; flex-direction: column; gap: 14px;">
+<h3 id="edit-h" style="margin: 0; font-size: 22px; line-height: 30px; font-weight: 600; color: #4e0014;">Edit {{sel.code}}</h3>
+<div style="display: flex; gap: 16px; align-items: flex-end;">
+<img src="{{sel.img}}" alt="{{sel.alt}}" style="width: 120px; height: 160px; object-fit: cover; object-position: 50% 12%; border: 2px solid #c8924a; border-radius: 999px 999px 8px 8px;">
+<span style="display: flex; flex-direction: column; gap: 8px;">
+<button type="button" class="btn-s" style="min-height: 40px; padding: 0 12px; border: 1px solid #9a7a5a; border-radius: 2px; background: #fffaf3; color: #730020; font-family: inherit; font-size: 15px; font-weight: 600; cursor: pointer;">Ganti foto utama</button>
+<button type="button" class="btn-s" style="min-height: 40px; padding: 0 12px; border: 1px solid #9a7a5a; border-radius: 2px; background: #fffaf3; color: #730020; font-family: inherit; font-size: 15px; font-weight: 600; cursor: pointer;">Tambah foto detail</button>
+</span>
+</div>
+<label style="display: flex; flex-direction: column; gap: 6px; font-weight: 600; font-size: 15px;">Nama koleksi
+<input type="text" value="{{sel.name}}" style="min-height: 44px; padding: 0 12px; border: 1px solid #9a7a5a; border-radius: 2px; background: #fffaf3; font-family: inherit; font-size: 17px; font-weight: 400;">
+</label>
+<div style="display: flex; gap: 12px;">
+<label style="flex: 1 1 0; display: flex; flex-direction: column; gap: 6px; font-weight: 600; font-size: 15px;">Kode
+<input type="text" value="{{sel.code}}" style="min-width: 0; min-height: 44px; padding: 0 12px; border: 1px solid #9a7a5a; border-radius: 2px; background: #fffaf3; font-family: inherit; font-size: 17px; font-weight: 400;">
+</label>
+<label style="flex: 1 1 0; display: flex; flex-direction: column; gap: 6px; font-weight: 600; font-size: 15px;">Harga sewa / stel
+<input type="text" value="{{sel.price}}" style="min-width: 0; min-height: 44px; padding: 0 12px; border: 1px solid #9a7a5a; border-radius: 2px; background: #fffaf3; font-family: inherit; font-size: 17px; font-weight: 400;">
+</label>
+</div>
+<fieldset style="margin: 0; padding: 0; border: 0; display: flex; flex-wrap: wrap; gap: 4px 16px;">
+<legend style="font-weight: 600; font-size: 15px; padding: 0; margin-bottom: 6px;">Ukuran tersedia</legend>
+<label style="display: flex; align-items: center; gap: 6px; min-height: 36px;"><input type="checkbox" checked style="width: 18px; height: 18px; accent-color: #730020;"> S</label>
+<label style="display: flex; align-items: center; gap: 6px; min-height: 36px;"><input type="checkbox" checked style="width: 18px; height: 18px; accent-color: #730020;"> M</label>
+<label style="display: flex; align-items: center; gap: 6px; min-height: 36px;"><input type="checkbox" checked style="width: 18px; height: 18px; accent-color: #730020;"> L</label>
+<label style="display: flex; align-items: center; gap: 6px; min-height: 36px;"><input type="checkbox" checked style="width: 18px; height: 18px; accent-color: #730020;"> XL</label>
+</fieldset>
+<label style="display: flex; flex-direction: column; gap: 6px; font-weight: 600; font-size: 15px;">Deskripsi (2–3 baris)
+<textarea rows="4" style="padding: 10px 12px; border: 1px solid #9a7a5a; border-radius: 2px; background: #fffaf3; font-family: inherit; font-size: 16px; line-height: 24px; font-style: italic; font-weight: 400; resize: vertical;">{{sel.desc}}</textarea>
+</label>
+<button type="button" class="btn-s" style="align-self: flex-start; display: inline-flex; align-items: center; gap: 8px; min-height: 40px; padding: 0 12px; border: 1px solid #9a7a5a; border-radius: 2px; background: #fffaf3; color: #730020; font-family: inherit; font-size: 15px; font-weight: 600; cursor: pointer;">
+<svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="#730020" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M12 3l1.8 4.6L18 9l-4.2 1.4L12 15l-1.8-4.6L6 9l4.2-1.4zM19 15l.8 2 2 .8-2 .8-.8 2-.8-2-2-.8 2-.8z"/></svg>
+Tulis ulang dengan agen
+</button>
+<div style="display: flex; flex-wrap: wrap; justify-content: space-between; gap: 8px; padding-top: 12px; border-top: 1px solid #e6c9a5;">
+<button type="button" class="btn-d" style="min-height: 44px; padding: 0 14px; border: 1px solid #a11d12; border-radius: 2px; background: #fffaf3; color: #a11d12; font-family: inherit; font-size: 15px; font-weight: 600; cursor: pointer;">Hapus koleksi</button>
+<button type="button" class="btn-p" style="min-height: 44px; padding: 0 20px; border: 0; border-radius: 2px; background: #730020; color: #fdf3e7; font-family: inherit; font-size: 16px; font-weight: 600; cursor: pointer;">Simpan &amp; tampilkan</button>
+</div>
+</form>
+</div>
+</section>
+
+<section id="medsos" aria-labelledby="medsos-h" style="display: flex; flex-direction: column; gap: 16px;">
+<h2 id="medsos-h" style="margin: 0; font-size: 28px; line-height: 36px; font-weight: 600; color: #4e0014;">Marketing media sosial</h2>
+<div style="display: flex; flex-wrap: wrap; align-items: flex-start; gap: 24px;">
+<form style="flex: 999 1 480px; min-width: 0; background: #fffaf3; border: 1px solid #e6c9a5; border-radius: 12px; padding: 20px 24px; display: flex; flex-direction: column; gap: 14px;">
+<h3 style="margin: 0; font-size: 22px; line-height: 30px; font-weight: 600; color: #4e0014;">Buat posting</h3>
+<label style="display: flex; flex-direction: column; gap: 6px; font-weight: 600; font-size: 15px;">Koleksi
+<select style="min-height: 44px; padding: 0 12px; border: 1px solid #9a7a5a; border-radius: 2px; background: #fffaf3; font-family: inherit; font-size: 17px;">
+<option>Koleksi 009 · Fuchsia Glam</option><option>Koleksi 008 · Srikandi Kemuning</option><option>Koleksi 010 · Candrakirana Nusantara</option><option>Koleksi 011 · Mocha Elegance</option>
+</select>
+</label>
+<fieldset style="margin: 0; padding: 0; border: 0;">
+<legend style="font-weight: 600; font-size: 15px; padding: 0; margin-bottom: 6px;">Kanal</legend>
+<div style="display: flex; flex-wrap: wrap; gap: 8px;">
+<sc-for list="{{channels}}" as="ch" hint-placeholder-count="4">
+<button type="button" onClick="{{ch.pick}}" aria-pressed="{{ch.on}}" style="min-height: 40px; padding: 0 14px; border-radius: 9999px; border: 1px solid {{ch.border}}; background: {{ch.bg}}; color: {{ch.fg}}; font-family: inherit; font-size: 15px; font-weight: 600; cursor: pointer;">{{ch.label}}</button>
+</sc-for>
+</div>
+</fieldset>
+<label style="display: flex; flex-direction: column; gap: 6px; font-weight: 600; font-size: 15px;">Caption (draf dari agen)
+<textarea rows="8" style="padding: 12px; border: 1px solid #9a7a5a; border-radius: 2px; background: #fffaf3; font-family: inherit; font-size: 16px; line-height: 24px; font-weight: 400; resize: vertical;">{{caption}}</textarea>
+</label>
+<div style="display: flex; flex-wrap: wrap; gap: 12px;">
+<label style="flex: 1 1 160px; display: flex; flex-direction: column; gap: 6px; font-weight: 600; font-size: 15px;">Tanggal tayang
+<input type="date" value="2026-11-15" style="min-height: 44px; padding: 0 12px; border: 1px solid #9a7a5a; border-radius: 2px; background: #fffaf3; font-family: inherit; font-size: 16px; box-sizing: border-box;">
+</label>
+<label style="flex: 1 1 120px; display: flex; flex-direction: column; gap: 6px; font-weight: 600; font-size: 15px;">Jam
+<input type="time" value="19:00" style="min-height: 44px; padding: 0 12px; border: 1px solid #9a7a5a; border-radius: 2px; background: #fffaf3; font-family: inherit; font-size: 16px; box-sizing: border-box;">
+</label>
+</div>
+<div style="display: flex; flex-wrap: wrap; gap: 8px;">
+<button type="button" class="btn-p" style="min-height: 44px; padding: 0 18px; border: 0; border-radius: 2px; background: #730020; color: #fdf3e7; font-family: inherit; font-size: 16px; font-weight: 600; cursor: pointer;">Jadwalkan</button>
+<button type="button" class="btn-s" style="min-height: 44px; padding: 0 16px; border: 1px solid #9a7a5a; border-radius: 2px; background: #fffaf3; color: #730020; font-family: inherit; font-size: 16px; font-weight: 600; cursor: pointer;">Buat 3 variasi caption</button>
+<button type="button" class="btn-s" style="min-height: 44px; padding: 0 16px; border: 1px solid #9a7a5a; border-radius: 2px; background: #fffaf3; color: #730020; font-family: inherit; font-size: 16px; font-weight: 600; cursor: pointer;">Simpan draf</button>
+</div>
+</form>
+
+<figure aria-label="Pratinjau posting" style="flex: 1 1 340px; min-width: 0; margin: 0; background: #fffaf3; border: 1px solid #e6c9a5; border-radius: 12px; overflow: hidden; display: flex; flex-direction: column;">
+<div style="display: flex; align-items: center; gap: 10px; padding: 12px 16px;">
+<span style="width: 36px; height: 36px; border-radius: 9999px; background: #fdf3e7; border: 1.5px solid #c8924a; display: flex; align-items: center; justify-content: center; overflow: hidden;"><img src="../assets/logo/logo-sister-studio.png" alt="" style="width: 30px; height: 30px; object-fit: contain;"></span>
+<span style="font-weight: 600;">sisterstudio.plg</span>
+<span style="margin-left: auto; font-size: 14px; color: #6a4a44;">Pratinjau</span>
+</div>
+<img src="../assets/foto/koleksi-009-fuchsia-glam.jpg" alt="Kebaya Fuchsia Glam di manekin" style="display: block; width: 100%; aspect-ratio: 1 / 1; object-fit: cover; object-position: 50% 20%;">
+<figcaption style="padding: 12px 16px; font-size: 15px; line-height: 22px; white-space: pre-line; max-height: 132px; overflow: hidden;"><strong>sisterstudio.plg</strong> {{caption}}</figcaption>
+</figure>
+</div>
+
+<div style="display: flex; flex-wrap: wrap; align-items: flex-start; gap: 24px;">
+<section aria-labelledby="kalender" style="flex: 999 1 480px; min-width: 0; background: #fffaf3; border: 1px solid #e6c9a5; border-radius: 12px; padding: 20px 24px; display: flex; flex-direction: column; gap: 8px;">
+<h3 id="kalender" style="margin: 0 0 4px; font-size: 22px; line-height: 30px; font-weight: 600; color: #4e0014;">Jadwal konten · 15–21 Nov</h3>
+<sc-for list="{{posts}}" as="po" hint-placeholder-count="4">
+<div style="display: flex; flex-wrap: wrap; align-items: center; gap: 8px 16px; padding: 12px 0; border-bottom: 1px solid #e6c9a5;">
+<span style="width: 120px; font-weight: 600; color: #4e0014;">{{po.when}}</span>
+<span style="flex: 1 1 220px; min-width: 0; display: flex; flex-direction: column;">
+<span style="font-weight: 600;">{{po.title}}</span>
+<span style="font-size: 14px; line-height: 20px; color: #6a4a44;">{{po.channel}}</span>
+</span>
+<span style="padding: 0 8px; border-radius: 2px; font-size: 14px; line-height: 22px; font-weight: 600; background: {{po.sb}}; color: {{po.sf}};">{{po.status}}</span>
+</div>
+</sc-for>
+</section>
+<section aria-labelledby="ide" style="flex: 1 1 340px; min-width: 0; background: #fbe9d7; border: 1px solid #e6c9a5; border-radius: 12px; padding: 20px 24px; display: flex; flex-direction: column; gap: 10px;">
+<h3 id="ide" style="margin: 0; font-size: 22px; line-height: 30px; font-weight: 600; color: #4e0014;">Ide konten dari agen</h3>
+<ul style="margin: 0; padding-left: 20px; display: flex; flex-direction: column; gap: 8px;">
+<li>Seri “Kebaya untuk wisuda Desember”: 3 posting mulai akhir November.</li>
+<li>Mocha Elegance belum diposting 30 hari. Tampilkan untuk momen lamaran.</li>
+<li>Minta izin pelanggan yang sudah mengembalikan kebaya untuk berbagi foto hari istimewanya.</li>
+</ul>
+<button type="button" class="btn-s" style="align-self: flex-start; min-height: 40px; padding: 0 14px; border: 1px solid #9a7a5a; border-radius: 2px; background: #fffaf3; color: #730020; font-family: inherit; font-size: 15px; font-weight: 600; cursor: pointer;">Jadikan draf</button>
+</section>
+</div>
+</section>
+</main>
+</div>
+</x-dc>
+<script type="text/x-dc" data-dc-script data-props='{"$preview":{"width":1440,"height":2100}}'>
+class Component extends DCLogic {
+  constructor(props) {
+    super(props);
+    this.state = { sel: 1, ch: { 'Instagram feed': true, 'Instagram story': true, 'TikTok': false, 'Status WhatsApp': true } };
+  }
+  renderVals() {
+    const P = [
+      { code: 'Koleksi 008', name: 'Srikandi Kemuning', price: 'Rp250.000', rented: 4, web: 'Tampil', img: '../assets/foto/koleksi-008-srikandi-kemuning.jpg', alt: 'Kebaya renda cokelat tua dengan rok songket emas', desc: 'Perpaduan gaya Jawa yang anggun dengan sentuhan Melayu yang mewah, melambangkan kelembutan, ketegasan, dan keanggunan seorang wanita Nusantara.' },
+      { code: 'Koleksi 009', name: 'Fuchsia Glam', price: 'Rp300.000', rented: 5, web: 'Tampil', img: '../assets/foto/koleksi-009-fuchsia-glam.jpg', alt: 'Kebaya fuchsia berpayet', desc: 'Kebaya modern bernuansa elegan dengan taburan payet yang berkilau, memancarkan pesona anggun dan glamor di setiap momen istimewa.' },
+      { code: 'Koleksi 010', name: 'Candrakirana Nusantara', price: 'Rp300.000', rented: 6, web: 'Tampil', img: '../assets/foto/koleksi-010-candrakirana-nusantara.jpg', alt: 'Kebaya hijau sage bersulam bunga', desc: 'Kebaya anggun bernuansa hijau lembut, terinspirasi dari kemilau cahaya rembulan (Candrakirana) yang memancarkan ketenangan, keanggunan, dan pesona wanita Nusantara.' },
+      { code: 'Koleksi 011', name: 'Mocha Elegance', price: 'Rp200.000', rented: 3, web: 'Draf foto baru', img: '../assets/foto/koleksi-011-mocha-elegance.jpg', alt: 'Kebaya renda mocha', desc: 'Kebaya renda bernuansa mocha yang memancarkan kesan anggun, lembut, dan berkelas di setiap suasana istimewa.' }
+    ];
+    const s = this.state.sel;
+    const items = P.map((p, i) => Object.assign({}, p, {
+      codeUp: p.code.toUpperCase(),
+      rowBg: i === s ? '#f6dfdc' : 'transparent',
+      sb: p.web === 'Tampil' ? '#dcefee' : '#fbe7c0',
+      sf: p.web === 'Tampil' ? '#155e63' : '#7a4a00',
+      editLabel: 'Edit ' + p.name,
+      delLabel: 'Hapus ' + p.name,
+      pick: () => this.setState({ sel: i })
+    }));
+    const ch = this.state.ch;
+    const channels = Object.keys(ch).map((label) => {
+      const on = ch[label];
+      return {
+        label, on,
+        bg: on ? '#730020' : '#fffaf3', fg: on ? '#fdf3e7' : '#730020', border: on ? '#730020' : '#9a7a5a',
+        pick: () => this.setState({ ch: Object.assign({}, ch, { [label]: !on }) })
+      };
+    });
+    const INFO = { sb: '#e4e8f3', sf: '#3a4a72' }, WAIT = { sb: '#fbe7c0', sf: '#7a4a00' };
+    return {
+      items, sel: P[s], channels,
+      caption: 'Koleksi 009 · Fuchsia Glam\nKebaya modern dengan taburan payet yang berkilau, untuk Anda yang ingin tampil anggun sekaligus glamor di hari istimewa.\n\nSewa Rp300.000 / stel. Pesan jadwal fitting lewat tautan di bio atau WhatsApp Admin 1 0812 7111 6292.\n\n#sewakebaya #kebayamodern #kebayawisuda #sisterstudio',
+      posts: [
+        Object.assign({ when: 'Min, 15 Nov · 19.00', title: 'Koleksi 009 · Fuchsia Glam', channel: 'Instagram feed + story · Status WhatsApp', status: 'Terjadwal' }, INFO),
+        Object.assign({ when: 'Sel, 17 Nov · 12.00', title: 'Tips: merawat kebaya setelah dipakai', channel: 'Instagram story', status: 'Draf' }, WAIT),
+        Object.assign({ when: 'Kam, 19 Nov · 19.00', title: 'Cerita pelanggan: hari wisuda', channel: 'Instagram feed', status: 'Menunggu foto' }, WAIT),
+        Object.assign({ when: 'Sab, 21 Nov · 10.00', title: 'Di balik layar: fitting di studio', channel: 'TikTok', status: 'Draf' }, WAIT)
+      ]
+    };
+  }
+}
+</script>
+</body>
+</html>

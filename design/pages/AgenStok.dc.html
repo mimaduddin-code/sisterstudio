@@ -1,0 +1,317 @@
+<!doctype html>
+<html lang="id">
+<head>
+<meta charset="utf-8">
+<title>Agen Stok Inventaris — Sister Studio</title>
+<script src="./support.js"></script>
+</head>
+<body>
+<x-dc>
+<helmet>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Crimson+Pro:ital,wght@0,400;0,600;0,700;1,400&amp;family=Great+Vibes&amp;display=swap">
+<style>
+body{margin:0;background:#fdf3e7}
+a{color:#730020}a:hover{color:#4e0014}
+:focus-visible{outline:2px solid #730020;outline-offset:2px}
+.btn-p:hover{background:#4e0014 !important;color:#fdf3e7 !important}
+.btn-s:hover{background:#f6dfdc !important}
+</style>
+</helmet>
+<div style="min-height: 100vh; display: flex; flex-wrap: wrap; background: #fdf3e7; color: #1f0a0a; font-family: 'Crimson Pro', Georgia, 'Times New Roman', serif; font-size: 17px; line-height: 26px;">
+<div style="flex: 1 1 240px; background: #4e0014;">
+<dc-import name="AdminNav" active="stok" hint-size="100%,960px"></dc-import>
+</div>
+
+<main style="flex: 999 1 560px; min-width: 0; padding: 32px; box-sizing: border-box; display: flex; flex-direction: column; gap: 24px;">
+<header style="display: flex; flex-wrap: wrap; align-items: flex-end; justify-content: space-between; gap: 16px;">
+<div style="display: flex; flex-direction: column; gap: 4px;">
+<span style="display: flex; align-items: center; gap: 10px;">
+<span style="font-size: 13px; line-height: 16px; letter-spacing: 0.16em; font-weight: 600; color: #85561c;">AGEN STOK INVENTARIS</span>
+<span style="padding: 0 10px; border-radius: 2px; background: #dcefee; color: #155e63; font-size: 14px; line-height: 22px; font-weight: 600;">Aktif</span>
+</span>
+<h1 style="margin: 0; font-size: 36px; line-height: 44px; font-weight: 600; color: #4e0014;">Stok kebaya</h1>
+<span style="color: #6a4a44;">Stok masuk, keluar, dan kembali; pengingat pengembalian; riwayat peminjaman; kondisi dan perawatan.</span>
+</div>
+<div style="display: flex; flex-wrap: wrap; gap: 8px;">
+<a href="#perawatan" class="btn-s" style="min-height: 44px; display: inline-flex; align-items: center; padding: 0 16px; border: 1px solid #9a7a5a; border-radius: 2px; background: #fffaf3; font-weight: 600; text-decoration: none;">Update kondisi</a>
+<a href="#tambah" class="btn-p" style="min-height: 44px; display: inline-flex; align-items: center; padding: 0 18px; border-radius: 2px; background: #730020; color: #fdf3e7; font-weight: 600; text-decoration: none;">+ Tambah stok</a>
+</div>
+</header>
+
+<div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(180px, 1fr)); gap: 16px;">
+<sc-for list="{{kpis}}" as="k" hint-placeholder-count="5">
+<div style="background: #fffaf3; border: 1px solid #e6c9a5; border-radius: 12px; padding: 18px 20px; display: flex; flex-direction: column; gap: 4px; box-shadow: 0 1px 2px rgba(78,0,20,0.06), 0 4px 16px rgba(78,0,20,0.06);">
+<span style="font-size: 15px; color: #6a4a44;">{{k.label}}</span>
+<span style="font-size: 34px; line-height: 40px; font-weight: 600; color: {{k.vc}};">{{k.value}}</span>
+<span style="font-size: 14px; line-height: 20px; color: #6a4a44;">{{k.note}}</span>
+</div>
+</sc-for>
+</div>
+
+<section aria-labelledby="inventaris" style="background: #fffaf3; border: 1px solid #e6c9a5; border-radius: 12px; padding: 20px 24px; display: flex; flex-direction: column; gap: 12px;">
+<h2 id="inventaris" style="margin: 0; font-size: 24px; line-height: 32px; font-weight: 600; color: #4e0014;">Inventaris per koleksi</h2>
+<div style="overflow-x: auto; border: 1px solid #e6c9a5; border-radius: 12px;">
+<table style="width: 100%; min-width: 860px; border-collapse: collapse; font-size: 16px; line-height: 24px;">
+<thead>
+<tr style="background: #fbe9d7; text-align: left;">
+<th scope="col" style="padding: 10px 12px; font-weight: 600;">Koleksi</th>
+<th scope="col" style="padding: 10px 12px; font-weight: 600;">Per ukuran (S · M · L · XL)</th>
+<th scope="col" style="padding: 10px 12px; font-weight: 600;">Tersedia</th>
+<th scope="col" style="padding: 10px 12px; font-weight: 600;">Disewa</th>
+<th scope="col" style="padding: 10px 12px; font-weight: 600;">Perawatan</th>
+<th scope="col" style="padding: 10px 12px;"><span style="position: absolute; width: 1px; height: 1px; overflow: hidden; clip: rect(0 0 0 0);">Aksi</span></th>
+</tr>
+</thead>
+<tbody>
+<sc-for list="{{inv}}" as="p" hint-placeholder-count="4">
+<tr style="border-top: 1px solid #e6c9a5; background: {{p.rowBg}};">
+<td style="padding: 10px 12px;">
+<span style="display: flex; align-items: center; gap: 12px;">
+<img src="{{p.img}}" alt="" style="width: 48px; height: 64px; flex-shrink: 0; object-fit: cover; object-position: 50% 12%; border: 1.5px solid #c8924a; border-radius: 999px 999px 4px 4px;">
+<span style="display: flex; flex-direction: column;">
+<span style="font-size: 13px; letter-spacing: 0.12em; font-weight: 600; color: #85561c;">{{p.code}}</span>
+<span style="font-weight: 600; color: #4e0014;">{{p.name}}</span>
+</span>
+</span>
+</td>
+<td style="padding: 10px 12px; white-space: nowrap;">{{p.sizes}}</td>
+<td style="padding: 10px 12px; min-width: 160px;">
+<span style="display: flex; flex-direction: column; gap: 4px;">
+<span style="font-weight: 600;">{{p.avail}} dari {{p.total}}</span>
+<span role="img" aria-label="{{p.meterLabel}}" style="display: block; height: 8px; background: #fbe9d7; border-radius: 2px; overflow: hidden;"><span style="display: block; height: 100%; width: {{p.pct}}; background: #155e63;"></span></span>
+</span>
+</td>
+<td style="padding: 10px 12px;">{{p.out}}</td>
+<td style="padding: 10px 12px;">{{p.care}}</td>
+<td style="padding: 10px 12px;">
+<span style="display: flex; gap: 6px; justify-content: flex-end;">
+<button type="button" class="btn-s" onClick="{{p.pick}}" aria-pressed="{{p.on}}" style="min-height: 40px; padding: 0 12px; border: 1px solid #9a7a5a; border-radius: 2px; background: #fffaf3; color: #730020; font-family: inherit; font-size: 15px; font-weight: 600; cursor: pointer; white-space: nowrap;">Riwayat</button>
+<a href="#tambah" class="btn-s" style="min-height: 40px; display: inline-flex; align-items: center; padding: 0 12px; border: 1px solid #9a7a5a; border-radius: 2px; background: #fffaf3; font-size: 15px; font-weight: 600; text-decoration: none; white-space: nowrap;">+ Stok</a>
+</span>
+</td>
+</tr>
+</sc-for>
+</tbody>
+</table>
+</div>
+</section>
+
+<div style="display: flex; flex-wrap: wrap; align-items: flex-start; gap: 24px;">
+<section aria-labelledby="kembali" style="flex: 1 1 420px; min-width: 0; background: #fffaf3; border: 1px solid #e6c9a5; border-radius: 12px; padding: 20px 24px; display: flex; flex-direction: column; gap: 12px;">
+<h2 id="kembali" style="margin: 0; font-size: 24px; line-height: 32px; font-weight: 600; color: #4e0014;">Reminder pengembalian</h2>
+<sc-for list="{{returns}}" as="r" hint-placeholder-count="4">
+<div style="border: 1px solid {{r.edge}}; border-radius: 12px; padding: 14px 16px; background: {{r.bg}}; display: flex; flex-direction: column; gap: 6px;">
+<span style="display: flex; flex-wrap: wrap; align-items: center; justify-content: space-between; gap: 8px;">
+<span style="font-weight: 600; color: #4e0014;">{{r.item}} · {{r.who}}</span>
+<span style="padding: 0 8px; border-radius: 2px; font-size: 14px; line-height: 22px; font-weight: 600; background: {{r.sb}}; color: {{r.sf}};">{{r.status}}</span>
+</span>
+<span style="font-size: 15px; line-height: 22px; color: #6a4a44;">{{r.note}}</span>
+<span style="display: flex; flex-wrap: wrap; gap: 8px;">
+<button type="button" class="btn-p" style="min-height: 40px; padding: 0 12px; border: 0; border-radius: 2px; background: #730020; color: #fdf3e7; font-family: inherit; font-size: 15px; font-weight: 600; cursor: pointer;">{{r.action}}</button>
+<button type="button" class="btn-s" style="min-height: 40px; padding: 0 12px; border: 1px solid #9a7a5a; border-radius: 2px; background: #fffaf3; color: #730020; font-family: inherit; font-size: 15px; font-weight: 600; cursor: pointer;">Tandai sudah kembali</button>
+</span>
+</div>
+</sc-for>
+</section>
+
+<section aria-labelledby="riwayat" style="flex: 1 1 420px; min-width: 0; background: #fffaf3; border: 1px solid #e6c9a5; border-radius: 12px; padding: 20px 24px; display: flex; flex-direction: column; gap: 12px;">
+<div style="display: flex; align-items: center; gap: 12px;">
+<img src="{{selItem.img}}" alt="" style="width: 44px; height: 58px; object-fit: cover; object-position: 50% 12%; border: 1.5px solid #c8924a; border-radius: 999px 999px 4px 4px;">
+<div style="display: flex; flex-direction: column;">
+<h2 id="riwayat" style="margin: 0; font-size: 24px; line-height: 32px; font-weight: 600; color: #4e0014;">Riwayat peminjaman</h2>
+<span style="font-size: 15px; color: #6a4a44;">{{selItem.code}} · {{selItem.name}}</span>
+</div>
+</div>
+<ol style="list-style: none; margin: 0; padding: 0 0 0 16px; border-left: 2px solid #c8924a; display: flex; flex-direction: column; gap: 14px;">
+<sc-for list="{{history}}" as="h" hint-placeholder-count="4">
+<li style="position: relative; display: flex; flex-direction: column;">
+<span aria-hidden="true" style="position: absolute; left: -23px; top: 8px; width: 12px; height: 12px; border-radius: 9999px; background: #fffaf3; border: 2px solid #730020;"></span>
+<span style="font-weight: 600;">{{h.dates}} · {{h.who}} ({{h.size}})</span>
+<span style="font-size: 15px; line-height: 22px; color: #6a4a44;">{{h.note}}</span>
+</li>
+</sc-for>
+</ol>
+</section>
+</div>
+
+<section aria-labelledby="log" style="background: #fffaf3; border: 1px solid #e6c9a5; border-radius: 12px; padding: 20px 24px; display: flex; flex-direction: column; gap: 12px;">
+<h2 id="log" style="margin: 0; font-size: 24px; line-height: 32px; font-weight: 600; color: #4e0014;">Catatan keluar &amp; kembali</h2>
+<div style="overflow-x: auto; border: 1px solid #e6c9a5; border-radius: 12px;">
+<table style="width: 100%; min-width: 760px; border-collapse: collapse; font-size: 16px; line-height: 24px;">
+<thead>
+<tr style="background: #fbe9d7; text-align: left;">
+<th scope="col" style="padding: 10px 12px; font-weight: 600;">Waktu</th>
+<th scope="col" style="padding: 10px 12px; font-weight: 600;">Gerak</th>
+<th scope="col" style="padding: 10px 12px; font-weight: 600;">Kebaya</th>
+<th scope="col" style="padding: 10px 12px; font-weight: 600;">Pelanggan</th>
+<th scope="col" style="padding: 10px 12px; font-weight: 600;">Catatan</th>
+</tr>
+</thead>
+<tbody>
+<sc-for list="{{log}}" as="l" hint-placeholder-count="6">
+<tr style="border-top: 1px solid #e6c9a5;">
+<td style="padding: 10px 12px; white-space: nowrap;">{{l.when}}</td>
+<td style="padding: 10px 12px;"><span style="padding: 0 8px; border-radius: 2px; font-size: 14px; line-height: 22px; font-weight: 600; background: {{l.sb}}; color: {{l.sf}};">{{l.move}}</span></td>
+<td style="padding: 10px 12px;">{{l.item}}</td>
+<td style="padding: 10px 12px;">{{l.who}}</td>
+<td style="padding: 10px 12px;">{{l.note}}</td>
+</tr>
+</sc-for>
+</tbody>
+</table>
+</div>
+</section>
+
+<div style="display: flex; flex-wrap: wrap; align-items: flex-start; gap: 24px;">
+<section id="perawatan" aria-labelledby="rawat" style="flex: 999 1 520px; min-width: 0; background: #fffaf3; border: 1px solid #e6c9a5; border-radius: 12px; padding: 20px 24px; display: flex; flex-direction: column; gap: 14px;">
+<h2 id="rawat" style="margin: 0; font-size: 24px; line-height: 32px; font-weight: 600; color: #4e0014;">Kondisi &amp; perawatan</h2>
+<ul style="list-style: none; margin: 0; padding: 0; display: flex; flex-direction: column;">
+<sc-for list="{{care}}" as="c" hint-placeholder-count="4">
+<li style="display: flex; flex-wrap: wrap; align-items: center; gap: 6px 16px; padding: 10px 0; border-bottom: 1px solid #e6c9a5;">
+<span style="flex: 1 1 240px; min-width: 0; display: flex; flex-direction: column;">
+<span style="font-weight: 600;">{{c.item}}</span>
+<span style="font-size: 15px; line-height: 22px; color: #6a4a44;">{{c.note}}</span>
+</span>
+<span style="padding: 0 8px; border-radius: 2px; font-size: 14px; line-height: 22px; font-weight: 600; background: {{c.sb}}; color: {{c.sf}};">{{c.status}}</span>
+<span style="width: 130px; font-size: 15px; color: #6a4a44;">Siap {{c.ready}}</span>
+</li>
+</sc-for>
+</ul>
+<form style="display: flex; flex-direction: column; gap: 12px; padding: 16px; background: #fdf3e7; border-radius: 12px;">
+<h3 style="margin: 0; font-size: 19px; font-weight: 600; color: #4e0014;">Update kondisi</h3>
+<div style="display: flex; flex-wrap: wrap; gap: 12px;">
+<label style="flex: 2 1 220px; display: flex; flex-direction: column; gap: 6px; font-weight: 600; font-size: 15px;">Kebaya
+<select style="min-height: 44px; padding: 0 12px; border: 1px solid #9a7a5a; border-radius: 2px; background: #fffaf3; font-family: inherit; font-size: 16px;">
+<option>Koleksi 011 · Mocha Elegance</option><option>Koleksi 008 · Srikandi Kemuning</option><option>Koleksi 009 · Fuchsia Glam</option><option>Koleksi 010 · Candrakirana Nusantara</option>
+</select>
+</label>
+<label style="flex: 1 1 100px; display: flex; flex-direction: column; gap: 6px; font-weight: 600; font-size: 15px;">Ukuran
+<select style="min-height: 44px; padding: 0 12px; border: 1px solid #9a7a5a; border-radius: 2px; background: #fffaf3; font-family: inherit; font-size: 16px;"><option>M</option><option>S</option><option>L</option><option>XL</option></select>
+</label>
+</div>
+<fieldset style="margin: 0; padding: 0; border: 0; display: flex; flex-wrap: wrap; gap: 4px 16px;">
+<legend style="font-weight: 600; font-size: 15px; padding: 0; margin-bottom: 6px;">Kondisi</legend>
+<label style="display: flex; align-items: center; gap: 6px; min-height: 36px;"><input type="radio" name="kondisi" style="width: 18px; height: 18px; accent-color: #730020;"> Baik, siap disewa</label>
+<label style="display: flex; align-items: center; gap: 6px; min-height: 36px;"><input type="radio" name="kondisi" style="width: 18px; height: 18px; accent-color: #730020;"> Laundry</label>
+<label style="display: flex; align-items: center; gap: 6px; min-height: 36px;"><input type="radio" name="kondisi" checked style="width: 18px; height: 18px; accent-color: #730020;"> Perbaikan</label>
+<label style="display: flex; align-items: center; gap: 6px; min-height: 36px;"><input type="radio" name="kondisi" style="width: 18px; height: 18px; accent-color: #730020;"> Tidak layak sewa</label>
+</fieldset>
+<label style="display: flex; flex-direction: column; gap: 6px; font-weight: 600; font-size: 15px;">Catatan
+<textarea rows="2" style="padding: 10px 12px; border: 1px solid #9a7a5a; border-radius: 2px; background: #fffaf3; font-family: inherit; font-size: 16px; line-height: 24px; font-weight: 400; resize: vertical;">Payet lepas di lengan kiri, sekitar 6 butir. Dikirim ke penjahit.</textarea>
+</label>
+<div style="display: flex; flex-wrap: wrap; align-items: center; justify-content: space-between; gap: 12px;">
+<label style="display: flex; flex-direction: column; gap: 6px; font-weight: 600; font-size: 15px;">Foto kondisi
+<input type="file" accept="image/*" style="min-height: 44px; padding: 8px; border: 1px dashed #9a7a5a; border-radius: 2px; background: #fffaf3; font-family: inherit; font-size: 14px;">
+</label>
+<button type="button" class="btn-p" style="min-height: 44px; padding: 0 20px; border: 0; border-radius: 2px; background: #730020; color: #fdf3e7; font-family: inherit; font-size: 16px; font-weight: 600; cursor: pointer;">Simpan kondisi</button>
+</div>
+</form>
+</section>
+
+<form id="tambah" aria-labelledby="tambah-h" style="flex: 1 1 340px; min-width: 0; background: #fffaf3; border: 1px solid #e6c9a5; border-radius: 12px; padding: 20px 24px; display: flex; flex-direction: column; gap: 12px;">
+<h2 id="tambah-h" style="margin: 0; font-size: 24px; line-height: 32px; font-weight: 600; color: #4e0014;">Tambah stok</h2>
+<label style="display: flex; flex-direction: column; gap: 6px; font-weight: 600; font-size: 15px;">Koleksi
+<select style="min-height: 44px; padding: 0 12px; border: 1px solid #9a7a5a; border-radius: 2px; background: #fffaf3; font-family: inherit; font-size: 16px;">
+<option>Koleksi 010 · Candrakirana Nusantara</option><option>Koleksi 008 · Srikandi Kemuning</option><option>Koleksi 009 · Fuchsia Glam</option><option>Koleksi 011 · Mocha Elegance</option><option>Koleksi baru…</option>
+</select>
+</label>
+<div style="display: flex; gap: 12px;">
+<label style="flex: 1 1 0; display: flex; flex-direction: column; gap: 6px; font-weight: 600; font-size: 15px;">Ukuran
+<select style="min-width: 0; min-height: 44px; padding: 0 12px; border: 1px solid #9a7a5a; border-radius: 2px; background: #fffaf3; font-family: inherit; font-size: 16px;"><option>M</option><option>S</option><option>L</option><option>XL</option></select>
+</label>
+<label style="flex: 1 1 0; display: flex; flex-direction: column; gap: 6px; font-weight: 600; font-size: 15px;">Jumlah stel
+<input type="number" min="1" value="1" style="min-width: 0; min-height: 44px; padding: 0 12px; border: 1px solid #9a7a5a; border-radius: 2px; background: #fffaf3; font-family: inherit; font-size: 16px;">
+</label>
+</div>
+<label style="display: flex; flex-direction: column; gap: 6px; font-weight: 600; font-size: 15px;">Tanggal masuk
+<input type="date" value="2026-11-14" style="min-height: 44px; padding: 0 12px; border: 1px solid #9a7a5a; border-radius: 2px; background: #fffaf3; font-family: inherit; font-size: 16px; box-sizing: border-box;">
+</label>
+<label style="display: flex; flex-direction: column; gap: 6px; font-weight: 600; font-size: 15px;">Biaya pembelian / jahit
+<input type="text" inputmode="numeric" placeholder="Rp" style="min-height: 44px; padding: 0 12px; border: 1px solid #9a7a5a; border-radius: 2px; background: #fffaf3; font-family: inherit; font-size: 16px;">
+</label>
+<label style="display: flex; align-items: flex-start; gap: 8px; font-size: 16px;"><input type="checkbox" checked style="width: 18px; height: 18px; margin-top: 4px; accent-color: #730020;"> Catat biaya sebagai kas keluar di Agen Kasir</label>
+<button type="button" class="btn-p" style="min-height: 44px; border: 0; border-radius: 2px; background: #730020; color: #fdf3e7; font-family: inherit; font-size: 16px; font-weight: 600; cursor: pointer;">Tambah ke stok</button>
+</form>
+</div>
+</main>
+</div>
+</x-dc>
+<script type="text/x-dc" data-dc-script data-props='{"$preview":{"width":1440,"height":2200}}'>
+class Component extends DCLogic {
+  constructor(props) {
+    super(props);
+    this.state = { sel: 2 };
+  }
+  renderVals() {
+    const P = [
+      { code: 'Koleksi 008', name: 'Srikandi Kemuning', img: '../assets/foto/koleksi-008-srikandi-kemuning.jpg', sizes: '1 · 2 · 2 · 1', total: 6, avail: 4, out: 1, care: 1,
+        hist: [
+          { dates: '13–15 Nov', who: 'Tika', size: 'S', note: 'Sedang disewa · kembali Min, 15 Nov' },
+          { dates: '6–8 Nov', who: 'Laras', size: 'M', note: 'Kembali tepat waktu · kondisi baik → laundry' },
+          { dates: '30 Okt–1 Nov', who: 'Yuni', size: 'XL', note: 'Kancing kedua longgar → perbaikan' }
+        ] },
+      { code: 'Koleksi 009', name: 'Fuchsia Glam', img: '../assets/foto/koleksi-009-fuchsia-glam.jpg', sizes: '1 · 2 · 2 · 1', total: 6, avail: 2, out: 3, care: 1,
+        hist: [
+          { dates: '14–17 Nov', who: 'Yuni', size: 'L', note: 'Keluar hari ini 10.10 · kembali Sel, 17 Nov' },
+          { dates: '10–13 Nov', who: 'Lestari', size: 'M', note: 'Terlambat 1 hari · pengingat gagal terkirim' },
+          { dates: '7–9 Nov', who: 'Citra', size: 'S', note: 'Kembali tepat waktu → laundry' }
+        ] },
+      { code: 'Koleksi 010', name: 'Candrakirana Nusantara', img: '../assets/foto/koleksi-010-candrakirana-nusantara.jpg', sizes: '1 · 2 · 2 · 1', total: 6, avail: 3, out: 2, care: 1,
+        hist: [
+          { dates: '12–15 Nov', who: 'Rina', size: 'M', note: 'Minta perpanjangan ke Sen, 16 Nov · menunggu admin' },
+          { dates: '9–12 Nov', who: 'Putri', size: 'L', note: 'Belum kembali · terlambat 2 hari' },
+          { dates: '10–13 Nov', who: 'Laras', size: 'S', note: 'Kembali tepat waktu · kondisi baik → laundry' },
+          { dates: '31 Okt–2 Nov', who: 'Dinda', size: 'M', note: 'Kembali tepat waktu · kondisi baik' }
+        ] },
+      { code: 'Koleksi 011', name: 'Mocha Elegance', img: '../assets/foto/koleksi-011-mocha-elegance.jpg', sizes: '1 · 2 · 2 · 1', total: 6, avail: 4, out: 1, care: 1,
+        hist: [
+          { dates: '11–14 Nov', who: 'Wulan', size: 'M', note: 'Kembali dengan payet lepas → perbaikan, biaya ditagihkan' },
+          { dates: '2–4 Nov', who: 'Maya', size: 'L', note: 'Kembali tepat waktu · kondisi baik' }
+        ] }
+    ];
+    const s = this.state.sel;
+    const inv = P.map((p, i) => Object.assign({}, p, {
+      on: i === s,
+      rowBg: i === s ? '#f6dfdc' : 'transparent',
+      pct: Math.round((p.avail / p.total) * 100) + '%',
+      meterLabel: p.avail + ' dari ' + p.total + ' stel tersedia',
+      pick: () => this.setState({ sel: i })
+    }));
+    const LATE = { sb: '#fbe0da', sf: '#a11d12', edge: '#a11d12', bg: '#fffaf3' };
+    const SOON = { sb: '#e4e8f3', sf: '#3a4a72', edge: '#e6c9a5', bg: '#fdf3e7' };
+    const WAIT = { sb: '#fbe7c0', sf: '#7a4a00', edge: '#e6c9a5', bg: '#fdf3e7' };
+    return {
+      inv, selItem: P[s], history: P[s].hist,
+      kpis: [
+        { label: 'Total stok', value: '24 stel', note: '4 koleksi · 4 ukuran', vc: '#4e0014' },
+        { label: 'Tersedia', value: '13', note: 'Siap disewa hari ini', vc: '#155e63' },
+        { label: 'Disewa', value: '7', note: '3 kembali dalam 3 hari', vc: '#3a4a72' },
+        { label: 'Perawatan', value: '4', note: '3 laundry · 1 perbaikan', vc: '#7a4a00' },
+        { label: 'Terlambat kembali', value: '2', note: 'Pengingat kedua terkirim', vc: '#a11d12' }
+      ],
+      returns: [
+        Object.assign({ item: 'Candrakirana Nusantara (L)', who: 'Putri', status: 'Terlambat 2 hari', note: 'Jatuh tempo Kam, 12 Nov · pengingat kedua terkirim Sab 09.00', action: 'Kirim pengingat ketiga' }, LATE),
+        Object.assign({ item: 'Fuchsia Glam (M)', who: 'Lestari', status: 'Terlambat 1 hari', note: 'Jatuh tempo Jum, 13 Nov · WhatsApp gagal, nomor tidak aktif', action: 'Kirim lewat email' }, LATE),
+        Object.assign({ item: 'Srikandi Kemuning (S)', who: 'Tika', status: 'Besok', note: 'Kembali Min, 15 Nov · pengingat terjadwal Min 09.00', action: 'Kirim sekarang' }, SOON),
+        Object.assign({ item: 'Candrakirana Nusantara (M)', who: 'Rina', status: 'Minta perpanjangan', note: 'Jatuh tempo Min, 15 Nov · usul diperpanjang ke Sen, 16 Nov', action: 'Buka di Admin Agen' }, WAIT)
+      ],
+      log: [
+        { when: 'Sab 14, 11.30', move: 'Kembali', sb: '#dcefee', sf: '#155e63', item: 'Mocha Elegance (M)', who: 'Wulan', note: 'Payet lepas di lengan kiri → perbaikan' },
+        { when: 'Sab 14, 10.10', move: 'Keluar', sb: '#e4e8f3', sf: '#3a4a72', item: 'Fuchsia Glam (L)', who: 'Yuni', note: 'Kembali Sel, 17 Nov' },
+        { when: 'Jum 13, 16.00', move: 'Keluar', sb: '#e4e8f3', sf: '#3a4a72', item: 'Srikandi Kemuning (S)', who: 'Tika', note: 'Kembali Min, 15 Nov' },
+        { when: 'Jum 13, 14.20', move: 'Kembali', sb: '#dcefee', sf: '#155e63', item: 'Candrakirana Nusantara (S)', who: 'Laras', note: 'Kondisi baik → laundry' },
+        { when: 'Kam 12, 10.00', move: 'Keluar', sb: '#e4e8f3', sf: '#3a4a72', item: 'Candrakirana Nusantara (M)', who: 'Rina', note: 'Kembali Min, 15 Nov' },
+        { when: 'Sel 10, 15.30', move: 'Keluar', sb: '#e4e8f3', sf: '#3a4a72', item: 'Fuchsia Glam (M)', who: 'Lestari', note: 'Kembali Jum, 13 Nov · belum kembali' }
+      ],
+      care: [
+        { item: 'Mocha Elegance (M)', note: 'Payet lepas di lengan kiri · penjahit langganan', status: 'Perbaikan', sb: '#fbe0da', sf: '#a11d12', ready: 'Sel, 17 Nov' },
+        { item: 'Candrakirana Nusantara (S)', note: 'Cuci kering dan setrika uap', status: 'Laundry', sb: '#fbe7c0', sf: '#7a4a00', ready: 'Sen, 16 Nov' },
+        { item: 'Fuchsia Glam (S)', note: 'Cuci kering dan setrika uap', status: 'Laundry', sb: '#fbe7c0', sf: '#7a4a00', ready: 'Min, 15 Nov' },
+        { item: 'Srikandi Kemuning (XL)', note: 'Kancing kedua dijahit ulang, lalu laundry', status: 'Laundry', sb: '#fbe7c0', sf: '#7a4a00', ready: 'Rab, 18 Nov' }
+      ]
+    };
+  }
+}
+</script>
+</body>
+</html>

@@ -1,0 +1,232 @@
+<!doctype html>
+<html lang="id">
+<head>
+<meta charset="utf-8">
+<title>Admin Agen — Ringkasan</title>
+<script src="./support.js"></script>
+</head>
+<body>
+<x-dc>
+<helmet>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Crimson+Pro:ital,wght@0,400;0,600;0,700;1,400&amp;family=Great+Vibes&amp;display=swap">
+<style>
+body{margin:0;background:#fdf3e7}
+a{color:#730020}a:hover{color:#4e0014}
+:focus-visible{outline:2px solid #730020;outline-offset:2px}
+.btn-p:hover{background:#4e0014 !important;color:#fdf3e7 !important}
+.btn-s:hover{background:#f6dfdc !important}
+</style>
+</helmet>
+<div style="min-height: 100vh; display: flex; flex-wrap: wrap; background: #fdf3e7; color: #1f0a0a; font-family: 'Crimson Pro', Georgia, 'Times New Roman', serif; font-size: 17px; line-height: 26px;">
+<div style="flex: 1 1 240px; background: #4e0014;">
+<dc-import name="AdminNav" active="admin" hint-size="100%,960px"></dc-import>
+</div>
+
+<main style="flex: 999 1 560px; min-width: 0; padding: 32px; box-sizing: border-box; display: flex; flex-direction: column; gap: 24px;">
+<header style="display: flex; flex-wrap: wrap; align-items: flex-end; justify-content: space-between; gap: 16px;">
+<div style="display: flex; flex-direction: column; gap: 4px;">
+<span style="display: flex; align-items: center; gap: 10px;">
+<span style="font-size: 13px; line-height: 16px; letter-spacing: 0.16em; font-weight: 600; color: #85561c;">ADMIN AGEN</span>
+<span style="padding: 0 10px; border-radius: 2px; background: #dcefee; color: #155e63; font-size: 14px; line-height: 22px; font-weight: 600;">Aktif</span>
+</span>
+<h1 style="margin: 0; font-size: 36px; line-height: 44px; font-weight: 600; color: #4e0014;">Selamat siang, [Owner]</h1>
+<span style="color: #6a4a44;">Ringkasan dari 5 agen · Sab, 14 Nov 2026, 13.00</span>
+</div>
+<div style="display: flex; flex-wrap: wrap; gap: 8px;">
+<label style="display: flex;"><span style="position: absolute; width: 1px; height: 1px; overflow: hidden; clip: rect(0 0 0 0);">Cari</span>
+<input type="search" placeholder="Cari pelanggan, invoice, kebaya…" style="width: 280px; max-width: 100%; min-height: 44px; padding: 0 12px; border: 1px solid #9a7a5a; border-radius: 2px; background: #fffaf3; font-family: inherit; font-size: 16px;">
+</label>
+<button type="button" class="btn-s" style="min-height: 44px; padding: 0 16px; border: 1px solid #9a7a5a; border-radius: 2px; background: #fffaf3; color: #730020; font-family: inherit; font-size: 16px; font-weight: 600; cursor: pointer;">Unduh laporan harian</button>
+</div>
+</header>
+
+<div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(200px, 1fr)); gap: 16px;">
+<sc-for list="{{kpis}}" as="k" hint-placeholder-count="4">
+<div style="background: #fffaf3; border: 1px solid #e6c9a5; border-radius: 12px; padding: 20px; display: flex; flex-direction: column; gap: 4px; box-shadow: 0 1px 2px rgba(78,0,20,0.06), 0 4px 16px rgba(78,0,20,0.06);">
+<span style="font-size: 15px; color: #6a4a44;">{{k.label}}</span>
+<span style="font-size: 34px; line-height: 40px; font-weight: 600; color: #4e0014;">{{k.value}}</span>
+<span style="font-size: 14px; line-height: 20px; color: #6a4a44;">{{k.note}}</span>
+</div>
+</sc-for>
+</div>
+
+<section aria-labelledby="keputusan" style="background: #f6dfdc; border: 1px solid #e6c9a5; border-radius: 12px; padding: 20px 24px; display: flex; flex-direction: column; gap: 12px;">
+<h2 id="keputusan" style="margin: 0; font-size: 22px; line-height: 30px; font-weight: 600; color: #730020;">Perlu keputusan Anda · 3</h2>
+<sc-for list="{{decisions}}" as="d" hint-placeholder-count="3">
+<div style="display: flex; flex-wrap: wrap; align-items: center; gap: 12px 16px; padding: 12px 16px; background: #fffaf3; border-radius: 12px;">
+<span style="padding: 0 10px; border-radius: 2px; background: #730020; color: #fdf3e7; font-size: 14px; line-height: 24px; font-weight: 600;">{{d.agent}}</span>
+<span style="flex: 1 1 320px; min-width: 0;">{{d.text}}</span>
+<span style="display: flex; flex-wrap: wrap; gap: 8px;">
+<button type="button" class="btn-p" style="min-height: 40px; padding: 0 14px; border: 0; border-radius: 2px; background: #730020; color: #fdf3e7; font-family: inherit; font-size: 15px; font-weight: 600; cursor: pointer;">{{d.yes}}</button>
+<button type="button" class="btn-s" style="min-height: 40px; padding: 0 14px; border: 1px solid #9a7a5a; border-radius: 2px; background: #fffaf3; color: #730020; font-family: inherit; font-size: 15px; font-weight: 600; cursor: pointer;">{{d.no}}</button>
+</span>
+</div>
+</sc-for>
+</section>
+
+<div style="display: flex; flex-wrap: wrap; align-items: flex-start; gap: 24px;">
+<div style="flex: 999 1 520px; min-width: 0; display: flex; flex-direction: column; gap: 24px;">
+
+<section aria-labelledby="konsol" style="background: #fffaf3; border: 1px solid #e6c9a5; border-radius: 12px; overflow: hidden; display: flex; flex-direction: column;">
+<div style="padding: 20px 24px 12px; display: flex; flex-direction: column; gap: 4px;">
+<h2 id="konsol" style="margin: 0; font-size: 24px; line-height: 32px; font-weight: 600; color: #4e0014;">Perintah ke Admin Agen</h2>
+<span style="font-size: 15px; color: #6a4a44;">Tulis perintah dengan bahasa sehari-hari. Agen mengumpulkan data dari agen lain dan menjawab di sini serta lewat WhatsApp.</span>
+</div>
+<div role="group" aria-label="Perintah cepat" style="display: flex; flex-wrap: wrap; gap: 8px; padding: 0 24px 16px;">
+<sc-for list="{{cmds}}" as="c" hint-placeholder-count="4">
+<button type="button" onClick="{{c.pick}}" aria-pressed="{{c.on}}" style="min-height: 40px; padding: 0 14px; border-radius: 9999px; border: 1px solid {{c.border}}; background: {{c.bg}}; color: {{c.fg}}; font-family: inherit; font-size: 15px; font-weight: 600; cursor: pointer;">{{c.label}}</button>
+</sc-for>
+</div>
+<div style="background: #fdf3e7; border-top: 1px solid #e6c9a5; border-bottom: 1px solid #e6c9a5; padding: 20px 24px; display: flex; flex-direction: column; gap: 12px;">
+<div style="align-self: flex-end; max-width: 80%; display: flex; flex-direction: column; align-items: flex-end; gap: 2px;">
+<span style="font-size: 13px; color: #6a4a44;">Owner · 13.02</span>
+<div style="background: #730020; color: #fdf3e7; border-radius: 12px 12px 2px 12px; padding: 10px 14px;">{{cmd.ask}}</div>
+</div>
+<div style="align-self: flex-start; max-width: 88%; display: flex; flex-direction: column; gap: 2px;">
+<span style="font-size: 13px; color: #6a4a44;">Admin Agen · 13.02</span>
+<div style="background: #fffaf3; border: 1px solid #e6c9a5; border-radius: 12px 12px 12px 2px; padding: 12px 16px; white-space: pre-line;">{{cmd.answer}}</div>
+<span style="display: flex; flex-wrap: wrap; gap: 8px; margin-top: 6px;">
+<button type="button" class="btn-p" style="min-height: 40px; padding: 0 14px; border: 0; border-radius: 2px; background: #730020; color: #fdf3e7; font-family: inherit; font-size: 15px; font-weight: 600; cursor: pointer;">{{cmd.action}}</button>
+<button type="button" class="btn-s" style="min-height: 40px; padding: 0 14px; border: 1px solid #9a7a5a; border-radius: 2px; background: #fffaf3; color: #730020; font-family: inherit; font-size: 15px; font-weight: 600; cursor: pointer;">Kirim ke WhatsApp saya</button>
+</span>
+</div>
+</div>
+<form style="display: flex; gap: 8px; padding: 12px 16px;">
+<label style="flex: 1 1 auto; display: flex;"><span style="position: absolute; width: 1px; height: 1px; overflow: hidden; clip: rect(0 0 0 0);">Perintah</span>
+<input type="text" placeholder="Contoh: siapa saja yang fitting minggu depan?" style="flex: 1 1 auto; min-width: 0; min-height: 44px; padding: 0 12px; border: 1px solid #9a7a5a; border-radius: 2px; background: #fffaf3; font-family: inherit; font-size: 16px;">
+</label>
+<button type="button" class="btn-p" style="min-height: 44px; padding: 0 20px; border: 0; border-radius: 2px; background: #730020; color: #fdf3e7; font-family: inherit; font-size: 16px; font-weight: 600; cursor: pointer;">Kirim</button>
+</form>
+</section>
+
+<section aria-labelledby="aktivitas" style="background: #fffaf3; border: 1px solid #e6c9a5; border-radius: 12px; padding: 20px 24px; display: flex; flex-direction: column; gap: 12px;">
+<div style="display: flex; flex-wrap: wrap; align-items: center; justify-content: space-between; gap: 12px;">
+<h2 id="aktivitas" style="margin: 0; font-size: 24px; line-height: 32px; font-weight: 600; color: #4e0014;">Catatan aktivitas agen</h2>
+<div role="group" aria-label="Saring menurut agen" style="display: flex; flex-wrap: wrap; gap: 6px;">
+<sc-for list="{{filters}}" as="f" hint-placeholder-count="6">
+<button type="button" onClick="{{f.pick}}" aria-pressed="{{f.on}}" style="min-height: 36px; padding: 0 12px; border-radius: 9999px; border: 1px solid {{f.border}}; background: {{f.bg}}; color: {{f.fg}}; font-family: inherit; font-size: 14px; font-weight: 600; cursor: pointer;">{{f.label}}</button>
+</sc-for>
+</div>
+</div>
+<ol style="list-style: none; margin: 0; padding: 0; display: flex; flex-direction: column;">
+<sc-for list="{{feed}}" as="e" hint-placeholder-count="8">
+<li style="display: flex; flex-wrap: wrap; align-items: baseline; gap: 4px 16px; padding: 12px 0; border-bottom: 1px solid #e6c9a5;">
+<span style="width: 48px; font-size: 15px; font-weight: 600; color: #6a4a44;">{{e.time}}</span>
+<span style="min-width: 96px; padding: 0 8px; border-radius: 2px; background: #f6dfdc; color: #730020; font-size: 14px; line-height: 22px; font-weight: 600; text-align: center;">{{e.agent}}</span>
+<span style="flex: 1 1 320px; min-width: 0;">{{e.text}}</span>
+</li>
+</sc-for>
+</ol>
+</section>
+</div>
+
+<div style="flex: 1 1 340px; min-width: 0; display: flex; flex-direction: column; gap: 24px;">
+<section aria-labelledby="reminder" style="background: #fffaf3; border: 1px solid #e6c9a5; border-radius: 12px; padding: 20px 24px; display: flex; flex-direction: column; gap: 12px;">
+<h2 id="reminder" style="margin: 0; font-size: 22px; line-height: 30px; font-weight: 600; color: #4e0014;">Reminder reservasi</h2>
+<sc-for list="{{days}}" as="day" hint-placeholder-count="2">
+<div style="display: flex; flex-direction: column; gap: 8px;">
+<span style="font-size: 13px; line-height: 16px; letter-spacing: 0.16em; font-weight: 600; color: #85561c;">{{day.label}}</span>
+<sc-for list="{{day.items}}" as="r" hint-placeholder-count="2">
+<div style="display: flex; gap: 12px; padding: 10px 12px; border: 1px solid #e6c9a5; border-radius: 12px; background: #fdf3e7;">
+<span style="font-weight: 600; color: #4e0014; width: 44px;">{{r.time}}</span>
+<span style="flex: 1 1 auto; display: flex; flex-direction: column; min-width: 0;">
+<span style="font-weight: 600;">{{r.type}} · {{r.who}}</span>
+<span style="font-size: 15px; line-height: 22px; color: #6a4a44;">{{r.kebaya}}</span>
+<span style="align-self: flex-start; margin-top: 4px; padding: 0 8px; border-radius: 2px; font-size: 13px; line-height: 20px; font-weight: 600; background: {{r.sb}}; color: {{r.sf}};">{{r.status}}</span>
+</span>
+</div>
+</sc-for>
+</div>
+</sc-for>
+<a href="AgenCS.dc.html" style="font-weight: 600; min-height: 44px; display: inline-flex; align-items: center;">Atur pengingat di Agen CS →</a>
+</section>
+
+<section aria-labelledby="status-agen" style="background: #fffaf3; border: 1px solid #e6c9a5; border-radius: 12px; padding: 20px 24px; display: flex; flex-direction: column; gap: 8px;">
+<h2 id="status-agen" style="margin: 0 0 4px; font-size: 22px; line-height: 30px; font-weight: 600; color: #4e0014;">Status agen</h2>
+<sc-for list="{{agents}}" as="a" hint-placeholder-count="5">
+<a href="{{a.href}}" style="display: flex; align-items: center; gap: 12px; min-height: 56px; padding: 8px 0; border-bottom: 1px solid #e6c9a5; color: #1f0a0a; text-decoration: none;">
+<span style="flex: 1 1 auto; display: flex; flex-direction: column; min-width: 0;">
+<span style="font-weight: 600; color: #4e0014;">{{a.name}}</span>
+<span style="font-size: 14px; line-height: 20px; color: #6a4a44;">{{a.note}}</span>
+</span>
+<span style="padding: 0 8px; border-radius: 2px; background: #dcefee; color: #155e63; font-size: 13px; line-height: 20px; font-weight: 600;">Aktif</span>
+</a>
+</sc-for>
+</section>
+</div>
+</div>
+</main>
+</div>
+</x-dc>
+<script type="text/x-dc" data-dc-script data-props='{"$preview":{"width":1440,"height":1700}}'>
+class Component extends DCLogic {
+  constructor(props) {
+    super(props);
+    this.state = { cmd: 0, agent: 'Semua' };
+  }
+  renderVals() {
+    const chip = (on) => ({ bg: on ? '#730020' : '#fffaf3', fg: on ? '#fdf3e7' : '#730020', border: on ? '#730020' : '#9a7a5a' });
+    const CMDS = [
+      { label: 'Laporan hari ini', ask: 'Laporan hari ini sampai sekarang.', action: 'Simpan sebagai PDF',
+        answer: 'Ringkasan Sab, 14 Nov sampai 13.00:\n• CS: 18 chat masuk, 15 dijawab otomatis, 3 diteruskan ke admin.\n• Reservasi: 3 fitting baru, 1 dibatalkan pelanggan.\n• Kasir: kas masuk Rp425.000 (2 DP, 1 pelunasan), kas keluar Rp120.000 (laundry).\n• Stok: 2 kebaya keluar, 1 kembali dan perlu perbaikan.\n• Kreator: 1 posting Instagram terjadwal Min, 15 Nov 19.00.' },
+      { label: 'Jadwal besok', ask: 'Siapa saja yang datang besok?', action: 'Kirim pengingat sekarang',
+        answer: 'Min, 15 Nov 2026:\n• 10.00 Fitting · Sari · Fuchsia Glam\n• 11.30 Pengambilan · Ayu · Srikandi Kemuning (sudah lunas)\n• 13.00 Fitting · Dewi · Candrakirana Nusantara\nPengingat H-1 sudah dikirim Agen CS pukul 09.00 lewat WhatsApp dan email.' },
+      { label: 'Belum kembali', ask: 'Kebaya mana yang belum dikembalikan?', action: 'Tetapkan denda',
+        answer: '2 kebaya melewati tanggal kembali:\n• Candrakirana Nusantara (L) · Putri · jatuh tempo Kam, 12 Nov · terlambat 2 hari\n• Fuchsia Glam (M) · Lestari · jatuh tempo Jum, 13 Nov · terlambat 1 hari\nAgen Stok sudah mengirim pengingat kedua pukul 09.00. Usul: tetapkan denda sesuai S/K.' },
+      { label: 'Rekap keuangan November', ask: 'Rekap keuangan November sejauh ini.', action: 'Buka Agen Kasir',
+        answer: '1–14 Nov 2026:\n• Kas masuk Rp6.450.000\n• Kas keluar Rp1.320.000 (laundry, perbaikan, iklan)\n• Saldo bersih Rp5.130.000\n• Piutang Rp675.000 dari 3 invoice\nKoleksi paling sering disewa: Candrakirana Nusantara (6 kali).' }
+    ];
+    const ci = this.state.cmd;
+    const cmds = CMDS.map((c, i) => Object.assign({ label: c.label, on: i === ci, pick: () => this.setState({ cmd: i }) }, chip(i === ci)));
+    const FEED = [
+      { time: '12.40', agent: 'Kasir', text: 'Mencatat pelunasan INV-2026-11-0038 sebesar Rp125.000 lewat QRIS. Status invoice: Lunas.' },
+      { time: '12.15', agent: 'CS', text: 'Meneruskan permintaan perpanjangan sewa dari Rina (Candrakirana Nusantara, M) ke admin.' },
+      { time: '11.30', agent: 'Stok', text: 'Mocha Elegance (M) kembali dari Wulan. Kondisi: payet lepas di lengan kiri. Masuk antrean perbaikan.' },
+      { time: '10.05', agent: 'CS', text: 'Mengirim pengingat H-1 fitting ke 3 pelanggan lewat WhatsApp dan email.' },
+      { time: '09.40', agent: 'Kreator', text: 'Menyusun caption dan menjadwalkan posting Koleksi 009 Fuchsia Glam untuk Min, 15 Nov 19.00.' },
+      { time: '09.00', agent: 'Stok', text: 'Mengirim pengingat pengembalian kedua ke 2 pelanggan yang terlambat.' },
+      { time: '08.30', agent: 'Kasir', text: 'Rekap Jum, 13 Nov: kas masuk Rp1.150.000, kas keluar Rp180.000.' },
+      { time: '08.00', agent: 'Admin Agen', text: 'Mengirim laporan pagi ke WhatsApp owner.' }
+    ];
+    const ag = this.state.agent;
+    const filters = ['Semua', 'Admin Agen', 'CS', 'Kreator', 'Kasir', 'Stok'].map((label) => Object.assign({ label, on: label === ag, pick: () => this.setState({ agent: label }) }, chip(label === ag)));
+    const OK = { sb: '#dcefee', sf: '#155e63' }, PLAN = { sb: '#e4e8f3', sf: '#3a4a72' };
+    return {
+      kpis: [
+        { label: 'Reservasi minggu ini', value: '12', note: '3 lebih banyak dari minggu lalu' },
+        { label: 'Fitting hari ini', value: '4', note: '2 sudah datang' },
+        { label: 'Kebaya sedang disewa', value: '7', note: '2 terlambat kembali' },
+        { label: 'Kas masuk November', value: 'Rp6.450.000', note: 'Sampai Sab, 14 Nov' }
+      ],
+      decisions: [
+        { agent: 'CS', text: 'Rina minta perpanjangan sewa Candrakirana Nusantara (M) 1 hari, sampai Sen, 16 Nov. Tidak ada pemesan lain sampai Rab, 18 Nov.', yes: 'Setujui', no: 'Tolak' },
+        { agent: 'Stok', text: 'Mocha Elegance (M) perlu perbaikan payet di lengan kiri. Perkiraan biaya penjahit Rp75.000.', yes: 'Setujui perbaikan', no: 'Lihat foto' },
+        { agent: 'Kasir', text: 'INV-2026-11-0040 dan INV-2026-11-0041 lewat batas bayar DP. Jadwal fitting keduanya Sel, 17 Nov.', yes: 'Kirim pengingat', no: 'Lepas jadwal' }
+      ],
+      cmds, cmd: CMDS[ci],
+      filters,
+      feed: ag === 'Semua' ? FEED : FEED.filter((e) => e.agent === ag),
+      days: [
+        { label: 'BESOK · MIN, 15 NOV', items: [
+          Object.assign({ time: '10.00', type: 'Fitting', who: 'Sari', kebaya: 'Fuchsia Glam', status: 'Pengingat terkirim' }, OK),
+          Object.assign({ time: '11.30', type: 'Pengambilan', who: 'Ayu', kebaya: 'Srikandi Kemuning', status: 'Pengingat terkirim' }, OK),
+          Object.assign({ time: '13.00', type: 'Fitting', who: 'Dewi', kebaya: 'Candrakirana Nusantara', status: 'Pengingat terkirim' }, OK)
+        ] },
+        { label: 'SEN, 16 NOV', items: [
+          Object.assign({ time: '09.00', type: 'Pengembalian', who: 'Rina', kebaya: 'Candrakirana Nusantara', status: 'Terjadwal Min 09.00' }, PLAN),
+          Object.assign({ time: '14.30', type: 'Fitting', who: 'Maya', kebaya: 'Mocha Elegance', status: 'Terjadwal Min 09.00' }, PLAN)
+        ] }
+      ],
+      agents: [
+        { name: 'Agen CS', note: '18 chat hari ini · terakhir 12.15', href: 'AgenCS.dc.html' },
+        { name: 'Agen Kreator', note: '1 posting terjadwal · terakhir 09.40', href: 'AgenKreator.dc.html' },
+        { name: 'Agen Kasir & Akuntan', note: '3 transaksi hari ini · terakhir 12.40', href: 'AgenKasir.dc.html' },
+        { name: 'Agen Stok Inventaris', note: '2 keluar, 1 kembali · terakhir 11.30', href: 'AgenStok.dc.html' },
+        { name: 'Admin Agen', note: 'Laporan pagi terkirim 08.00', href: 'AdminDashboard.dc.html' }
+      ]
+    };
+  }
+}
+</script>
+</body>
+</html>

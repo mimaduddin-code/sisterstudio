@@ -1,0 +1,12 @@
+{
+  "nama": "Agen Stok Inventaris",
+  "tugas": [
+    "Menambah stok",
+    "Mencatat stok keluar dan kembali",
+    "Reminder pengembalian",
+    "Riwayat peminjaman",
+    "Kondisi dan perawatan"
+  ],
+  "status": "Aktif",
+  "contoh": false
+}

@@ -1,0 +1,18 @@
+{
+  "reservasi": "RSV-2026-11-0034",
+  "pelanggan": "tika",
+  "item": [
+    {
+      "keterangan": "Sewa Srikandi Kemuning (S)",
+      "jumlah": 1,
+      "harga": 250000
+    }
+  ],
+  "total": 250000,
+  "dp": 125000,
+  "dibayar": 250000,
+  "sisa": 0,
+  "status": "Lunas",
+  "terbit": "2026-11-04",
+  "contoh": true
+}

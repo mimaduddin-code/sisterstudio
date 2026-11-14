@@ -1,0 +1,17 @@
+{
+  "judul": "Syarat & ketentuan sewa",
+  "versi": 3,
+  "diperbarui": "2026-11-02",
+  "status": "Draf, isi nilai dalam kurung siku",
+  "butir": [
+    "Lama sewa [3] hari, dihitung dari tanggal pengambilan.",
+    "DP [50%] mengunci tanggal sewa. Pelunasan saat pengambilan kebaya.",
+    "Jaminan: [kartu identitas asli / deposit Rp…], dikembalikan setelah kebaya kembali dalam kondisi baik.",
+    "Keterlambatan pengembalian dikenakan denda [Rp…] per hari.",
+    "Noda permanen, sobek, atau payet lepas dikenakan biaya perbaikan sesuai penilaian studio. Kebaya hilang diganti [nilai penggantian].",
+    "Pembatalan kurang dari [H-7]: DP tidak dikembalikan, tetapi dapat dialihkan ke tanggal lain [1 kali].",
+    "Kebaya tidak boleh dipotong, dijahit, atau diubah tanpa izin.",
+    "Tidak perlu dicuci sendiri; laundry dan perawatan ditangani studio."
+  ],
+  "contoh": false
+}

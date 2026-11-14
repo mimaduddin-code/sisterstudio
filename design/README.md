@@ -9,7 +9,7 @@ Bahan desain website sewa kebaya Sister Studio, untuk dilanjutkan di Figma.
 
 | Path | Isi |
 | --- | --- |
-| `pages/*.dc.html` | 5 halaman publik yang sudah jadi. Format canvas Claude (butuh `support.js` dari canvas), jadi pakai sebagai acuan tata letak, isi, dan gaya, bukan sebagai situs yang langsung jalan. |
+| `pages/*.dc.html` | 13 halaman (website publik, akun pelanggan, invoice, admin, 5 agen) dan komponen menu admin. Format canvas Claude (butuh `support.js` dari canvas), jadi pakai sebagai acuan tata letak, isi, dan gaya, bukan sebagai situs yang langsung jalan. |
 | `canvas.json` | Daftar 12 halaman beserta ukuran dan susunannya di canvas. |
 | `tokens.json` | Warna, tipografi, spasi, radius, dan bayangan dari design system. |
 | `assets/foto/` | Foto kebaya yang dipotong dari poster katalog, foto manekin, dan 2 foto interior studio. |
@@ -39,7 +39,9 @@ Kontak: Admin 1 081271116292 · Admin 2 081368685449 · Admin 3 082216219763 · 
 
 ## Halaman
 
-### Sudah jadi (website publik)
+Semua 13 halaman dan komponen menu admin sudah ada di canvas dan di `pages/`. Seluruh data yang tampil di halaman-halaman ini tersimpan di database: lihat `../database/README.md`.
+
+### Website publik
 
 1. **Home** (`Main.dc.html`): menu, hero dengan foto manekin di bingkai lengkung, cara sewa 4 langkah, 4 koleksi, cuplikan testimoni, bagian Kunjungi Studio (foto interior, alamat, jam buka, 3 admin), bar kontak.
 2. **Testimoni**: saring menurut momen, kartu testimoni dengan foto kebaya yang dipakai, formulir tulis testimoni untuk akun Google yang sudah mengembalikan kebaya (tampil setelah disetujui admin).
@@ -47,7 +49,9 @@ Kontak: Admin 1 081271116292 · Admin 2 081368685449 · Admin 3 082216219763 · 
 4. **Fitting** (interaktif): Masuk dengan Google → pilih kebaya dan ukuran → pilih tanggal dan jam → konfirmasi (WhatsApp, pengingat, cara bayar DP, setuju S/K) → selesai (invoice terkirim, daftar pengingat). Ringkasan di samping menghitung DP 50%.
 5. **Kontak**: 3 admin WhatsApp, Instagram, email, studio, foto ruang fitting, formulir pesan, chat Agen CS dengan balasan cepat, FAQ, dan draf syarat & ketentuan sewa.
 
-### Belum dibuat
+### Pelanggan, admin, dan agen
+
+Halaman admin memakai komponen menu bersama `AdminNav.dc.html` (`<dc-import name="AdminNav" active="…">`).
 
 6. **Akun saya** (login Google): reservasi mendatang, invoice (status DP/Lunas), pengingat terkirim/terjadwal, riwayat sewa, tombol tulis testimoni.
 7. **Invoice**: dokumen bermerek; nomor INV, pelanggan, item sewa, DP, sisa, cara bayar, status, ringkasan S/K, bar kontak.

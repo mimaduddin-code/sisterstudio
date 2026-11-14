@@ -1,0 +1,7 @@
+{
+  "pertanyaan": "Metode pembayaran apa saja?",
+  "jawaban": "Transfer bank, QRIS, atau tunai di studio. Bukti bayar dicatat otomatis di invoice Anda.",
+  "dipakai_minggu_ini": 14,
+  "tampil_di_website": true,
+  "contoh": false
+}
