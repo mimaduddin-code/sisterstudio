@@ -87,6 +87,16 @@ canvas.dust { position: absolute; inset: 0; width: 100%; height: 100%; pointer-e
 .chip .n { font-family: var(--script); font-size: 34px; line-height: 1.1; }
 .chip .pr { margin-left: auto; text-align: right; font-weight: 600; font-size: 22px; line-height: 1.1; }
 .chip .pr small { display: block; font-size: 13px; color: var(--gold-3); font-weight: 400; }
+.arch img { transition: opacity .35s ease; }
+.arch img.swap { opacity: 0; }
+.picker { margin-top: 12px; display: grid; grid-template-columns: repeat(4, minmax(0, 1fr)); gap: 8px; }
+.picker button { display: flex; flex-direction: column; align-items: center; gap: 4px; padding: 6px 4px; min-height: 44px; background: var(--card); border: 1.5px solid var(--line); border-radius: 10px; cursor: pointer; font-family: inherit; color: var(--ink); }
+.picker button:hover { border-color: var(--gold-5); }
+.picker button[aria-checked="true"] { border-color: var(--maroon); background: var(--tint); }
+.picker img { width: 46px; height: 62px; object-fit: cover; object-position: 50% 12%; border-radius: 999px 999px 4px 4px; border: 1px solid var(--gold-5); }
+.picker span { font-size: 12.5px; line-height: 1.2; font-weight: 600; text-align: center; color: var(--maroon-9); }
+.picker-label { margin-top: 14px; font-size: 13px; letter-spacing: .12em; font-weight: 600; color: var(--gold-7); text-transform: uppercase; }
+.card-k .look { margin-top: 6px; min-height: 44px; font-size: 16px; }
 .cta-row { display: flex; flex-wrap: wrap; gap: 10px; margin-top: 20px; }
 .facts { margin: 14px 0 0; padding: 0; list-style: none; display: flex; flex-wrap: wrap; gap: 6px; }
 .facts li { padding: 2px 12px; border-radius: 999px; background: var(--tint); color: var(--maroon); font-size: 15px; font-weight: 600; }
@@ -139,6 +149,7 @@ footer.foot a { color: var(--ivory); }
 @media (prefers-reduced-motion: reduce) {
   .world { display: none; }
   .static-steps { display: block; }
+  .card-k .look { display: none; }
   .site-head { background: rgba(253,243,231,.96); }
   .site-head .brand b, .site-head .nav a { color: var(--maroon-9); }
 }
@@ -164,6 +175,9 @@ footer.foot a { color: var(--ivory); }
   .hs .lbl { font-size: 13px; padding: 4px 8px; }
   .facts { display: none; }
   .cta-row .btn { flex: 1 1 auto; }
+  .picker { gap: 6px; margin-top: 8px; }
+  .picker img { width: 38px; height: 50px; }
+  .picker span, .picker-label { display: none; }
 }
 </style>
 
@@ -191,7 +205,7 @@ footer.foot a { color: var(--ivory); }
       <div class="plane" id="plane">
         <div class="arch">
           <div class="photo">
-            <img src="assets/srikandi-full.jpg" alt="Kebaya Srikandi Kemuning pada manekin: renda cokelat tua dengan untaian manik dan payet di kerah dan tepi depan, dipadu rok songket emas." width="940" height="2284" fetchpriority="high">
+            <img id="kbImg" src="assets/srikandi-full.jpg" alt="Kebaya Srikandi Kemuning pada manekin: renda cokelat tua dengan untaian manik dan payet di kerah dan tepi depan, dipadu rok songket emas." width="940" height="2284" fetchpriority="high">
             <div class="sheen" id="sheen"></div>
           </div>
         </div>
@@ -214,7 +228,14 @@ footer.foot a { color: var(--ivory); }
             <div class="eyebrow"><span class="step-no">1</span>Langkah pertama</div>
             <h2>Pilih kebaya</h2>
             <p>Lihat katalog, saring menurut momen dan ukuran, lalu simpan yang Anda suka.</p>
-            <div class="chip"><div><div class="k">KOLEKSI 008 · KEBAYA</div><div class="n">Srikandi Kemuning</div></div><div class="pr">Rp250.000<small>/ stel</small></div></div>
+            <div class="chip"><div><div class="k" id="chipK">KOLEKSI 008 · KEBAYA</div><div class="n" id="chipN">Srikandi Kemuning</div></div><div class="pr" id="chipP">Rp250.000<small>/ stel</small></div></div>
+            <div class="picker-label" id="pickLbl">Pilih kebaya lain</div>
+            <div class="picker" role="radiogroup" aria-labelledby="pickLbl">
+              <button type="button" role="radio" aria-checked="true" data-kb="srikandi"><img src="assets/koleksi-008-srikandi-kemuning.jpg" alt=""><span>Srikandi Kemuning</span></button>
+              <button type="button" role="radio" aria-checked="false" data-kb="fuchsia"><img src="assets/koleksi-009-fuchsia-glam.jpg" alt=""><span>Fuchsia Glam</span></button>
+              <button type="button" role="radio" aria-checked="false" data-kb="candrakirana"><img src="assets/koleksi-010-candrakirana-nusantara.jpg" alt=""><span>Candrakirana Nusantara</span></button>
+              <button type="button" role="radio" aria-checked="false" data-kb="mocha"><img src="assets/koleksi-011-mocha-elegance.jpg" alt=""><span>Mocha Elegance</span></button>
+            </div>
           </div>
         </div>
         <div class="copy" data-i="2">
@@ -247,7 +268,7 @@ footer.foot a { color: var(--ivory); }
             <h2>Kebaya untuk hari istimewa Anda</h2>
             <p>Coba langsung di studio. Tim kami membantu memilih ukuran, padanan kain, dan aksesori.</p>
             <div class="cta-row">
-              <a class="btn btn-p" href="https://wa.me/6281271116292?text=Halo%20Sister%20Studio%2C%20saya%20ingin%20pesan%20jadwal%20fitting%20Kebaya%20Srikandi%20Kemuning." target="_blank" rel="noopener">Pesan fitting via WhatsApp</a>
+              <a class="btn btn-p" id="ctaWa" href="https://wa.me/6281271116292?text=Halo%20Sister%20Studio%2C%20saya%20ingin%20pesan%20jadwal%20fitting%20Kebaya%20Srikandi%20Kemuning." target="_blank" rel="noopener">Pesan fitting via WhatsApp</a>
               <a class="btn btn-s" href="#koleksi">Lihat koleksi</a>
             </div>
           </div>
@@ -278,10 +299,10 @@ footer.foot a { color: var(--ivory); }
         <div><div class="eyebrow">Koleksi pilihan</div><h2>Koleksi di katalog kami</h2></div>
       </div>
       <div class="grid">
-        <article class="card-k"><div class="ph"><img src="assets/koleksi-008-srikandi-kemuning.jpg" alt="Kebaya renda cokelat tua dengan rok songket emas" loading="lazy"></div><span class="code">Koleksi 008</span><span class="nm">Srikandi Kemuning</span><p class="ds">Perpaduan gaya Jawa yang anggun dengan sentuhan Melayu yang mewah.</p><span class="pr">Rp250.000 <small>/ stel</small></span></article>
-        <article class="card-k"><div class="ph"><img src="assets/koleksi-009-fuchsia-glam.jpg" alt="Kebaya fuchsia berpayet dengan rok songket fuchsia" loading="lazy"></div><span class="code">Koleksi 009</span><span class="nm">Fuchsia Glam</span><p class="ds">Kebaya modern dengan taburan payet berkilau; anggun dan glamor.</p><span class="pr">Rp300.000 <small>/ stel</small></span></article>
-        <article class="card-k"><div class="ph"><img src="assets/koleksi-010-candrakirana-nusantara.jpg" alt="Kebaya hijau sage bersulam bunga dengan rok songket hitam-perak" loading="lazy"></div><span class="code">Koleksi 010</span><span class="nm">Candrakirana Nusantara</span><p class="ds">Hijau lembut, terinspirasi kemilau cahaya rembulan.</p><span class="pr">Rp300.000 <small>/ stel</small></span></article>
-        <article class="card-k"><div class="ph"><img src="assets/koleksi-011-mocha-elegance.jpg" alt="Kebaya renda mocha dengan kain bermotif biru tua" loading="lazy"></div><span class="code">Koleksi 011</span><span class="nm">Mocha Elegance</span><p class="ds">Kebaya renda bernuansa mocha; anggun, lembut, dan berkelas.</p><span class="pr">Rp200.000 <small>/ stel</small></span></article>
+        <article class="card-k"><div class="ph"><img src="assets/koleksi-008-srikandi-kemuning.jpg" alt="Kebaya renda cokelat tua dengan rok songket emas" loading="lazy"></div><span class="code">Koleksi 008</span><span class="nm">Srikandi Kemuning</span><p class="ds">Perpaduan gaya Jawa yang anggun dengan sentuhan Melayu yang mewah.</p><span class="pr">Rp250.000 <small>/ stel</small></span><button type="button" class="btn btn-s look" data-kb="srikandi" aria-label="Lihat Srikandi Kemuning dari dekat">Lihat dari dekat</button></article>
+        <article class="card-k"><div class="ph"><img src="assets/koleksi-009-fuchsia-glam.jpg" alt="Kebaya fuchsia berpayet dengan rok songket fuchsia" loading="lazy"></div><span class="code">Koleksi 009</span><span class="nm">Fuchsia Glam</span><p class="ds">Kebaya modern dengan taburan payet berkilau; anggun dan glamor.</p><span class="pr">Rp300.000 <small>/ stel</small></span><button type="button" class="btn btn-s look" data-kb="fuchsia" aria-label="Lihat Fuchsia Glam dari dekat">Lihat dari dekat</button></article>
+        <article class="card-k"><div class="ph"><img src="assets/koleksi-010-candrakirana-nusantara.jpg" alt="Kebaya hijau sage bersulam bunga dengan rok songket hitam-perak" loading="lazy"></div><span class="code">Koleksi 010</span><span class="nm">Candrakirana Nusantara</span><p class="ds">Hijau lembut, terinspirasi kemilau cahaya rembulan.</p><span class="pr">Rp300.000 <small>/ stel</small></span><button type="button" class="btn btn-s look" data-kb="candrakirana" aria-label="Lihat Candrakirana Nusantara dari dekat">Lihat dari dekat</button></article>
+        <article class="card-k"><div class="ph"><img src="assets/koleksi-011-mocha-elegance.jpg" alt="Kebaya renda mocha dengan kain bermotif biru tua" loading="lazy"></div><span class="code">Koleksi 011</span><span class="nm">Mocha Elegance</span><p class="ds">Kebaya renda bernuansa mocha; anggun, lembut, dan berkelas.</p><span class="pr">Rp200.000 <small>/ stel</small></span><button type="button" class="btn btn-s look" data-kb="mocha" aria-label="Lihat Mocha Elegance dari dekat">Lihat dari dekat</button></article>
       </div>
     </div>
   </section>
@@ -321,6 +342,47 @@ footer.foot a { color: var(--ivory); }
   var railBtns = [].slice.call(document.querySelectorAll('.rail button'));
   var phone = window.matchMedia('(max-width: 760px)');
 
+  // Kebaya the visitor picks in step 1: photo, focus points (neckline, front, lower fabric) and detail labels [left%, top%, text, label-on-left]
+  var KB = {
+    srikandi: { code: 'KOLEKSI 008 · KEBAYA', name: 'Srikandi Kemuning', price: 'Rp250.000', img: 'assets/srikandi-full.jpg',
+      alt: 'Kebaya Srikandi Kemuning pada manekin: renda cokelat tua dengan untaian manik dan payet di kerah dan tepi depan, dipadu rok songket emas.',
+      k: { cx: 0.50, nx: 0.53, ny: 0.15, fx: 0.46, fy: 0.33, lx: 0.54, ly: 0.84 },
+      hs: [[36, 15, 'Untaian manik & payet di kerah', 1], [57, 34, 'Payet di sepanjang tepi depan', 0], [26, 30, 'Renda cokelat tua', 1], [60, 86, 'Songket emas motif bunga', 0]] },
+    fuchsia: { code: 'KOLEKSI 009 · KEBAYA', name: 'Fuchsia Glam', price: 'Rp300.000', img: 'assets/fuchsia-glam-full.jpg',
+      alt: 'Kebaya Fuchsia Glam pada manekin: kebaya fuchsia bertabur payet berkilau, dipadu rok songket fuchsia.',
+      k: { cx: 0.45, nx: 0.44, ny: 0.22, fx: 0.46, fy: 0.38, lx: 0.45, ly: 0.82 },
+      hs: [[40, 21, 'Manik di kerah', 1], [52, 36, 'Taburan payet berkilau', 0], [28, 48, 'Renda fuchsia', 1], [52, 82, 'Songket fuchsia', 0]] },
+    candrakirana: { code: 'KOLEKSI 010 · KEBAYA', name: 'Candrakirana Nusantara', price: 'Rp300.000', img: 'assets/candrakirana-nusantara-full.jpg',
+      alt: 'Kebaya Candrakirana Nusantara pada manekin: kebaya hijau lembut berhias bunga dan payet, dipadu rok songket hitam-perak.',
+      k: { cx: 0.49, nx: 0.48, ny: 0.24, fx: 0.45, fy: 0.34, lx: 0.50, ly: 0.82 },
+      hs: [[44, 24, 'Manik hijau di kerah', 1], [48, 32, 'Hiasan bunga & payet', 0], [28, 56, 'Renda hijau lembut', 1], [52, 84, 'Songket hitam-perak', 0]] },
+    mocha: { code: 'KOLEKSI 011 · KEBAYA', name: 'Mocha Elegance', price: 'Rp200.000', img: 'assets/mocha-elegance-full.jpg',
+      alt: 'Kebaya Mocha Elegance pada manekin: kebaya renda mocha dengan aksen payet emas, dipadu kain motif biru tua.',
+      k: { cx: 0.44, nx: 0.41, ny: 0.18, fx: 0.43, fy: 0.34, lx: 0.45, ly: 0.80 },
+      hs: [[40, 17, 'Kerah renda mocha', 1], [44, 32, 'Aksen payet emas', 0], [22, 50, 'Renda mocha', 1], [46, 80, 'Kain motif biru tua', 0]] }
+  };
+  var sel = 'srikandi', curK = Object.assign({}, KB.srikandi.k), preloaded = false;
+  var kbImg = document.getElementById('kbImg'), pickBtns = [].slice.call(document.querySelectorAll('.picker button'));
+  function preloadAll() { if (preloaded) return; preloaded = true; Object.keys(KB).forEach(function (key) { var im = new Image(); im.src = KB[key].img; }); }
+  function select(key) {
+    if (!KB[key] || key === sel) return;
+    sel = key; var d = KB[key];
+    pickBtns.forEach(function (b) { b.setAttribute('aria-checked', b.getAttribute('data-kb') === key ? 'true' : 'false'); });
+    document.getElementById('chipK').textContent = d.code;
+    document.getElementById('chipN').textContent = d.name;
+    document.getElementById('chipP').firstChild.nodeValue = d.price;
+    document.getElementById('ctaWa').href = 'https://wa.me/6281271116292?text=' + encodeURIComponent('Halo Sister Studio, saya ingin pesan jadwal fitting Kebaya ' + d.name + '.');
+    kbImg.classList.add('swap');
+    var pre = new Image();
+    pre.onload = pre.onerror = function () { if (sel !== key) return; kbImg.src = d.img; kbImg.alt = d.alt; requestAnimationFrame(function () { kbImg.classList.remove('swap'); }); };
+    pre.src = d.img;
+    spots.forEach(function (sp, i) { var h = d.hs[i]; sp.style.left = h[0] + '%'; sp.style.top = h[1] + '%'; sp.querySelector('.lbl').textContent = h[2]; sp.classList.toggle('left', !!h[3]); });
+  }
+  pickBtns.forEach(function (b) {
+    b.addEventListener('click', function () { select(b.getAttribute('data-kb')); });
+    b.addEventListener('pointerenter', preloadAll); b.addEventListener('focus', preloadAll);
+  });
+
   // Camera stops: f = focus point on the photo (0..1), s = zoom, rx/ry = tilt (deg), ox/oy = where the focus sits on screen (fraction of stage), sh = sequin sheen
   var D = [
     { f: [0.50, 0.50], s: 0.92, rx: 0,   ry: -22, ox: 0.17, oy: 0.02,  sh: 0 },
@@ -341,10 +403,12 @@ footer.foot a { color: var(--ivory); }
   var K = D.length;
   var clamp = function (v, a, b) { return Math.max(a, Math.min(b, v)); };
   var mix = function (a, b, u) { return a + (b - a) * u; };
+  function focusFor(i) { var q = curK; return i === 2 ? [q.nx, q.ny] : i === 3 ? [q.fx, q.fy] : i === 4 ? [q.lx, q.ly] : i === 1 ? [q.cx + 0.02, 0.48] : [q.cx, 0.5]; }
   function camAt(t) {
     var S = phone.matches ? M : D;
     var i = Math.min(Math.floor(t), K - 2), u = t - i, a = S[i], b = S[i + 1];
-    return { fx: mix(a.f[0], b.f[0], u), fy: mix(a.f[1], b.f[1], u), s: mix(a.s, b.s, u), rx: mix(a.rx, b.rx, u), ry: mix(a.ry, b.ry, u), ox: mix(a.ox, b.ox, u), oy: mix(a.oy, b.oy, u), sh: mix(a.sh, b.sh, u) };
+    var fa = focusFor(i), fb = focusFor(i + 1);
+    return { fx: mix(fa[0], fb[0], u), fy: mix(fa[1], fb[1], u), s: mix(a.s, b.s, u), rx: mix(a.rx, b.rx, u), ry: mix(a.ry, b.ry, u), ox: mix(a.ox, b.ox, u), oy: mix(a.oy, b.oy, u), sh: mix(a.sh, b.sh, u) };
   }
   // Scroll progress -> timeline with a pause around every stop (camera rests while the copy is read)
   function targetT() {
@@ -358,12 +422,13 @@ footer.foot a { color: var(--ivory); }
     stage.addEventListener('pointermove', function (e) { var r = stage.getBoundingClientRect(); tmx = ((e.clientY - r.top) / r.height - 0.5) * -4; tmy = ((e.clientX - r.left) / r.width - 0.5) * 6; });
     stage.addEventListener('pointerleave', function () { tmx = tmy = 0; });
   }
-  railBtns.forEach(function (b) {
-    b.addEventListener('click', function () {
-      var i = +b.getAttribute('data-go'), span = world.offsetHeight - stage.offsetHeight;
-      var y = world.getBoundingClientRect().top + window.scrollY + span * (i / (K - 1));
-      window.scrollTo({ top: y, behavior: 'smooth' });
-    });
+  function goTo(i) {
+    var span = world.offsetHeight - stage.offsetHeight;
+    window.scrollTo({ top: world.getBoundingClientRect().top + window.scrollY + span * (i / (K - 1)), behavior: 'smooth' });
+  }
+  railBtns.forEach(function (b) { b.addEventListener('click', function () { goTo(+b.getAttribute('data-go')); }); });
+  [].slice.call(document.querySelectorAll('.card-k .look')).forEach(function (b) {
+    b.addEventListener('click', function () { select(b.getAttribute('data-kb')); goTo(1); });
   });
 
   // Gold dust: depth-scaled particles that drift with the camera for parallax
@@ -380,6 +445,8 @@ footer.foot a { color: var(--ivory); }
     var tg = targetT(), k = 1 - Math.pow(0.88, dt / 16.7);
     cur += (tg.t - cur) * k; if (Math.abs(tg.t - cur) < 0.0005) cur = tg.t;
     mx += (tmx - mx) * k; my += (tmy - my) * k;
+    var tk = KB[sel].k; for (var key in tk) curK[key] += (tk[key] - curK[key]) * k;
+    if (!preloaded && cur > 0.6) preloadAll();
     var c = camAt(cur), W = plane.offsetWidth, H = plane.offsetHeight, sw = stage.clientWidth, sh = stage.clientHeight;
     var tx = c.ox * sw - c.s * (c.fx - 0.5) * W, ty = c.oy * sh - c.s * (c.fy - 0.5) * H;
     plane.style.transform = 'translate(-50%,-50%) translate3d(' + tx.toFixed(1) + 'px,' + ty.toFixed(1) + 'px,0) rotateX(' + (c.rx + mx).toFixed(2) + 'deg) rotateY(' + (c.ry + my).toFixed(2) + 'deg) scale(' + c.s.toFixed(3) + ')';
