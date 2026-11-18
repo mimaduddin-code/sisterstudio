@@ -1,0 +1,421 @@
+<!doctype html>
+<html lang="id">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<style>:root{padding-top:env(safe-area-inset-top,0px);padding-bottom:env(safe-area-inset-bottom,0px)}body{margin:0}img{max-width:100%}[hidden]{display:none!important}</style>
+</head>
+<body>
+<title>Sister Studio Home</title>
+<meta name="claude:viewport-fit-sides" content="cover">
+<meta name="description" content="Sister Studio, sewa kebaya dan dress. Lihat Kebaya Srikandi Kemuning dari dekat: payet, manik, dan songket emas.">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Crimson+Pro:ital,wght@0,400;0,600;0,700;1,400&family=Great+Vibes&display=swap">
+<style>
+/* Layout: a sticky "camera stage" (walnut studio, gold arch) scrubbed by scroll through six stops; copy pinned left, step rail right; regular page sections follow. Tokens from the Sister Studio design system; one deliberate warm look. */
+:root {
+  --ivory: #fdf3e7; --ivory-2: #fbe9d7; --card: #fffaf3; --ink: #1f0a0a; --muted: #6a4a44;
+  --maroon: #730020; --maroon-9: #4e0014; --gold-3: #f2d08c; --gold-5: #c8924a; --gold-7: #85561c;
+  --line: #e6c9a5; --walnut: #4a3020; --walnut-deep: #24160d; --tint: #f6dfdc;
+  --serif: "Crimson Pro", Georgia, "Times New Roman", serif; --script: "Great Vibes", "Brush Script MT", cursive;
+  color-scheme: light;
+}
+* { box-sizing: border-box; }
+html { scroll-behavior: auto; }
+body { background: var(--ivory); color: var(--ink); font-family: var(--serif); font-size: 18px; line-height: 1.55; }
+a { color: var(--maroon); }
+:focus-visible { outline: 2px solid var(--maroon); outline-offset: 3px; }
+.gutter { padding-left: max(16px, env(safe-area-inset-left, 0px)); padding-right: max(16px, env(safe-area-inset-right, 0px)); }
+.eyebrow { font-size: 13px; letter-spacing: 0.16em; font-weight: 600; text-transform: uppercase; }
+.btn { display: inline-flex; align-items: center; justify-content: center; min-height: 48px; padding: 0 24px; border-radius: 2px; font-weight: 600; font-size: 18px; text-decoration: none; border: 1px solid transparent; cursor: pointer; font-family: inherit; }
+.btn-p { background: var(--maroon); color: var(--ivory); border-color: var(--maroon); }
+.btn-p:hover { background: var(--maroon-9); }
+.btn-s { background: transparent; color: var(--maroon); border-color: #9a7a5a; }
+.btn-s:hover { background: var(--tint); }
+.btn-g { background: var(--gold-3); color: var(--maroon-9); }
+.btn-g:hover { background: var(--ivory); }
+
+/* ---------- header ---------- */
+.site-head { position: fixed; inset: 0 0 auto; z-index: 30; padding-top: env(safe-area-inset-top, 0px); transition: background-color .3s, box-shadow .3s; }
+.site-head .in { max-width: 1280px; margin: 0 auto; padding-block: 12px; display: flex; align-items: center; justify-content: space-between; gap: 16px; }
+.brand { display: flex; align-items: center; gap: 10px; text-decoration: none; }
+.brand img { width: 46px; height: 46px; object-fit: contain; background: var(--ivory); border-radius: 50%; border: 1.5px solid var(--gold-5); padding: 3px; }
+.brand b { font-size: 24px; font-weight: 600; color: var(--ivory); line-height: 1; }
+.brand small { display: block; font-size: 10px; letter-spacing: .16em; font-weight: 600; color: var(--gold-3); margin-top: 3px; }
+.nav { display: flex; gap: 6px 26px; align-items: center; }
+.nav a { color: var(--ivory); text-decoration: none; font-weight: 600; font-size: 17px; padding: 8px 0; }
+.nav a:hover { color: var(--gold-3); }
+.site-head.solid { background: rgba(253, 243, 231, .96); box-shadow: 0 1px 0 var(--line); }
+.site-head.solid .brand b, .site-head.solid .nav a { color: var(--maroon-9); }
+.site-head.solid .brand small { color: var(--gold-7); }
+.site-head.solid .nav a:hover { color: var(--maroon); }
+.nav .btn { min-height: 44px; padding: 0 18px; font-size: 16px; }
+.site-head:not(.solid) .nav .btn { background: var(--gold-3); color: var(--maroon-9); border-color: var(--gold-3); }
+
+/* ---------- camera world ---------- */
+.world { position: relative; height: 640vh; background: var(--walnut-deep); }
+.stage { position: sticky; top: 0; height: 100vh; height: 100dvh; overflow: hidden; perspective: 1500px; perspective-origin: 50% 45%; }
+.backdrop { position: absolute; inset: -8%; background: url("assets/studio-bg.jpg") center / cover no-repeat; filter: blur(14px) saturate(1.05); opacity: .42; will-change: transform; }
+.glow { position: absolute; inset: 0; background: radial-gradient(42% 60% at 64% 46%, rgba(242,208,140,.28), transparent 70%), linear-gradient(90deg, rgba(36,22,13,.92) 0%, rgba(36,22,13,.55) 38%, rgba(36,22,13,.15) 70%, rgba(36,22,13,.45) 100%); pointer-events: none; }
+.floor { position: absolute; left: 0; right: 0; bottom: 0; height: 28%; background: linear-gradient(180deg, transparent, rgba(36,22,13,.75)); pointer-events: none; }
+canvas.dust { position: absolute; inset: 0; width: 100%; height: 100%; pointer-events: none; }
+.plane { position: absolute; left: 50%; top: 50%; height: 84vh; height: 84dvh; aspect-ratio: 940 / 2284; transform-style: preserve-3d; will-change: transform; transform: translate(-50%, -50%) translate3d(17vw, 0, 0) rotateY(-22deg) scale(.92); }
+.arch { position: absolute; inset: 0; padding: 9px; border: 2px solid var(--gold-5); border-radius: 999px 999px 16px 16px; box-shadow: 0 0 0 1px rgba(242,208,140,.25), 0 0 70px rgba(242,208,140,.28), 0 40px 80px rgba(0,0,0,.45); background: rgba(36,22,13,.35); }
+.arch .photo { position: relative; width: 100%; height: 100%; border-radius: 999px 999px 10px 10px; overflow: hidden; background: #2b1a10; }
+.arch img { display: block; width: 100%; height: 100%; object-fit: cover; }
+.sheen { position: absolute; inset: 0; background: linear-gradient(112deg, transparent 38%, rgba(255,236,190,.65) 48%, rgba(255,250,235,.9) 50%, rgba(255,236,190,.65) 52%, transparent 62%); background-size: 320% 100%; background-position: 120% 0; mix-blend-mode: soft-light; opacity: 0; pointer-events: none; }
+.hs { position: absolute; transform: translate(-50%, -50%) scale(var(--inv, 1)); display: flex; align-items: center; gap: 10px; opacity: 0; transition: opacity .35s; pointer-events: none; white-space: nowrap; }
+.hs .dot { width: 16px; height: 16px; border-radius: 50%; background: var(--gold-3); box-shadow: 0 0 0 4px rgba(242,208,140,.35), 0 0 18px rgba(242,208,140,.9); flex: none; }
+.hs .lbl { background: rgba(253,243,231,.95); color: var(--maroon-9); font-size: 15px; font-weight: 600; padding: 6px 12px; border-radius: 2px; border: 1px solid var(--gold-5); box-shadow: 0 6px 18px rgba(0,0,0,.25); }
+.hs.left { flex-direction: row-reverse; }
+
+.copy-wrap { position: absolute; left: 0; top: 0; bottom: 0; width: min(520px, 44vw); display: flex; align-items: center; padding-left: max(32px, env(safe-area-inset-left, 0px)); }
+.copy { position: absolute; left: max(32px, env(safe-area-inset-left, 0px)); right: 0; top: 50%; transform: translateY(-50%); opacity: 0; pointer-events: none; will-change: opacity, transform; }
+.copy.on { pointer-events: auto; }
+.copy .card { background: rgba(255,250,243,.95); border: 1px solid var(--line); border-radius: 12px; padding: 28px 30px; box-shadow: 0 20px 50px rgba(0,0,0,.28); }
+.copy .eyebrow { color: var(--gold-7); }
+.copy h1, .copy h2 { margin: 6px 0 10px; color: var(--maroon-9); font-weight: 600; text-wrap: balance; }
+.copy h1 { font-size: clamp(38px, 4.4vw, 60px); line-height: 1.04; }
+.copy h2 { font-size: clamp(30px, 3.2vw, 44px); line-height: 1.1; }
+.copy p { margin: 0; font-size: 19px; line-height: 1.55; }
+.copy .poem { font-style: italic; font-size: 20px; line-height: 1.6; color: var(--ink); }
+.copy .hint { margin-top: 16px; font-size: 15px; color: var(--muted); display: flex; align-items: center; gap: 8px; }
+.copy .hint svg { flex: none; }
+.step-no { display: inline-flex; align-items: center; justify-content: center; width: 40px; height: 40px; border-radius: 50%; background: var(--maroon); color: var(--gold-3); border: 2px solid var(--gold-5); font-weight: 700; font-size: 20px; margin-right: 10px; vertical-align: middle; }
+.chip { margin-top: 18px; display: flex; align-items: center; gap: 14px; padding: 12px 16px; border-radius: 12px; background: var(--maroon); color: var(--ivory); border: 2px solid var(--gold-5); }
+.chip .k { font-size: 12px; letter-spacing: .16em; color: var(--gold-3); font-weight: 600; }
+.chip .n { font-family: var(--script); font-size: 34px; line-height: 1.1; }
+.chip .pr { margin-left: auto; text-align: right; font-weight: 600; font-size: 22px; line-height: 1.1; }
+.chip .pr small { display: block; font-size: 13px; color: var(--gold-3); font-weight: 400; }
+.cta-row { display: flex; flex-wrap: wrap; gap: 10px; margin-top: 20px; }
+.facts { margin: 14px 0 0; padding: 0; list-style: none; display: flex; flex-wrap: wrap; gap: 6px; }
+.facts li { padding: 2px 12px; border-radius: 999px; background: var(--tint); color: var(--maroon); font-size: 15px; font-weight: 600; }
+
+.rail { position: absolute; right: max(24px, env(safe-area-inset-right, 0px)); top: 50%; transform: translateY(-50%); display: flex; flex-direction: column; gap: 6px; }
+.rail button { display: flex; align-items: center; gap: 10px; justify-content: flex-end; min-height: 40px; background: none; border: 0; color: rgba(253,243,231,.85); text-shadow: 0 1px 3px rgba(0,0,0,.9), 0 0 12px rgba(0,0,0,.6); font-family: inherit; font-size: 15px; font-weight: 600; cursor: pointer; padding: 0 4px; }
+.rail button i { width: 10px; height: 10px; border-radius: 50%; border: 1.5px solid var(--gold-3); display: block; transition: transform .25s, background .25s; }
+.rail button[aria-current="step"] { color: var(--gold-3); }
+.rail button[aria-current="step"] i { background: var(--gold-3); transform: scale(1.3); }
+.rail button:hover { color: var(--ivory); }
+.progress { position: absolute; left: 0; right: 0; bottom: 0; height: 3px; background: rgba(242,208,140,.18); }
+.progress span { display: block; height: 100%; width: 0; background: var(--gold-3); }
+
+/* ---------- regular sections ---------- */
+section.band { padding-block: 72px; }
+.wrap { max-width: 1200px; margin: 0 auto; }
+.sec-head { display: flex; flex-wrap: wrap; align-items: flex-end; justify-content: space-between; gap: 12px; margin-bottom: 28px; }
+.sec-head h2 { margin: 6px 0 0; font-size: 38px; line-height: 1.15; color: var(--maroon-9); font-weight: 600; }
+.sec-head .eyebrow { color: var(--gold-7); }
+.grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(250px, 1fr)); gap: 22px; }
+.card-k { background: var(--card); border: 1px solid var(--line); border-radius: 12px; padding: 18px; display: flex; flex-direction: column; align-items: center; text-align: center; gap: 8px; box-shadow: 0 1px 2px rgba(78,0,20,.06), 0 4px 16px rgba(78,0,20,.06); }
+.card-k .ph { width: 100%; max-width: 100%; aspect-ratio: 3 / 4; padding: 5px; border: 2px solid var(--gold-5); border-radius: 999px 999px 12px 12px; }
+.card-k .ph img { width: 100%; height: 100%; object-fit: cover; object-position: 50% 12%; border-radius: 999px 999px 8px 8px; display: block; }
+.card-k .code { margin-top: -22px; background: var(--maroon); color: var(--ivory); border: 2px solid var(--gold-5); border-radius: 2px; padding: 0 12px; font-weight: 600; font-size: 17px; }
+.card-k .nm { font-family: var(--script); font-size: 34px; line-height: 1.2; color: var(--maroon-9); }
+.card-k .ds { margin: 0; font-style: italic; font-size: 16px; line-height: 1.45; }
+.card-k .pr { font-size: 24px; font-weight: 600; color: var(--maroon); }
+.card-k .pr small { font-size: 14px; color: var(--gold-7); font-weight: 400; }
+.visit { background: var(--walnut); color: var(--ivory); }
+.visit .wrap { display: flex; flex-wrap: wrap; gap: 32px; align-items: center; justify-content: space-between; }
+.visit h2 { margin: 6px 0 10px; font-size: 38px; line-height: 1.15; font-weight: 600; }
+.visit .eyebrow { color: var(--gold-3); }
+.visit dl { margin: 0; display: grid; grid-template-columns: repeat(auto-fit, minmax(220px, 1fr)); gap: 12px; flex: 1 1 520px; min-width: 0; }
+.visit dl div { border: 1px solid var(--gold-5); border-radius: 12px; padding: 12px 16px; }
+.visit dt { font-size: 12px; letter-spacing: .16em; font-weight: 600; color: var(--gold-3); }
+.visit dd { margin: 4px 0 0; font-size: 17px; user-select: text; }
+footer.foot { background: var(--maroon); color: var(--ivory); padding-block: 24px; }
+footer.foot .wrap { display: flex; flex-wrap: wrap; justify-content: space-between; gap: 12px; font-size: 15px; }
+footer.foot a { color: var(--ivory); }
+
+/* ---------- static version (reduced motion) ---------- */
+.static-steps { display: none; padding-block: 120px 40px; background: var(--walnut-deep); }
+.static-steps .wrap { display: grid; gap: 24px; }
+.st { display: flex; flex-wrap: wrap; gap: 20px; align-items: center; background: var(--card); border-radius: 12px; padding: 20px; }
+.st img { width: 220px; max-width: 100%; aspect-ratio: 3 / 4; object-fit: cover; border-radius: 999px 999px 10px 10px; border: 2px solid var(--gold-5); }
+.st div { flex: 1 1 280px; min-width: 0; }
+.st h2 { margin: 4px 0 6px; color: var(--maroon-9); font-size: 30px; }
+.st p { margin: 0; }
+
+@media (prefers-reduced-motion: reduce) {
+  .world { display: none; }
+  .static-steps { display: block; }
+  .site-head { background: rgba(253,243,231,.96); }
+  .site-head .brand b, .site-head .nav a { color: var(--maroon-9); }
+}
+
+/* ---------- phones ---------- */
+@media (max-width: 760px) {
+  .nav a:not(.btn) { display: none; }
+  .brand b { font-size: 20px; }
+  .world { height: 600vh; }
+  .plane { height: 56vh; height: 56dvh; }
+  .glow { background: radial-gradient(60% 45% at 50% 32%, rgba(242,208,140,.28), transparent 70%), linear-gradient(180deg, rgba(36,22,13,.55), rgba(36,22,13,.1) 40%, rgba(36,22,13,.85) 78%); }
+  .copy-wrap { left: 0; right: 0; top: auto; bottom: 0; width: auto; height: auto; padding: 0; }
+  .copy { left: max(12px, env(safe-area-inset-left, 0px)); right: max(12px, env(safe-area-inset-right, 0px)); top: auto; bottom: calc(14px + env(safe-area-inset-bottom, 0px)); transform: none; }
+  .copy .card { padding: 16px 18px; }
+  .copy h1 { font-size: 32px; }
+  .copy h2 { font-size: 26px; margin: 2px 0 6px; }
+  .copy p, .copy .poem { font-size: 16px; line-height: 1.45; }
+  .step-no { width: 32px; height: 32px; font-size: 16px; }
+  .chip { margin-top: 10px; padding: 8px 12px; }
+  .chip .n { font-size: 26px; }
+  .chip .pr { font-size: 18px; }
+  .rail { display: none; }
+  .hs .lbl { font-size: 13px; padding: 4px 8px; }
+  .facts { display: none; }
+  .cta-row .btn { flex: 1 1 auto; }
+}
+</style>
+
+<header class="site-head gutter" id="head">
+  <div class="in">
+    <a class="brand" href="#top" aria-label="Sister Studio, ke awal halaman">
+      <img src="assets/logo.png" alt="">
+      <span><b>Sister Studio</b><small>SEWA KEBAYA &amp; DRESS</small></span>
+    </a>
+    <nav class="nav" aria-label="Menu utama">
+      <a href="#cara-sewa">Cara sewa</a>
+      <a href="#koleksi">Koleksi</a>
+      <a href="#kontak">Kontak</a>
+      <a class="btn btn-p" href="https://wa.me/6281271116292?text=Halo%20Sister%20Studio%2C%20saya%20ingin%20pesan%20jadwal%20fitting." target="_blank" rel="noopener">Pesan fitting</a>
+    </nav>
+  </div>
+</header>
+
+<main id="top">
+  <section class="world" id="cara-sewa" aria-label="Empat langkah menuju hari istimewa">
+    <div class="stage" id="stage">
+      <div class="backdrop" id="bd" aria-hidden="true"></div>
+      <div class="glow" aria-hidden="true"></div>
+      <canvas class="dust" id="dust" aria-hidden="true"></canvas>
+      <div class="plane" id="plane">
+        <div class="arch">
+          <div class="photo">
+            <img src="assets/srikandi-full.jpg" alt="Kebaya Srikandi Kemuning pada manekin: renda cokelat tua dengan untaian manik dan payet di kerah dan tepi depan, dipadu rok songket emas." width="940" height="2284" fetchpriority="high">
+            <div class="sheen" id="sheen"></div>
+          </div>
+        </div>
+        <div class="hs left" style="left: 36%; top: 15%" data-a="1.55" data-b="2.6"><span class="dot"></span><span class="lbl">Untaian manik &amp; payet di kerah</span></div>
+        <div class="hs" style="left: 57%; top: 34%" data-a="2.55" data-b="3.5"><span class="dot"></span><span class="lbl">Payet di sepanjang tepi depan</span></div>
+        <div class="hs left" style="left: 26%; top: 30%" data-a="2.7" data-b="3.5"><span class="dot"></span><span class="lbl">Renda cokelat tua</span></div>
+        <div class="hs" style="left: 60%; top: 86%" data-a="3.55" data-b="4.5"><span class="dot"></span><span class="lbl">Songket emas motif bunga</span></div>
+      </div>
+      <div class="copy-wrap">
+        <div class="copy" data-i="0">
+          <div class="card">
+            <div class="eyebrow">Sister Studio · Sewa kebaya &amp; dress</div>
+            <h1>The Art of Indonesian Elegance</h1>
+            <p class="poem">Setiap helai menyimpan cerita.<br>Setiap detail mempresentasikan keindahan.<br>Abadikan ceritamu dengan kemewahan Nusantara.<br>Warisan budaya tak lekang oleh waktu.</p>
+            <div class="hint"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" aria-hidden="true"><rect x="7" y="3" width="10" height="16" rx="5"/><path d="M12 7v3"/><path d="M9 21l3 2 3-2"/></svg>Gulir perlahan untuk melihat setiap detail</div>
+          </div>
+        </div>
+        <div class="copy" data-i="1">
+          <div class="card">
+            <div class="eyebrow"><span class="step-no">1</span>Langkah pertama</div>
+            <h2>Pilih kebaya</h2>
+            <p>Lihat katalog, saring menurut momen dan ukuran, lalu simpan yang Anda suka.</p>
+            <div class="chip"><div><div class="k">KOLEKSI 008 · KEBAYA</div><div class="n">Srikandi Kemuning</div></div><div class="pr">Rp250.000<small>/ stel</small></div></div>
+          </div>
+        </div>
+        <div class="copy" data-i="2">
+          <div class="card">
+            <div class="eyebrow"><span class="step-no">2</span>Langkah kedua</div>
+            <h2>Pesan jadwal fitting</h2>
+            <p>Masuk dengan akun Google, lalu pilih tanggal dan jam yang kosong di studio. Saat fitting, Anda bisa melihat untaian manik dan payetnya sedekat ini.</p>
+            <ul class="facts"><li>Login Google</li><li>Pilih tanggal &amp; jam</li><li>Pengingat H-1</li></ul>
+          </div>
+        </div>
+        <div class="copy" data-i="3">
+          <div class="card">
+            <div class="eyebrow"><span class="step-no">3</span>Langkah ketiga</div>
+            <h2>Terima invoice</h2>
+            <p>Invoice langsung terkirim ke email Anda. Bayar DP untuk mengunci kebaya di tanggal acara; pelunasan saat pengambilan.</p>
+            <ul class="facts"><li>Invoice lewat email</li><li>Transfer atau QRIS</li></ul>
+          </div>
+        </div>
+        <div class="copy" data-i="4">
+          <div class="card">
+            <div class="eyebrow"><span class="step-no">4</span>Langkah terakhir</div>
+            <h2>Pakai, lalu kembalikan</h2>
+            <p>Kebaya dicuci dan disetrika sebelum Anda pakai. Kami ingatkan jadwal pengambilan dan pengembalian lewat WhatsApp dan email.</p>
+            <ul class="facts"><li>Siap pakai</li><li>Pengingat pengembalian</li></ul>
+          </div>
+        </div>
+        <div class="copy" data-i="5">
+          <div class="card">
+            <div class="eyebrow">Wisuda · Lamaran · Akad · Kondangan</div>
+            <h2>Kebaya untuk hari istimewa Anda</h2>
+            <p>Coba langsung di studio. Tim kami membantu memilih ukuran, padanan kain, dan aksesori.</p>
+            <div class="cta-row">
+              <a class="btn btn-p" href="https://wa.me/6281271116292?text=Halo%20Sister%20Studio%2C%20saya%20ingin%20pesan%20jadwal%20fitting%20Kebaya%20Srikandi%20Kemuning." target="_blank" rel="noopener">Pesan fitting via WhatsApp</a>
+              <a class="btn btn-s" href="#koleksi">Lihat koleksi</a>
+            </div>
+          </div>
+        </div>
+      </div>
+      <nav class="rail" aria-label="Langkah">
+        <button type="button" data-go="1"><span>Pilih kebaya</span><i></i></button>
+        <button type="button" data-go="2"><span>Pesan jadwal fitting</span><i></i></button>
+        <button type="button" data-go="3"><span>Terima invoice</span><i></i></button>
+        <button type="button" data-go="4"><span>Pakai, lalu kembalikan</span><i></i></button>
+      </nav>
+      <div class="progress" aria-hidden="true"><span id="bar"></span></div>
+    </div>
+  </section>
+
+  <section class="static-steps gutter" aria-label="Empat langkah menuju hari istimewa">
+    <div class="wrap">
+      <div class="st"><img src="assets/srikandi-full.jpg" alt="Kebaya Srikandi Kemuning pada manekin, tampak penuh."><div><div class="eyebrow" style="color:var(--gold-7)">Langkah 1</div><h2>Pilih kebaya</h2><p>Lihat katalog, saring menurut momen dan ukuran, lalu simpan yang Anda suka.</p></div></div>
+      <div class="st"><img src="assets/srikandi-payet.jpg" alt="Detail untaian manik dan payet di kerah."><div><div class="eyebrow" style="color:var(--gold-7)">Langkah 2</div><h2>Pesan jadwal fitting</h2><p>Masuk dengan akun Google, lalu pilih tanggal dan jam yang kosong di studio.</p></div></div>
+      <div class="st"><img src="assets/srikandi-payet.jpg" alt="Detail payet di tepi depan kebaya."><div><div class="eyebrow" style="color:var(--gold-7)">Langkah 3</div><h2>Terima invoice</h2><p>Invoice langsung terkirim ke email Anda. Bayar DP untuk mengunci kebaya di tanggal acara.</p></div></div>
+      <div class="st"><img src="assets/srikandi-songket.jpg" alt="Detail songket emas motif bunga."><div><div class="eyebrow" style="color:var(--gold-7)">Langkah 4</div><h2>Pakai, lalu kembalikan</h2><p>Kami ingatkan jadwal pengambilan dan pengembalian lewat WhatsApp dan email.</p></div></div>
+    </div>
+  </section>
+
+  <section class="band gutter" id="koleksi">
+    <div class="wrap">
+      <div class="sec-head">
+        <div><div class="eyebrow">Koleksi pilihan</div><h2>Koleksi di katalog kami</h2></div>
+      </div>
+      <div class="grid">
+        <article class="card-k"><div class="ph"><img src="assets/koleksi-008-srikandi-kemuning.jpg" alt="Kebaya renda cokelat tua dengan rok songket emas" loading="lazy"></div><span class="code">Koleksi 008</span><span class="nm">Srikandi Kemuning</span><p class="ds">Perpaduan gaya Jawa yang anggun dengan sentuhan Melayu yang mewah.</p><span class="pr">Rp250.000 <small>/ stel</small></span></article>
+        <article class="card-k"><div class="ph"><img src="assets/koleksi-009-fuchsia-glam.jpg" alt="Kebaya fuchsia berpayet dengan rok songket fuchsia" loading="lazy"></div><span class="code">Koleksi 009</span><span class="nm">Fuchsia Glam</span><p class="ds">Kebaya modern dengan taburan payet berkilau; anggun dan glamor.</p><span class="pr">Rp300.000 <small>/ stel</small></span></article>
+        <article class="card-k"><div class="ph"><img src="assets/koleksi-010-candrakirana-nusantara.jpg" alt="Kebaya hijau sage bersulam bunga dengan rok songket hitam-perak" loading="lazy"></div><span class="code">Koleksi 010</span><span class="nm">Candrakirana Nusantara</span><p class="ds">Hijau lembut, terinspirasi kemilau cahaya rembulan.</p><span class="pr">Rp300.000 <small>/ stel</small></span></article>
+        <article class="card-k"><div class="ph"><img src="assets/koleksi-011-mocha-elegance.jpg" alt="Kebaya renda mocha dengan kain bermotif biru tua" loading="lazy"></div><span class="code">Koleksi 011</span><span class="nm">Mocha Elegance</span><p class="ds">Kebaya renda bernuansa mocha; anggun, lembut, dan berkelas.</p><span class="pr">Rp200.000 <small>/ stel</small></span></article>
+      </div>
+    </div>
+  </section>
+
+  <section class="band visit gutter" id="kontak">
+    <div class="wrap">
+      <div style="flex: 1 1 360px; min-width: 0">
+        <div class="eyebrow">Kunjungi studio</div>
+        <h2>Coba langsung, dibantu tim kami</h2>
+        <p style="margin:0 0 20px">Datang sesuai jadwal fitting agar ruang ganti sudah siap untuk Anda.</p>
+        <a class="btn btn-g" href="https://wa.me/6281271116292?text=Halo%20Sister%20Studio%2C%20saya%20ingin%20pesan%20jadwal%20fitting." target="_blank" rel="noopener">Pesan fitting via WhatsApp</a>
+      </div>
+      <dl>
+        <div><dt>WHATSAPP</dt><dd>Admin 1 · 0812 7111 6292<br>Admin 2 · 0813 6868 5449<br>Admin 3 · 0822 1621 9763</dd></div>
+        <div><dt>INSTAGRAM</dt><dd>@sisterstudio.plg</dd></div>
+        <div><dt>ALAMAT</dt><dd>[Alamat lengkap studio]</dd></div>
+        <div><dt>JAM BUKA</dt><dd>[Hari dan jam buka]</dd></div>
+      </dl>
+    </div>
+  </section>
+</main>
+<footer class="foot gutter"><div class="wrap"><span>© 2026 Sister Studio · sisterstudio.com</span><span>Foto: koleksi asli Sister Studio</span></div></footer>
+
+<script>
+(function () {
+  var reduce = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+  var head = document.getElementById('head');
+  var world = document.querySelector('.world');
+  function headState() { var r = world.getBoundingClientRect(); head.classList.toggle('solid', reduce || r.bottom < 80); }
+  window.addEventListener('scroll', headState, { passive: true }); headState();
+  if (reduce) return;
+
+  var stage = document.getElementById('stage'), plane = document.getElementById('plane'), bd = document.getElementById('bd');
+  var sheen = document.getElementById('sheen'), bar = document.getElementById('bar');
+  var copies = [].slice.call(document.querySelectorAll('.copy'));
+  var spots = [].slice.call(document.querySelectorAll('.hs'));
+  var railBtns = [].slice.call(document.querySelectorAll('.rail button'));
+  var phone = window.matchMedia('(max-width: 760px)');
+
+  // Camera stops: f = focus point on the photo (0..1), s = zoom, rx/ry = tilt (deg), ox/oy = where the focus sits on screen (fraction of stage), sh = sequin sheen
+  var D = [
+    { f: [0.50, 0.50], s: 0.92, rx: 0,   ry: -22, ox: 0.17, oy: 0.02,  sh: 0 },
+    { f: [0.52, 0.48], s: 1.04, rx: 3,   ry: -12, ox: 0.16, oy: 0.0,   sh: 0.12 },
+    { f: [0.53, 0.15], s: 2.15, rx: 17,  ry: -4,  ox: 0.15, oy: 0.07,  sh: 0.6 },
+    { f: [0.46, 0.33], s: 2.7,  rx: 9,   ry: 7,   ox: 0.15, oy: 0.0,   sh: 0.75 },
+    { f: [0.54, 0.84], s: 2.25, rx: -14, ry: 9,   ox: 0.15, oy: -0.05, sh: 0.5 },
+    { f: [0.50, 0.50], s: 0.95, rx: 0,   ry: 12,  ox: 0.17, oy: 0.0,   sh: 0.1 }
+  ];
+  var M = [
+    { f: [0.50, 0.50], s: 0.95, rx: 0,   ry: -18, ox: 0, oy: -0.13, sh: 0 },
+    { f: [0.52, 0.46], s: 1.05, rx: 3,   ry: -10, ox: 0, oy: -0.13, sh: 0.12 },
+    { f: [0.53, 0.16], s: 2.1,  rx: 15,  ry: -3,  ox: 0, oy: -0.16, sh: 0.6 },
+    { f: [0.47, 0.33], s: 2.6,  rx: 8,   ry: 6,   ox: 0, oy: -0.16, sh: 0.75 },
+    { f: [0.54, 0.84], s: 2.15, rx: -12, ry: 8,   ox: 0, oy: -0.18, sh: 0.5 },
+    { f: [0.50, 0.50], s: 0.95, rx: 0,   ry: 10,  ox: 0, oy: -0.14, sh: 0.1 }
+  ];
+  var K = D.length;
+  var clamp = function (v, a, b) { return Math.max(a, Math.min(b, v)); };
+  var mix = function (a, b, u) { return a + (b - a) * u; };
+  function camAt(t) {
+    var S = phone.matches ? M : D;
+    var i = Math.min(Math.floor(t), K - 2), u = t - i, a = S[i], b = S[i + 1];
+    return { fx: mix(a.f[0], b.f[0], u), fy: mix(a.f[1], b.f[1], u), s: mix(a.s, b.s, u), rx: mix(a.rx, b.rx, u), ry: mix(a.ry, b.ry, u), ox: mix(a.ox, b.ox, u), oy: mix(a.oy, b.oy, u), sh: mix(a.sh, b.sh, u) };
+  }
+  // Scroll progress -> timeline with a pause around every stop (camera rests while the copy is read)
+  function targetT() {
+    var r = world.getBoundingClientRect(), span = world.offsetHeight - stage.offsetHeight;
+    var p = clamp(-r.top / Math.max(1, span), 0, 1), seg = p * (K - 1), i = Math.min(Math.floor(seg), K - 2), u = seg - i, h = 0.2;
+    u = clamp((u - h) / (1 - 2 * h), 0, 1); u = u * u * u * (u * (u * 6 - 15) + 10);
+    return { t: i + u, p: p };
+  }
+  var cur = targetT().t, mx = 0, my = 0, tmx = 0, tmy = 0, last = 0, lastRound = -1;
+  if (window.matchMedia('(pointer: fine)').matches) {
+    stage.addEventListener('pointermove', function (e) { var r = stage.getBoundingClientRect(); tmx = ((e.clientY - r.top) / r.height - 0.5) * -4; tmy = ((e.clientX - r.left) / r.width - 0.5) * 6; });
+    stage.addEventListener('pointerleave', function () { tmx = tmy = 0; });
+  }
+  railBtns.forEach(function (b) {
+    b.addEventListener('click', function () {
+      var i = +b.getAttribute('data-go'), span = world.offsetHeight - stage.offsetHeight;
+      var y = world.getBoundingClientRect().top + window.scrollY + span * (i / (K - 1));
+      window.scrollTo({ top: y, behavior: 'smooth' });
+    });
+  });
+
+  // Gold dust: depth-scaled particles that drift with the camera for parallax
+  var cv = document.getElementById('dust'), cx = cv.getContext('2d'), dots = [], dpr = Math.min(2, window.devicePixelRatio || 1);
+  var nDots = phone.matches ? 18 : 42;
+  for (var k = 0; k < nDots; k++) dots.push({ x: Math.random(), y: Math.random(), z: 0.25 + Math.random() * 0.75, ph: Math.random() * 6.28 });
+  var cw = 0, ch = 0, lastW = 0;
+  function sizeCanvas() { cw = stage.clientWidth; ch = stage.clientHeight; cv.width = cw * dpr; cv.height = ch * dpr; }
+  sizeCanvas();
+  window.addEventListener('resize', function () { if (!phone.matches || Math.abs(stage.clientWidth - lastW) > 2) { lastW = stage.clientWidth; sizeCanvas(); } });
+
+  function frame(now) {
+    var dt = Math.min(64, now - (last || now)); last = now;
+    var tg = targetT(), k = 1 - Math.pow(0.88, dt / 16.7);
+    cur += (tg.t - cur) * k; if (Math.abs(tg.t - cur) < 0.0005) cur = tg.t;
+    mx += (tmx - mx) * k; my += (tmy - my) * k;
+    var c = camAt(cur), W = plane.offsetWidth, H = plane.offsetHeight, sw = stage.clientWidth, sh = stage.clientHeight;
+    var tx = c.ox * sw - c.s * (c.fx - 0.5) * W, ty = c.oy * sh - c.s * (c.fy - 0.5) * H;
+    plane.style.transform = 'translate(-50%,-50%) translate3d(' + tx.toFixed(1) + 'px,' + ty.toFixed(1) + 'px,0) rotateX(' + (c.rx + mx).toFixed(2) + 'deg) rotateY(' + (c.ry + my).toFixed(2) + 'deg) scale(' + c.s.toFixed(3) + ')';
+    plane.style.setProperty('--inv', (1 / c.s).toFixed(3));
+    bd.style.transform = 'translate3d(' + (-(c.ry + my) * 1.2).toFixed(1) + 'px,' + (-cur * 14).toFixed(1) + 'px,0) scale(' + (1.05 + cur * 0.03).toFixed(3) + ')';
+    sheen.style.opacity = c.sh.toFixed(2);
+    sheen.style.backgroundPosition = (120 - ((cur * 46 + now * 0.004) % 140)).toFixed(1) + '% 0';
+    bar.style.width = (tg.p * 100).toFixed(2) + '%';
+    for (var i = 0; i < copies.length; i++) {
+      var d = Math.abs(cur - i), o = clamp(1 - (d - 0.12) / 0.3, 0, 1), el = copies[i];
+      el.style.opacity = o.toFixed(3);
+      el.style.transform = (phone.matches ? 'translateY(' : 'translateY(calc(-50% + ') + ((cur - i) * -28).toFixed(1) + 'px' + (phone.matches ? ')' : '))');
+      el.classList.toggle('on', o > 0.5);
+      el.setAttribute('aria-hidden', o > 0.5 ? 'false' : 'true');
+    }
+    for (var j = 0; j < spots.length; j++) {
+      var a = +spots[j].getAttribute('data-a'), b = +spots[j].getAttribute('data-b');
+      spots[j].style.opacity = (cur > a && cur < b) ? '1' : '0';
+    }
+    var r = Math.round(cur);
+    if (r !== lastRound) { lastRound = r; railBtns.forEach(function (bt) { if (+bt.getAttribute('data-go') === r) bt.setAttribute('aria-current', 'step'); else bt.removeAttribute('aria-current'); }); }
+    cx.setTransform(dpr, 0, 0, dpr, 0, 0); cx.clearRect(0, 0, cw, ch);
+    for (var q = 0; q < dots.length; q++) {
+      var dd = dots[q], y = ((dd.y * ch - cur * 260 * dd.z - now * 0.008 * dd.z) % ch + ch) % ch, x = dd.x * cw + Math.sin(now * 0.0004 + dd.ph) * 14 * dd.z - my * 6 * dd.z;
+      var rad = 1 + dd.z * 3.2, al = 0.12 + dd.z * 0.38;
+      var g = cx.createRadialGradient(x, y, 0, x, y, rad * 3);
+      g.addColorStop(0, 'rgba(255,228,170,' + al.toFixed(2) + ')'); g.addColorStop(1, 'rgba(242,208,140,0)');
+      cx.fillStyle = g; cx.beginPath(); cx.arc(x, y, rad * 3, 0, 6.2832); cx.fill();
+    }
+    raf = visible ? requestAnimationFrame(frame) : 0;
+  }
+  var raf = 0, visible = true;
+  new IntersectionObserver(function (es) { visible = es[0].isIntersecting; if (visible && !raf) { last = 0; raf = requestAnimationFrame(frame); } }, { rootMargin: '200px' }).observe(world);
+  raf = requestAnimationFrame(frame);
+})();
+</script>
+
+</body>
+</html>
