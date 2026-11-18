@@ -6,7 +6,8 @@ Alur kamera (6 titik henti): pembuka "The Art of Indonesian Elegance" → 1 Pili
 
 - `assets/srikandi-full.jpg` dipotong dari poster katalog lalu diperbesar 2× dan dipertajam supaya zoom tetap tajam.
 - Titik henti kamera ada di array `D` (desktop) dan `M` (HP) di skrip: `s` zoom, `rx`/`ry` kemiringan, `sh` kilau payet. Titik fokus (kerah, payet depan, kain bawah) dan label detail per kebaya ada di objek `KB`.
-- Di langkah "Pilih kebaya" pengunjung bisa memilih 4 koleksi (008–011); tombol "Lihat dari dekat" di kartu koleksi melakukan hal yang sama.
+- Di langkah "Pilih kebaya" pengunjung bisa memilih 4 koleksi (008–011).
+- Home hanya berisi landing interaktif ini; kontak (Admin 1–3, Instagram) ada di kartu penutup, dan menu atas melompat ke titik kamera.
 - Pengunjung dengan setelan "kurangi gerakan" melihat versi statis empat kartu.
 - Versi artifact: https://claude.ai/artifact/WLrdUgiWw5F3Ube2fMmxnb
 
