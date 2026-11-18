@@ -60,8 +60,13 @@ a { color: var(--maroon); }
 .floor { position: absolute; left: 0; right: 0; bottom: 0; height: 28%; background: linear-gradient(180deg, transparent, rgba(36,22,13,.75)); pointer-events: none; }
 canvas.dust { position: absolute; inset: 0; width: 100%; height: 100%; pointer-events: none; }
 .plane { position: absolute; left: 50%; top: 50%; height: 84vh; height: 84dvh; aspect-ratio: 940 / 2284; transform-style: preserve-3d; will-change: transform; transform: translate(-50%, -50%) translate3d(17vw, 0, 0) rotateY(-22deg) scale(.92); }
-.arch { position: absolute; inset: 0; padding: 9px; border: 2px solid var(--gold-5); border-radius: 999px 999px 16px 16px; box-shadow: 0 0 0 1px rgba(242,208,140,.25), 0 0 70px rgba(242,208,140,.28), 0 40px 80px rgba(0,0,0,.45); background: rgba(36,22,13,.35); }
-.arch .photo { position: relative; width: 100%; height: 100%; border-radius: 999px 999px 10px 10px; overflow: hidden; background: #2b1a10; }
+.arch { position: absolute; inset: 0; }
+/* No frame: the photo's edges feather into the studio so the mannequin stands in the room */
+.arch .photo { position: relative; width: 100%; height: 100%; overflow: hidden;
+  -webkit-mask-image: linear-gradient(90deg, transparent 0, #000 15%, #000 85%, transparent 100%), linear-gradient(180deg, transparent 0, #000 6%, #000 88%, transparent 100%);
+  -webkit-mask-composite: source-in;
+  mask-image: linear-gradient(90deg, transparent 0, #000 15%, #000 85%, transparent 100%), linear-gradient(180deg, transparent 0, #000 6%, #000 88%, transparent 100%);
+  mask-composite: intersect; }
 .arch img { display: block; width: 100%; height: 100%; object-fit: cover; }
 .sheen { position: absolute; inset: 0; background: linear-gradient(112deg, transparent 38%, rgba(255,236,190,.65) 48%, rgba(255,250,235,.9) 50%, rgba(255,236,190,.65) 52%, transparent 62%); background-size: 320% 100%; background-position: 120% 0; mix-blend-mode: soft-light; opacity: 0; pointer-events: none; }
 .hs { position: absolute; transform: translate(-50%, -50%) scale(var(--inv, 1)); display: flex; align-items: center; gap: 10px; opacity: 0; transition: opacity .35s; pointer-events: none; white-space: nowrap; }
@@ -93,7 +98,7 @@ canvas.dust { position: absolute; inset: 0; width: 100%; height: 100%; pointer-e
 .picker button { display: flex; flex-direction: column; align-items: center; gap: 4px; padding: 6px 4px; min-height: 44px; background: var(--card); border: 1.5px solid var(--line); border-radius: 10px; cursor: pointer; font-family: inherit; color: var(--ink); }
 .picker button:hover { border-color: var(--gold-5); }
 .picker button[aria-checked="true"] { border-color: var(--maroon); background: var(--tint); }
-.picker img { width: 46px; height: 62px; object-fit: cover; object-position: 50% 12%; border-radius: 999px 999px 4px 4px; border: 1px solid var(--gold-5); }
+.picker img { width: 46px; height: 62px; object-fit: cover; object-position: 50% 12%; border-radius: 6px; }
 .picker span { font-size: 12.5px; line-height: 1.2; font-weight: 600; text-align: center; color: var(--maroon-9); }
 .picker-label { margin-top: 14px; font-size: 13px; letter-spacing: .12em; font-weight: 600; color: var(--gold-7); text-transform: uppercase; }
 .card-k .look { margin-top: 6px; min-height: 44px; font-size: 16px; }
@@ -142,7 +147,7 @@ footer.foot a { color: var(--ivory); }
 .static-steps { display: none; padding-block: 120px 40px; background: var(--walnut-deep); }
 .static-steps .wrap { display: grid; gap: 24px; }
 .st { display: flex; flex-wrap: wrap; gap: 20px; align-items: center; background: var(--card); border-radius: 12px; padding: 20px; }
-.st img { width: 220px; max-width: 100%; aspect-ratio: 3 / 4; object-fit: cover; border-radius: 999px 999px 10px 10px; border: 2px solid var(--gold-5); }
+.st img { width: 220px; max-width: 100%; aspect-ratio: 3 / 4; object-fit: cover; border-radius: 10px; }
 .st div { flex: 1 1 280px; min-width: 0; }
 .st h2 { margin: 4px 0 6px; color: var(--maroon-9); font-size: 30px; }
 .st p { margin: 0; }
